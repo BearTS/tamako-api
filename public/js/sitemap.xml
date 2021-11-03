@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://tamako.tech/</loc>
+  <lastmod>2020-12-18T12:48:14+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://tamako.tech/docs/welcome/</loc>
+  <lastmod>2020-12-18T12:48:14+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://tamako.tech/docs/api/chatapi/</loc>
+  <lastmod>2020-12-18T12:48:14+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://tamako.tech/docs/setup/anischedule/</loc>
+  <lastmod>2020-12-18T12:48:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://tamako.tech/docs/setup/economy/</loc>
+  <lastmod>2020-12-18T12:48:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://tamako.tech/docs/setup/counter/</loc>
+  <lastmod>2020-12-18T12:48:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://tamako.tech/docs/setup/custom_welcome_message/</loc>
+  <lastmod>2020-12-18T12:48:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://tamako.tech/docs/setup/custom_leave_message/</loc>
+  <lastmod>2020-12-18T12:48:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://tamako.tech/docs/setup/xp_system/</loc>
+  <lastmod>2020-12-18T12:48:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://tamako.tech/docs/setup/proxy/</loc>
+  <lastmod>2020-12-18T12:48:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://tamako.tech/docs/commands/</loc>
+  <lastmod>2020-12-18T12:48:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://tamako.tech/docs/setup/point_system/</loc>
+  <lastmod>2020-12-18T12:48:14+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+
+
+</urlset>

@@ -1,0 +1,27 @@
+{
+  "name": "tamako-microservices",
+  "version": "1.0.0",
+  "description": "Services For Tamako",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bearts/tamako-microservices.git"
+  },
+  "keywords": [
+    "microservices",
+    "api",
+    "tamako"
+  ],
+  "author": "BearTS",
+  "license": "MIT ",
+  "bugs": {
+    "url": "https://github.com/bearts/tamako-microservices/issues"
+  },
+  "homepage": "https://github.com/bearts/tamako-microservices#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
