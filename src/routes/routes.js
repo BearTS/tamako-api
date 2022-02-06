@@ -36,7 +36,7 @@ router.get('/animalfact',async (req,res) => {
             res.status(200).json({ 
                 Api: 'Tamako API',
                 Type: 'Animal Fact API',
-                url: `${randomize(path.join(__dirname, '..', 'api', 'animalfact', `${animal}.json`))}`
+                fact: `${randomize(path.join(__dirname, '..', 'api', 'animalfact', `${animal}.json`))}`
             });
         } else {
             res.status(404).json({ 
@@ -105,7 +105,10 @@ router.get('/chat', async (req,res) => {
     // const token = req.query.token;
     const message = req.query.message;
     const user = req.query.userid || '000000000000000000';
-    const gender = res.query.gender ? res.query.gender : 'female';
+    const gender = req.query.gender || 'female';
+    const name = req.query.name || 'Tamako';
+    const prefix = req.query.prefix || 'No prefix set';
+    const dev = req.query.dev || 'Bear#3437';
     if (!regex.test(user)) return res.status(400).json({ message: 'Invalid user id!' });
     try {
         // if (!token) return res.status(400).json({ 'message': 'Token is required' });
@@ -114,10 +117,17 @@ router.get('/chat', async (req,res) => {
         const respond = output
             .replace(/<@&?([0-9]+)>/gm, '')
             .replace(/<@!?([0-9]+)>/gm, '')
-            .replace('TamakoAPI', res.query.name ? res.query.name : 'Tamako')
-            .replace('thisisprefix', res.query.prefix ? res.query.prefix : 'No prefix set')
-            .replace('iammaster', res.query.dev ? res.query.dev : 'Bear#3437')
-            .replace('female chatbot', `${gender}  chatbot`);
+            .replace('TamakoAPI', name)
+            .replace('thisisprefix', prefix)
+            .replace('iammaster', dev)
+            .replace('female chatbot', `${gender}  chatbot`)
+            .replace(process.env.str1, process.env.rep1)
+            .replace([process.env.str2, process.env.str3, process.env.str4], process.env.rep2)
+            .replace(process.env.str5, process.env.rep3)
+            .replace(process.env.str6, process.env.rep4)
+            .replace(process.env.str7, process.env.rep5)
+            .replace([process.env.str8, process.env.str9], ' ')
+            .replace(process.env.str10, process.env.rep6);
         
         res.status(200).json({
             Api: 'Tamako API',
