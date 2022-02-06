@@ -1,4 +1,8 @@
- MicroServices for Tamako that make the bot work
+ MicroServices for Tamako that make the bot work | In works 
 
-# Required For Proper Working of Tamako Bot 
-Public Version Does not Include Chat Bot or Anime Quote API
+# To DO
+- [ ] Add Authentication
+- [ ] More endpoints
+
+Current Priorities: 
+Will first finish porting [Tamako](https://github.com/bearts/tamako) then start on this

@@ -22,7 +22,10 @@
   },
   "homepage": "https://github.com/bearts/tamako-microservices#readme",
   "dependencies": {
+    "dotenv": "^16.0.0",
     "eslint": "^8.8.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^6.2.0",
+    "node-fetch": "^2.6.1"
   }
 }
