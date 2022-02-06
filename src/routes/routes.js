@@ -102,19 +102,29 @@ router.get('/roleplay/:type',async (req,res) => {
 
 router.get('/chat', async (req,res) => {
     const regex = new RegExp(/\d{18}/g);
-    const token = req.query.token;
+    // const token = req.query.token;
     const message = req.query.message;
     const user = req.query.userid || '000000000000000000';
+    const gender = res.query.gender ? res.query.gender : 'female';
     if (!regex.test(user)) return res.status(400).json({ message: 'Invalid user id!' });
     try {
-        if (!token) return res.status(400).json({ 'message': 'Token is required' });
+        // if (!token) return res.status(400).json({ 'message': 'Token is required' });
         if (!message) return res.status(400).json({ 'message': 'Message is required' });
         const output = await chat(user, message);
+        const respond = output
+            .replace(/<@&?([0-9]+)>/gm, '')
+            .replace(/<@!?([0-9]+)>/gm, '')
+            .replace('TamakoAPI', res.query.name ? res.query.name : 'Tamako')
+            .replace('thisisprefix', res.query.prefix ? res.query.prefix : 'No prefix set')
+            .replace('iammaster', res.query.dev ? res.query.dev : 'Bear#3437')
+            .replace('female chatbot', `${gender}  chatbot`);
+        
         res.status(200).json({
             Api: 'Tamako API',
             Type: 'Chat API',
+            input: message,
             userid: user === '000000000000000000' ? 'None Provided' : user,
-            message: output
+            message: respond
         });
     } catch (error) {
         res.status(500).json(error);
