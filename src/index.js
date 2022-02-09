@@ -4,7 +4,7 @@ const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 require('./fonts');
 const apiRouter = require('./routes/api');
-const canvasRouter = require('./routes/canvas');
+const editimageRouter = require('./routes/edit-image');
 
 const allowlist = ['::1'];
 
@@ -20,7 +20,7 @@ const app = express();
 app.use(limiter);
 app.use(express.static(path.join(__dirname, '../public/')));
 app.use('/api', apiRouter);
-app.use('/canvas', canvasRouter);
+app.use('/canvas/edit-image', editimageRouter);
 app.get('*', (req, res) => {
     res.status(404).sendFile(path.join(__dirname, '../public/404.html'));
 });
