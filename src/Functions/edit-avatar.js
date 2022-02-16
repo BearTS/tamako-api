@@ -41,6 +41,7 @@ const milk = async (avatarURL, direction) => {
 const eject = async (avatarURL, imposter, username, userID) => {
     username = username || 'Not_Provided';
     userID = userID || '000000';
+    if (!isImageUrl(avatarURL)) return 0;
     const frameCount = 52;
     const { body } = await request.get(avatarURL);
     const avatar = await loadImage(body);
@@ -97,6 +98,7 @@ const eject = async (avatarURL, imposter, username, userID) => {
 };
 
 const fire = async (avatarURL) => {
+    if (!isImageUrl(avatarURL)) return 0;
     const frameCount = 31;  
     const { body } = await request.get(avatarURL);
     const avatar = await loadImage(body);
@@ -137,6 +139,7 @@ const hat = async (avatarURL, type, user, addX, addY, scale) => {
 };
 
 const heLivesInYou = async (avatarURL) => {
+    if (!isImageUrl(avatarURL)) return 0;
     const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'he-lives-in-you.png'));
     const { body } = await request.get(avatarURL);
     const avatar = await loadImage(body);
@@ -149,7 +152,8 @@ const heLivesInYou = async (avatarURL) => {
     return canvas.toBuffer();
 };
 
-const rip = async (avatarURL, user, cause) => {
+const rip = async (avatarURL, username, cause) => {
+    if (!isImageUrl(avatarURL)) return 0;
     const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'rip.png'));
     const { body } = await request.get(avatarURL);
     const avatar = await loadImage(body);
@@ -162,7 +166,7 @@ const rip = async (avatarURL, user, cause) => {
     ctx.textAlign = 'center';
     ctx.font = '62px CoffinStone';
     ctx.fillStyle = 'black';
-    ctx.fillText(user.username, 438, 330, 500);
+    ctx.fillText(username, 438, 330, 500);
     ctx.fillStyle = 'white';
     if (cause) ctx.fillText(cause, 438, 910, 500);
     ctx.font = '37px CoffinStone';
@@ -170,6 +174,82 @@ const rip = async (avatarURL, user, cause) => {
     return canvas.toBuffer();
 };
 
+const sip = async (avatarURL, direction) => {
+    if (!isImageUrl(avatarURL)) return 0;
+    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'sip.png'));
+    const { body } = await request.get(avatarURL);
+    const avatar = await loadImage(body);
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.fillRect(0, 0, base.width, base.height);
+    if (direction === 'right') {
+        ctx.translate(base.width, 0);
+        ctx.scale(-1, 1);
+    }
+    ctx.drawImage(avatar, 0, 0, 512, 512);
+    if (direction === 'right') ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.drawImage(base, 0, 0);
+    return canvas.toBuffer();
+};
+
+const steamNowPlaying = async (avatarURL, username, game) => {
+    if (!isImageUrl(avatarURL)) return 0;
+    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'steam-now-playing.png'));
+    const { body } = await request.get(avatarURL);
+    const avatar = await loadImage(body);
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    ctx.drawImage(avatar, 26, 26, 41, 42);
+    ctx.fillStyle = '#90b93c';
+    ctx.font = '14px Noto Regular';
+    ctx.fillText(username, 80, 34);
+    ctx.fillText(shortenText(ctx, game, 200), 80, 70);
+    return canvas.toBuffer();
+};
+
+const steamNowPlayingClassic = async (avatarURL, username, game) => {
+    if (!isImageUrl(avatarURL)) return 0;
+    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'steam-now-playing-classic.png'));
+    const { body } = await request.get(avatarURL);
+    const avatar = await loadImage(body);
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    ctx.drawImage(avatar, 21, 21, 32, 32);
+    ctx.fillStyle = '#90ba3c';
+    ctx.font = '10px Noto Regular';
+    ctx.fillText(username, 63, 26);
+    ctx.fillText(shortenText(ctx, game, 160), 63, 54);
+    return canvas.toBuffer();
+};
+
+const triggered = async (avatarURL) => {
+    if (!isImageUrl(avatarURL)) return 0;
+    const coord1 = [-25, -33, -42, -14];
+    const coord2 = [-25, -13, -34, -10];
+    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'triggered.png'));
+    const { body } = await request.get(avatarURL);
+    const avatar = await loadImage(body);
+    const encoder = new GIFEncoder(base.width, base.width);
+    const canvas = createCanvas(base.width, base.width);
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, base.width, base.width);
+    const stream = encoder.createReadStream();
+    encoder.start();
+    encoder.setRepeat(0);
+    encoder.setDelay(50);
+    encoder.setQuality(200);
+    for (let i = 0; i < 4; i++) {
+        drawImageWithTint(ctx, avatar, 'red', coord1[i], coord2[i], 300, 300);
+        ctx.drawImage(base, 0, 218, 256, 38);
+        encoder.addFrame(ctx);
+    }
+    encoder.finish();
+    const buffer = await streamToArray(stream);
+    return Buffer.concat(buffer);
+};
 
 function streamToArray(stream) {
     if (!stream.readable) return Promise.resolve([]);
@@ -223,6 +303,15 @@ function greyscale(ctx, x, y, width, height) {
     return ctx;
 }
 
+function shortenText(ctx, text, maxWidth) {
+    let shorten = false;
+    while (ctx.measureText(`${text}...`).width > maxWidth) {
+        if (!shorten) shorten = true;
+        text = text.substr(0, text.length - 1);
+    }
+    return shorten ? `${text}...` : text;
+}
+
 module.exports = {
     avatarFusion,
     milk,
@@ -230,5 +319,9 @@ module.exports = {
     fire,
     hat,
     heLivesInYou,
-    rip
+    rip,
+    sip,
+    steamNowPlaying,
+    steamNowPlayingClassic,
+    triggered
 };
