@@ -52,7 +52,7 @@ const {
     tint,
     wanted,
     youDied
-} = require('../Functions/edit-image/edit-image');
+} = require('../Functions/edit-image');
 
 router.get('/achievement/:text', async (req, res) => {
     const input = req?.params?.text;
