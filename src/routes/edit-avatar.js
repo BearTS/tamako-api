@@ -5,7 +5,9 @@ const {
     eject,
     fire,
     hat,
+    hearts,
     heLivesInYou,
+    iHaveThePower,
     rip,
     sip,
     steamNowPlaying,
@@ -72,11 +74,11 @@ router.get('/fire', async (req, res) => {
 router.get('/hat', async (req, res) => {
     const avatarURL = req.query.avatarURL;
     const type = req.query.type;
-    const addX = req.query.addX;
-    const addY = req.query.addY;
-    const scale = req.query.scale;
+    const addX = req.query.addX || 0;
+    const addY = req.query.addY || 0;
+    const scale = req.query.scale || 0;
     const hats = new Set(['anon','ash','becel','birthday','christmas','devil','disguise','dunce','leprechaun','mask','megumin','pilgrim','pirate','soviet','tophat','witch']);
-    if (!addX || !addY || !scale || !type) return res.status(406).send(JSON.stringify({ error: 'Invalid parameters' }));
+    if (!addX || !addY || !scale || !type || scale > 1000 || scale < 0) return res.status(406).send(JSON.stringify({ error: 'Invalid parameters' }));
     if (!hats.has(type)) return res.status(406).send(JSON.stringify({ error: 'Invalid hat type' }));
     try {
         const image = await hat(avatarURL, type, addX, addY, scale);
@@ -88,6 +90,29 @@ router.get('/hat', async (req, res) => {
     }
 });
 
+router.get('/hearts', async (req, res) => {
+    const avatarURL = req.query.avatarURL;
+    try {
+        const image = await hearts(avatarURL);
+        if (image === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(image);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+router.get('/iHaveThePower', async (req, res) => {
+    const avatarURL = req.query.avatarURL;
+    try {
+        const image = await iHaveThePower(avatarURL);
+        if (image === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(image);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
 
 router.get('/heLivesInYou', async (req, res) => {
     const avatarURL = req.query.avatarURL;

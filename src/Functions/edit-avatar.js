@@ -143,6 +143,18 @@ const hat = async (avatarURL, type, addX, addY, scale) => {
     return canvas.toBuffer();
 };
 
+const hearts = async (avatarURL) => {
+    if (!isImageUrl(avatarURL)) return 0;
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'hearts.png'));
+    const { body } = await request.get(avatarURL);
+    const avatar = await loadImage(body);
+    const canvas = createCanvas(avatar.width, avatar.height);
+    const ctx = canvas.getContext('2d');
+    drawImageWithTint(ctx, avatar, 'deeppink', 0, 0, avatar.width, avatar.height);
+    ctx.drawImage(base, 0, 0, avatar.width, avatar.height);
+    return canvas.toBuffer();
+};
+
 const heLivesInYou = async (avatarURL) => {
     if (!isImageUrl(avatarURL)) return 0;
     const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'he-lives-in-you.png'));
@@ -154,6 +166,20 @@ const heLivesInYou = async (avatarURL) => {
     ctx.rotate(-24 * (Math.PI / 180));
     drawImageWithTint(ctx, avatar, '#00115d', 75, 160, 130, 150);
     ctx.rotate(24 * (Math.PI / 180));
+    return canvas.toBuffer();
+};
+
+const iHaveThePower = async (avatarURL) => {
+    if (!isImageUrl(avatarURL)) return 0;
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images','i-have-the-power.png'));
+    const { body } = await request.get(avatarURL);
+    const avatar = await loadImage(body);
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    ctx.rotate(18.3 * (Math.PI / 180));
+    ctx.drawImage(avatar, 332, -125, 175, 175);
+    ctx.rotate(-18.3 * (Math.PI / 180));
     return canvas.toBuffer();
 };
 
@@ -323,7 +349,9 @@ module.exports = {
     eject,
     fire,
     hat,
+    hearts,
     heLivesInYou,
+    iHaveThePower,
     rip,
     sip,
     steamNowPlaying,
