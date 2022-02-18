@@ -235,6 +235,7 @@ router.get('/createqr', async (req, res) => {
     if (!text) return res.status(406).send(JSON.stringify({ error: 'No text provided'}));
     try {
         const buffer = await createQr(text);
+        if (buffer === 0) return res.status(500).send(JSON.stringify({ error: 'some error occured' }));
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
@@ -371,7 +372,6 @@ router.get('/ghost', async (req, res) => {
         res.status(500).send(JSON.stringify({ error: err }));
     }
 });
-// this doesnt work, need to see this later ^
 
 router.get('/glass-shatter', async (req, res) => {
     const image = req.query.image;
@@ -535,9 +535,9 @@ router.get('/mirror', async (req, res) => {
     let type = req.query.type;
     if (!type) return res.status(406).send(JSON.stringify({ error: 'No type provided'}));
     type = type.toLowerCase();
-    if (type !== 'x' || type !== 'y' || type !== 'both') return res.status(406).send(JSON.stringify({ error: 'Type should be x or y or both'}));
+    if (!(type === 'x' || type === 'y' || type == 'both')) return res.status(406).send(JSON.stringify({ error: 'Type should be x or y or both'}));
     try {
-        const buffer = await mirror(image, type);
+        const buffer = await mirror(type, image);
         if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
@@ -545,8 +545,6 @@ router.get('/mirror', async (req, res) => {
         res.status(500).send(JSON.stringify({ error: err }));
     }
 });
-
-// will look on this later ^
 
 router.get('/motionBlur', async (req, res) => {
     const image = req.query.image;
@@ -569,10 +567,8 @@ router.get('/newspaper', async (req, res) => {
     if (headline.length > 20) return res.status(406).send(JSON.stringify({ error: 'Headline should be less than 20'}));
     try {
         const buffer = await newspaper(headline, body);
-        res.status(200).send(JSON.stringify({
-            name: 'Tamako API',
-            url: buffer
-        }));
+        res.writeHead(200,{ 'Content-Type': 'image/gif' });
+        res.end(buffer);
     } catch (err) {
         res.status(500).send(JSON.stringify({ error: err }));
     }
@@ -729,8 +725,6 @@ router.get('/spotifyNowPlaying', async (req, res) => {
         res.status(500).send(JSON.stringify({ error: err }));
     }
 });
-
-// not working ^
 
 router.get('/tint', async (req, res) => {
     let color = req.query.color;

@@ -8,7 +8,7 @@ const stackBlur = require('stackblur-canvas');
 const moment = require('moment');
 
 const minecraftachivement = async (text) => {
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'achievement.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'achievement.png'));
     const canvas = createCanvas(base.width, base.height);
     const ctx = canvas.getContext('2d');
     ctx.drawImage(base, 0, 0);
@@ -22,7 +22,7 @@ const minecraftachivement = async (text) => {
 
 const approve = async (url) => {
     if (!isImageUrl(url)) return 0;
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'approved.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'approved.png'));
     const { body } = await request.get(url);
     const data = await loadImage(body);
     const canvas = createCanvas(data.width, data.height);
@@ -34,7 +34,7 @@ const approve = async (url) => {
 };
 
 const axiscult = async (username, gender, age, profession) => {
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'axis-cult-sign-up.jpg'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'axis-cult-sign-up.jpg'));
     const canvas = createCanvas(base.width, base.height);
     const ctx = canvas.getContext('2d');
     ctx.drawImage(base, 0, 0);
@@ -63,7 +63,7 @@ const blur = async (radius, image) => {
 
 const bobross = async (image) => {
     if (!isImageUrl(image)) return 0;
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'bob-ross.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'bob-ross.png'));
     const { body } = await request.get(image);
     const data = await loadImage(body);
     const canvas = createCanvas(base.width, base.height);
@@ -77,7 +77,7 @@ const bobross = async (image) => {
 };
 
 const brazzers = async (image) => {
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'brazzers.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'brazzers.png'));
     const { body } = await request.get(image);
     const data = await loadImage(body);
     const canvas = createCanvas(data.width, data.height);
@@ -91,7 +91,7 @@ const brazzers = async (image) => {
 };
 
 const caution = async (text) => {
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'caution.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'caution.png'));
     const canvas = createCanvas(base.width, base.height);
     const ctx = canvas.getContext('2d');
     ctx.drawImage(base, 0, 0);
@@ -113,7 +113,7 @@ const caution = async (text) => {
 };
 
 const certificate = async (reason, name) => {
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'certificate.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'certificate.png'));
     const canvas = createCanvas(base.width, base.height);
     const ctx = canvas.getContext('2d');
     ctx.drawImage(base, 0, 0);
@@ -127,7 +127,7 @@ const certificate = async (reason, name) => {
 };
 
 const chineserestaurant = async (text) => {
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'chinese-restaurant.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'chinese-restaurant.png'));
     const canvas = createCanvas(base.width, base.height);
     const ctx = canvas.getContext('2d');
     ctx.drawImage(base, 0, 0);
@@ -180,7 +180,7 @@ const color = async(color) => {
 
 const communist = async (image) => {
     if (!isImageUrl(image)) return 0;
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'chinese-restaurant.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'chinese-restaurant.png'));
     const { body } = await request.get(image);
     const data = await loadImage(body);
     const canvas = createCanvas(data.width, data.height);
@@ -205,15 +205,20 @@ const contrast = async (image) => {
 };
 
 const createQr = async (text) => {
-    const { body } = await request
-        .get('https://api.qrserver.com/v1/create-qr-code/')
-        .query({ data: text });
+    try {
+        const { body } = await request
+            .get('https://api.qrserver.com/v1/create-qr-code/')
+            .query({ data: text });
     
-    return body;
+        return body;
+    }
+    catch (err) {
+        return 0;
+    }
 };
 
 const danger = async (text) => {
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'danger.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'danger.png'));
     const canvas = createCanvas(base.width, base.height);
     const ctx = canvas.getContext('2d');
     ctx.drawImage(base, 0, 0);
@@ -236,7 +241,7 @@ const danger = async (text) => {
 
 const dannydevito = async (image) => {
     if (!isImageUrl(image)) return 0;
-    const danny = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'danny-devito.png'));
+    const danny = await loadImage(join(__dirname, '..', 'assets', 'images', 'danny-devito.png'));
     const imgData = await request.get(image);
     try {
         const faces = await detect(imgData);
@@ -282,7 +287,7 @@ const desaturate = async (level, image) => {
 
 const dexter = async (image) => {
     if (!isImageUrl(image)) return 0;
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'dexter.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'dexter.png'));
     const { body } = await request.get(image);
     const data = await loadImage(body);
     const canvas = createCanvas(base.width, base.height);
@@ -309,7 +314,7 @@ const distort = async (level, image) => {
 
 const eyes = async (image) => {
     if (!isImageUrl(image)) return 0;
-    const eyes = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'eyes.png'));
+    const eyes = await loadImage(join(__dirname, '..', 'assets', 'images', 'eyes.png'));
     const imgData = await request.get(image);
     try {
         const faces = await detect(imgData);
@@ -352,7 +357,7 @@ const eyes = async (image) => {
 
 const fireframe = async (image) => {
     if (!isImageUrl(image)) return 0;
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'fire-frame.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'fire-frame.png'));
     const { body } = await request.get(image);
     const data = await loadImage(body);
     const canvas = createCanvas(data.width, data.height);
@@ -363,7 +368,7 @@ const fireframe = async (image) => {
 };
 
 const gandhiquote = async (quote) => {
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'gandhi-quote.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'gandhi-quote.png'));
     const canvas = createCanvas(base.width, base.height);
     const ctx = canvas.getContext('2d');
     ctx.drawImage(base, 0, 0);
@@ -387,7 +392,7 @@ const gandhiquote = async (quote) => {
 
 const ghost = async (image) => {
     if (!isImageUrl(image)) return 0;
-    const body = await request.get(image);
+    const { body } = await request.get(image);
     const data = await loadImage(body);
     const canvas = createCanvas(data.width, data.height);
     const ctx = canvas.getContext('2d');
@@ -400,7 +405,7 @@ const ghost = async (image) => {
 
 const glassshatter = async (image) => {
     if (!isImageUrl(image)) return 0;
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'glass-shatter.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'glass-shatter.png'));
     const { body } = await request.get(image);
     const data = await loadImage(body);
     const canvas = createCanvas(data.width, data.height);
@@ -434,7 +439,7 @@ const greyscale = async (image) => {
 
 const gun = async (image) => {
     if (!isImageUrl(image)) return 0;
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'gun.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'gun.png'));
     const { body } = await request.get(image);
     const data = await loadImage(body);
     const canvas = createCanvas(data.width, data.height);
@@ -448,7 +453,7 @@ const gun = async (image) => {
 
 const hands = async (image) => {
     if (!isImageUrl(image)) return 0;
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'hands.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'hands.png'));
     const { body } = await request.get(image);
     const data = await loadImage(body);
     const canvas = createCanvas(data.width, data.height);
@@ -461,7 +466,7 @@ const hands = async (image) => {
 };
 
 const highwaysign = async (text) => {
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'highway-sign.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'highway-sign.png'));
     const canvas = createCanvas(base.width, base.height);
     const ctx = canvas.getContext('2d');
     ctx.drawImage(base, 0, 0);
@@ -489,7 +494,7 @@ const highwaysign = async (text) => {
 };
 
 const hollywoodstar = async (name) => {
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'hollywood-star.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'hollywood-star.png'));
     const canvas = createCanvas(base.width, base.height);
     const ctx = canvas.getContext('2d');
     ctx.drawImage(base, 0, 0);
@@ -503,7 +508,7 @@ const hollywoodstar = async (name) => {
 
 const ifunny = async (image) => {
     if (!isImageUrl(image)) return 0;
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'ifunny.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'ifunny.png'));
     const { body } = await request.get(image);
     const data = await loadImage(body);
     const canvas = createCanvas(data.width, data.height);
@@ -549,7 +554,7 @@ const jeopardyQuestion = async (text) => {
 
 const legoIcon = async (image) => {
     if (!isImageUrl(image)) return 0;
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'lego-icon.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'lego-icon.png'));
     const { body } = await request.get(image);
     const data = await loadImage(body);
     const canvas = createCanvas(base.width, base.height);
@@ -565,7 +570,7 @@ const legoIcon = async (image) => {
 };
 
 const licensePlate = async (text) => {
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'license-plate.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'license-plate.png'));
     const canvas = createCanvas(base.width, base.height);
     const ctx = canvas.getContext('2d');
     ctx.drawImage(base, 0, 0);
@@ -578,8 +583,6 @@ const licensePlate = async (text) => {
 
 const mirror = async (type, image) => {
     if (!isImageUrl(image)) return 0;
-    type = type.toLowerCase();
-    // if (type != 'x' || type != 'y' || type != 'both') return 0;
     const { body } = await request.get(image);
     const data = await loadImage(body);
     const canvas = createCanvas(data.width, data.height);
@@ -616,7 +619,11 @@ const newspaper = async (headline, body) => {
         .attach('headline', headline)
         .attach('text', body);
     const newspaperURL = text.match(/<img src="(https:\/\/r[0-9]+\.fodey\.com\/[0-9]+\/.+\.jpg)"/i)[1];
-    return newspaperURL;
+    const data = await loadImage(newspaperURL);
+    const canvas = createCanvas(data.width, data.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(data, 0, 0);
+    return canvas.toBuffer();
 };
 
 const pet = async (image) => {
@@ -636,7 +643,7 @@ const pet = async (image) => {
     let squish = 0;
     for (let i = 0; i < frameCount; i++) {
         const frameID = `frame_${i.toString().padStart(2, '0')}.png`;
-        const frame = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'pet', frameID));
+        const frame = await loadImage(join(__dirname, '..', 'assets', 'images', 'pet', frameID));
         const { x, y, width, height } = centerImagePart(data, 75, 75, 27, 38);
         ctx.drawImage(data, x - (squish / 2), y + squish, width + squish, height - squish);
         ctx.drawImage(frame, 0, 0);
@@ -662,7 +669,7 @@ const pixelize = async (image) => {
 
 const policeTape = async (image) => {
     if (!isImageUrl(image)) return 0;
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'police-tape.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'police-tape.png'));
     const { body } = await request.get(image);
     const data = await loadImage(body);
     const canvas = createCanvas(data.width, data.height);
@@ -675,7 +682,7 @@ const policeTape = async (image) => {
 
 const rainbow = async (image) => {
     if (!isImageUrl(image)) return 0;
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'rainbow.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'rainbow.png'));
     const { body } = await request.get(image);
     const data = await loadImage(body);
     const canvas = createCanvas(data.width, data.height);
@@ -687,7 +694,7 @@ const rainbow = async (image) => {
 
 const rejected = async (image) => {
     if (!isImageUrl(image)) return 0;
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'rejected.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'rejected.png'));
     const { body } = await request.get(image);
     const data = await loadImage(body);
     const canvas = createCanvas(data.width, data.height);
@@ -728,7 +735,7 @@ const silouette = async (image) => {
 
 const simp = async (image) => {
     if (!isImageUrl(image)) return 0;
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'simp.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'simp.png'));
     const { body } = await request.get(image);
     const data = await loadImage(body);
     const canvas = createCanvas(data.width, data.height);
@@ -740,7 +747,7 @@ const simp = async (image) => {
 };
 
 const speedLimit = async (limit) => {
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'speed-limit.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'speed-limit.png'));
     const canvas = createCanvas(base.width, base.height);
     const ctx = canvas.getContext('2d');
     ctx.drawImage(base, 0, 0);
@@ -756,7 +763,7 @@ const SpongebobTimeCard = async (text) => {
     const canvas = createCanvas(1920, 1080);
     const ctx = canvas.getContext('2d');
     const num = Math.floor(Math.random() * 23);
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'spongebob-time-card', `${num}.png`));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'spongebob-time-card', `${num}.png`));
     ctx.drawImage(base, 0, 0);
     ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
@@ -775,7 +782,7 @@ const SpongebobTimeCard = async (text) => {
 
 const spotifyNowPlaying = async (name, artist, image) => {
     if (!isImageUrl(image)) return 0;
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'spotify-now-playing.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'spotify-now-playing.png'));
     const { body } = await request.get(image);
     const data = await loadImage(body);
     const canvas = createCanvas(base.width, base.height);
@@ -792,7 +799,6 @@ const spotifyNowPlaying = async (name, artist, image) => {
     ctx.fillText(name, base.width / 2, 685);
     ctx.fillStyle = '#bdbec2';
     ctx.font = '20px Noto Regular';
-    ctx.font = this.client.fonts.get('Noto-Regular.ttf').toCanvasString(20);
     ctx.fillText(artist, base.width / 2, 720);
     ctx.fillText('Tamako\'s Picks', base.width / 2, 65);
     return canvas.toBuffer();
@@ -810,7 +816,7 @@ const tint = async (color, image) => {
 
 const wanted = async (image) => {
     if (!isImageUrl(image)) return 0;
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'wanted.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'wanted.png'));
     const { body } = await request.get(image);
     const data = await loadImage(body);
     const canvas = createCanvas(base.width, base.height);
@@ -824,7 +830,7 @@ const wanted = async (image) => {
 
 const youDied = async (image) => {
     if (!isImageUrl(image)) return 0;
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'you-died.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'you-died.png'));
     const { body } = await request.get(image);
     const data = await loadImage(body);
     const canvas = createCanvas(data.width, data.height);
