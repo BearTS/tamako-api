@@ -4,7 +4,7 @@ const {
     milk,
     eject,
     fire,
-    // hat,
+    hat,
     heLivesInYou,
     rip,
     sip,
@@ -45,7 +45,7 @@ router.get('/eject', async (req, res) => {
     const imposter = req.query.imposter || '';
     const username = req.query.username;
     const userID = req.query.userID;
-    if (!username || !NaN(userID)) return res.status(406).send(JSON.stringify({ error: 'Username not provided or userID' }));
+    if (!username || !isNaN(userID)) return res.status(406).send(JSON.stringify({ error: 'Username not provided or userID' }));
     try {
         const image = await eject(avatarURL, imposter, username, userID);
         if (image === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
@@ -68,6 +68,26 @@ router.get('/fire', async (req, res) => {
         res.status(500).send(JSON.stringify({ error: err }));
     }
 });
+
+router.get('/hat', async (req, res) => {
+    const avatarURL = req.query.avatarURL;
+    const type = req.query.type;
+    const addX = req.query.addX;
+    const addY = req.query.addY;
+    const scale = req.query.scale;
+    const hats = new Set(['anon','ash','becel','birthday','christmas','devil','disguise','dunce','leprechaun','mask','megumin','pilgrim','pirate','soviet','tophat','witch']);
+    if (!addX || !addY || !scale || !type) return res.status(406).send(JSON.stringify({ error: 'Invalid parameters' }));
+    if (!hats.has(type)) return res.status(406).send(JSON.stringify({ error: 'Invalid hat type' }));
+    try {
+        const image = await hat(avatarURL, type, addX, addY, scale);
+        if (image === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(image);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
 
 router.get('/heLivesInYou', async (req, res) => {
     const avatarURL = req.query.avatarURL;

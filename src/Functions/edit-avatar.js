@@ -22,7 +22,7 @@ const avatarFusion = async (baseAvatarURL, overlayAvatarURL) => {
 const milk = async (avatarURL, direction) => {
     if (!isImageUrl(avatarURL)) return 0;
     direction = direction.toLowerCase();
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'chocolate-milk.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'chocolate-milk.png'));
     const { body } = await request.get(avatarURL);
     const avatar = await loadImage(body);
     const canvas = createCanvas(base.width, base.height);
@@ -39,6 +39,10 @@ const milk = async (avatarURL, direction) => {
 };
 
 const eject = async (avatarURL, imposter, username, userID) => {
+    const truthy = new Set(['true', 't', 'yes', 'y', 'on', 'enable', 'enabled', '1', '+']);
+    const falsy = new Set(['false', 'f', 'no', 'n', 'off', 'disable', 'disabled', '0', '-']);
+    if (truthy.has(imposter)) imposter = true;
+    if (falsy.has(imposter)) imposter = false;
     username = username || 'Not_Provided';
     userID = userID || '000000';
     if (!isImageUrl(avatarURL)) return 0;
@@ -64,7 +68,7 @@ const eject = async (avatarURL, imposter, username, userID) => {
     encoder.setQuality(200);
     for (let i = 0; i < frameCount; i++) {
         const frameID = `frame_${i.toString().padStart(2, '0')}.gif`;
-        const frame = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'eject', frameID));
+        const frame = await loadImage(join(__dirname, '..', 'assets', 'images', 'eject', frameID));
         ctx.drawImage(frame, 0, 0);
         if (i <= 17) {
             const x = ((320 / 15) * i) - 50;
@@ -112,7 +116,7 @@ const fire = async (avatarURL) => {
     encoder.setQuality(200);
     for (let i = 0; i < frameCount; i += 2) {
         const frameID = `frame-${i.toString().padStart(2, '0')}.png`;
-        const frame = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'fire', frameID));
+        const frame = await loadImage(join(__dirname, '..', 'assets', 'images', 'fire', frameID));
         const ratio = frame.width / frame.height;
         const height = Math.round(avatar.width / ratio);
         drawImageWithTint(ctx, avatar, '#fc671e', 0, 0, avatar.width, avatar.height);
@@ -124,11 +128,12 @@ const fire = async (avatarURL) => {
     return Buffer.concat(buffer);
 };
 
-const hat = async (avatarURL, type, user, addX, addY, scale) => {
-    /// check if hat is valid
+const hat = async (avatarURL, type, addX, addY, scale) => {
+    if (!isImageUrl(avatarURL)) return 0;
+    type = type.toLowerCase();
     scale /= 100;
     if (scale === 0) scale = 1;
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'hat', `${type}.png`));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'hat', `${type}.png`));
     const { body } = await request.get(avatarURL);
     const avatar = await loadImage(body);
     const canvas = createCanvas(avatar.width, avatar.height);
@@ -140,7 +145,7 @@ const hat = async (avatarURL, type, user, addX, addY, scale) => {
 
 const heLivesInYou = async (avatarURL) => {
     if (!isImageUrl(avatarURL)) return 0;
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'he-lives-in-you.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'he-lives-in-you.png'));
     const { body } = await request.get(avatarURL);
     const avatar = await loadImage(body);
     const canvas = createCanvas(base.width, base.height);
@@ -154,7 +159,7 @@ const heLivesInYou = async (avatarURL) => {
 
 const rip = async (avatarURL, username, cause) => {
     if (!isImageUrl(avatarURL)) return 0;
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'rip.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'rip.png'));
     const { body } = await request.get(avatarURL);
     const avatar = await loadImage(body);
     const canvas = createCanvas(base.width, base.height);
@@ -176,7 +181,7 @@ const rip = async (avatarURL, username, cause) => {
 
 const sip = async (avatarURL, direction) => {
     if (!isImageUrl(avatarURL)) return 0;
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'sip.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'sip.png'));
     const { body } = await request.get(avatarURL);
     const avatar = await loadImage(body);
     const canvas = createCanvas(base.width, base.height);
@@ -194,7 +199,7 @@ const sip = async (avatarURL, direction) => {
 
 const steamNowPlaying = async (avatarURL, username, game) => {
     if (!isImageUrl(avatarURL)) return 0;
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'steam-now-playing.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'steam-now-playing.png'));
     const { body } = await request.get(avatarURL);
     const avatar = await loadImage(body);
     const canvas = createCanvas(base.width, base.height);
@@ -210,7 +215,7 @@ const steamNowPlaying = async (avatarURL, username, game) => {
 
 const steamNowPlayingClassic = async (avatarURL, username, game) => {
     if (!isImageUrl(avatarURL)) return 0;
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'steam-now-playing-classic.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'steam-now-playing-classic.png'));
     const { body } = await request.get(avatarURL);
     const avatar = await loadImage(body);
     const canvas = createCanvas(base.width, base.height);
@@ -228,7 +233,7 @@ const triggered = async (avatarURL) => {
     if (!isImageUrl(avatarURL)) return 0;
     const coord1 = [-25, -33, -42, -14];
     const coord2 = [-25, -13, -34, -10];
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'triggered.png'));
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'triggered.png'));
     const { body } = await request.get(avatarURL);
     const avatar = await loadImage(body);
     const encoder = new GIFEncoder(base.width, base.width);
