@@ -200,7 +200,7 @@ const contrast = async (image) => {
     const canvas = createCanvas(data.width, data.height);
     const ctx = canvas.getContext('2d');
     ctx.drawImage(data, 0, 0);
-    contrast(ctx, 0, 0, data.width, data.height);
+    fcontrast(ctx, 0, 0, data.width, data.height);
     return canvas.toBuffer();
 };
 
@@ -1023,6 +1023,19 @@ function fmotionBlur(ctx, image, x, y, width, height) {
     ctx.globalAlpha = 0.2;
     for (let i = 0; i < 10; i += 2) ctx.drawImage(image, x + i, y, width, height);
     ctx.globalAlpha = 1;
+    return ctx;
+}
+
+function fcontrast(ctx, x, y, width, height) {
+    const data = ctx.getImageData(x, y, width, height);
+    const factor = (259 / 100) + 1;
+    const intercept = 128 * (1 - factor);
+    for (let i = 0; i < data.data.length; i += 4) {
+        data.data[i] = (data.data[i] * factor) + intercept;
+        data.data[i + 1] = (data.data[i + 1] * factor) + intercept;
+        data.data[i + 2] = (data.data[i + 2] * factor) + intercept;
+    }
+    ctx.putImageData(data, x, y);
     return ctx;
 }
 
