@@ -5,7 +5,6 @@ const request = require('node-superfetch');
 const isImageUrl = require('is-image-url');
 const { stripIndents } = require('common-tags');
 
-
 const threekyears = async (image) => {
     if (!isImageUrl(image)) return 0;
     const base = await loadImage(join(__dirname, '..', 'assets', 'images', '3000-years.png'));
@@ -391,6 +390,460 @@ const ForFiveHours = async (image) => {
     return canvas.toBuffer();
 };
 
+const genieRules = async (text) => {
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'genie-rules.png'));
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.font = '40px Noto Regular';
+    let fontSize = 40;
+    while (ctx.measureText(text).width > 1143) {
+        fontSize--;
+        ctx.font = `${fontSize}px Noto Regular`;
+    }
+    const lines = await wrapText(ctx, text, 381);
+    const topMost = 580 - (((fontSize * lines.length) / 2) + ((20 * (lines.length - 1)) / 2));
+    for (let i = 0; i < lines.length; i++) {
+        const height = topMost + ((fontSize + 20) * i);
+        ctx.fillText(lines[i], 220, height);
+    }
+};
+
+const girlWorthFightingFor = async (image) => {
+    if (!isImageUrl(image)) return 0;
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'girl-worth-fighting-for.png'));
+    const { body } = await request.get(image);
+    const data = await loadImage(body);
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    const { x, y, width, height } = centerImagePart(data, 150, 150, 380, 511);
+    ctx.drawImage(data, x, y, width, height);
+    return canvas.toBuffer();
+};
+
+const gruPlan = async (step1, step2, step3) => {
+    const coord = [[450, 129], [1200, 134], [450, 627], [1200, 627]];
+    const steps = [step1, step2, step3, step3];
+    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'gru-plan.png'));
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    ctx.fillStyle = 'black';
+    ctx.textBaseline = 'top';
+    let i = 0;
+    for (const [x, y] of coord) {
+        ctx.font = '35px Noto Regular';
+        const step = steps[i];
+        let fontSize = 35;
+        while (ctx.measureText(step).width > 1100) {
+            fontSize--;
+            ctx.font = `${fontSize}px Noto Regular`;
+        }
+        const lines = await wrapText(ctx, step, 252);
+        ctx.fillText(lines.join('\n'), x, y);
+        i++;
+    }
+    return canvas.toBuffer();
+};
+
+const iFearNoMan = async (image) => {
+    if (!isImageUrl(image)) return 0;
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'i-fear-no-man.png'));
+    const { body } = await request.get(image);
+    const data = await loadImage(body);
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    const { x, y, width, height } = centerImagePart(data, 169, 169, 167, 330);
+    ctx.drawImage(data, x, y, width, height);
+    return canvas.toBuffer();
+};
+
+const ifThoseKidsCouldRead = async (text) => {
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'if-those-kids-could-read.png'));
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.font = '40px Noto Regular';
+    let fontSize = 40;
+    while (ctx.measureText(text).width > 560) {
+        fontSize--;
+        ctx.font = `${fontSize}px Noto Regular`;
+    }
+    const lines = await wrapText(ctx, text, 160);
+    const topMost = 140 - (((fontSize * lines.length) / 2) + ((20 * (lines.length - 1)) / 2));
+    for (let i = 0; i < lines.length; i++) {
+        const height = topMost + ((fontSize + 20) * i);
+        ctx.fillText(lines[i], 300, height);
+    }
+};
+
+const kyonGun = async (image) => {
+    if (!isImageUrl(image)) return 0;
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'kyon-gun.png'));
+    const { body } = await request.get(image);
+    const data = await loadImage(body);
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, base.width, base.height);
+    const ratio = data.width / data.height;
+    const width = Math.round(base.height * ratio);
+    ctx.drawImage(data, (base.width / 2) - (width / 2), 0, width, base.height);
+    ctx.drawImage(base, 0, 0);
+    return canvas.toBuffer();
+};  
+
+const like = async (image) => {
+    if (!isImageUrl(image)) return 0;
+    const { body } = await request.get(image);
+    const base = await loadImage(body);
+    const plate = await loadImage(join(__dirname, '..', 'assets', 'images', 'like.png'));
+    const scaleH = plate.width / base.width;
+    const height = Math.round(base.height * scaleH);
+    const canvas = createCanvas(plate.width, plate.height + height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0, plate.width, height);
+    ctx.drawImage(plate, 0, height + 1);
+    return canvas.toBuffer();
+};
+
+const LisaPresentation = async (text) => {
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'lisa-presentation.png'));
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.font = '40px Noto Regular';
+    let fontSize = 40;
+    while (ctx.measureText(text).width > 1320) {
+        fontSize--;
+        ctx.font = `${fontSize}px Noto Regular`;
+    }
+    const lines = await wrapText(ctx, text, 330);
+    const topMost = 185 - (((fontSize * lines.length) / 2) + ((20 * (lines.length - 1)) / 2));
+    for (let i = 0; i < lines.length; i++) {
+        const height = topMost + ((fontSize + 20) * i);
+        ctx.fillText(lines[i], base.width / 2, height);
+    }
+    return canvas.toBuffer();
+};
+
+const LookAtThisPhotograph = async (image) => {
+    if (!isImageUrl(image)) return 0;
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'look-at-this-photograph.png'));
+    const { body } = await request.get(image);
+    const data = await loadImage(body);
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    ctx.rotate(-13.5 * (Math.PI / 180));
+    ctx.drawImage(data, 280, 218, 175, 125);
+    ctx.rotate(13.5 * (Math.PI / 180));
+    return canvas.toBuffer();
+};
+
+const MarioBrosViews = async (thing, mario, luigi) => {
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'mario-bros-views.png'));
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    ctx.textBaseline = 'top';
+    ctx.textAlign = 'center';
+    ctx.font = '47px Noto Regular';
+    ctx.fillText(thing, 420, 108, 180);
+    ctx.fillStyle = 'white';
+    ctx.font = '36px Noto Regular';
+    let fontSize = 36;
+    while (ctx.measureText(mario).width > 800) {
+        fontSize--;
+        ctx.font = `${fontSize}px Noto Regular`;
+    }
+    const marioLines = await wrapText(ctx, mario, 200);
+    const marioTopMost = 450 - (((fontSize * marioLines.length) / 2) + ((20 * (marioLines.length - 1)) / 2));
+    for (let i = 0; i < marioLines.length; i++) {
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 5;
+        const height = marioTopMost + ((fontSize + 20) * i);
+        ctx.strokeText(marioLines[i], 205, height);
+        ctx.fillText(marioLines[i], 205, height);
+    }
+    ctx.font = '36px Noto Regular';
+    fontSize = 36;
+    while (ctx.measureText(luigi).width > 800) {
+        fontSize--;
+        ctx.font = `${fontSize}px Noto Regular`;
+    }
+    const luigiLines = await wrapText(ctx, luigi, 200);
+    const luigiTopMost = 450 - (((fontSize * luigiLines.length) / 2) + ((20 * (luigiLines.length - 1)) / 2));
+    for (let i = 0; i < luigiLines.length; i++) {
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 5;
+        const height = luigiTopMost + ((fontSize + 20) * i);
+        ctx.strokeText(luigiLines[i], 450, height);
+        ctx.fillText(luigiLines[i], 450, height);
+    }
+    return canvas.toBuffer();
+};
+
+const memeGenClassic = async (top, bottom, image) => {
+    if (!isImageUrl(image)) return 0;
+    const { body } = await request.get(image);
+    const base = await loadImage(body);
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    const fontSize = Math.round(base.height / 10);
+    ctx.font = `${fontSize}px Impact`;
+    ctx.fillStyle = 'white';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    const topLines = await wrapText(ctx, top, base.width - 10);
+    if (!topLines) return 406;
+    for (let i = 0; i < topLines.length; i++) {
+        const textHeight = (i * fontSize) + (i * 10);
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 5;
+        ctx.strokeText(topLines[i], base.width / 2, textHeight);
+        ctx.fillStyle = 'white';
+        ctx.fillText(topLines[i], base.width / 2, textHeight);
+    }
+    const bottomLines = await wrapText(ctx, bottom, base.width - 10);
+    if (!bottomLines) return 406;
+    ctx.textBaseline = 'bottom';
+    const initial = base.height - ((bottomLines.length - 1) * fontSize) - ((bottomLines.length - 1) * 10);
+    for (let i = 0; i < bottomLines.length; i++) {
+        const textHeight = initial + (i * fontSize) + (i * 10);
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 5;
+        ctx.strokeText(bottomLines[i], base.width / 2, textHeight);
+        ctx.fillStyle = 'white';
+        ctx.fillText(bottomLines[i], base.width / 2, textHeight);
+    }
+    return canvas.toBuffer();
+};
+
+const memeGenModern = async (text, image) => {
+    if (!isImageUrl(image)) return 0;
+    const { body } = await request.get(image);
+    const base = await loadImage(body);
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.font = '40px Noto Regular';
+    const lines = await wrapText(ctx, text, base.width - 10);
+    const lineBreakLen = text.split('\n').length;
+    const linesLen = (40 * lines.length)
+				+ (40 * (lineBreakLen - 1))
+				+ (14 * lines.length)
+				+ (14 * (lineBreakLen - 1))
+				+ 14;
+    canvas.height += linesLen;
+    ctx.font = '40px Noto Regular';
+    ctx.textBaseline = 'top';
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, base.width, linesLen);
+    ctx.fillStyle = 'black';
+    ctx.fillText(lines.join('\n'), 5, 5);
+    ctx.drawImage(base, 0, linesLen);
+    return canvas.toBuffer();
+};
+
+const metamorphosis = async (name, image) => {
+    if (!isImageUrl(image)) return 0;
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'metamorphosis.png'));
+    const { body } = await request.get(image);
+    const data = await loadImage(body);
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    const { x, y, width, height } = centerImagePart(data, 200, 200, 412, 257);
+    ctx.drawImage(data, x, y, width, height);
+    ctx.textBaseline = 'top';
+    ctx.font = '20px Noto Regular';
+    ctx.fillText(`le ${name.toLowerCase()}`, 345, 466, 330);
+    return canvas.toBuffer();
+};
+
+const MyCollectionGrows = async (image) => {
+    if (!isImageUrl(image)) return 0;
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'my-collection-grows.png'));
+    const { body } = await request.get(image);
+    const data = await loadImage(body);
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, base.width, base.height);
+    ctx.rotate(-14 * (Math.PI / 180));
+    const { x, y, width, height } = centerImagePart(data, 425, 425, 145, 179);
+    ctx.drawImage(data, x, y, width, height);
+    ctx.rotate(14 * (Math.PI / 180));
+    ctx.drawImage(base, 0, 0);
+    return canvas.toBuffer();
+};
+
+const newPassword = async (weak, strong) => {
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'new-password.png'));
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    ctx.font = '60px Noto Regular';
+    ctx.font = this.client.fonts.get('Noto-Regular.ttf').toCanvasString(60);
+    ctx.fillText(shortenText(ctx, weak, 780), 70, 191);
+    ctx.fillText(shortenText(ctx, strong, 780), 70, 667);
+    return canvas.toBuffer();
+};
+
+const nikeAd = async (image, something, sacrifice) => {
+    if (!isImageUrl(image)) return 0;
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'nike-ad.png'));
+    const { body } = await request.get(image);
+    const data = await loadImage(body);
+    const canvas = createCanvas(data.width, data.height);
+    const ctx = canvas.getContext('2d');
+    drawImageWithTint(ctx, data, 'black', 0, 0, data.width, data.height);
+    greyscale(ctx, 0, 0, data.width, data.height);
+    const ratio = base.width / base.height;
+    const width = data.width / 3;
+    const height = Math.round(width / ratio);
+    ctx.drawImage(base, (data.width / 2) - (width / 2), data.height - height, width, height);
+    const fontSize = Math.round(data.height / 25);
+    ctx.font = `${fontSize}px Noto Regular`;
+    ctx.fillStyle = 'white';
+    ctx.textAlign = 'center';
+    const lines = await wrapText(ctx, `Believe in ${something}. Even if it means ${sacrifice}.`, data.width - 20);
+    if (!lines) return 406;
+    const initial = data.height / 2;
+    for (let i = 0; i < lines.length; i++) {
+        const textHeight = initial + (i * fontSize) + (i * 10);
+        ctx.fillText(lines[i], data.width / 2, textHeight);
+    }
+    return canvas.toBuffer();
+};
+
+const PanikKalmPanik = async (panik, kalm, panik2) => {
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'panik-kalm-panik.png'));
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.font = '40px Noto Regular';
+    let fontSize = 40;
+    while (ctx.measureText(panik).width > 1136) {
+        fontSize--;
+        ctx.font = `${fontSize}px Noto Regular`;
+    }
+    const panikLines = await wrapText(ctx, panik, 284);
+    const panikTopMost = 130 - (((fontSize * panikLines.length) / 2) + ((10 * (panikLines.length - 1)) / 2));
+    for (let i = 0; i < panikLines.length; i++) {
+        const height = panikTopMost + ((fontSize + 10) * i);
+        ctx.fillText(panikLines[i], 150, height);
+    }
+    ctx.font = '40px Noto Regular';
+    fontSize = 40;
+    while (ctx.measureText(kalm).width > 1136) {
+        fontSize--;
+        ctx.font = `${fontSize}px Noto Regular`;
+    }
+    const kalmLines = await wrapText(ctx, kalm, 284);
+    const kalmTopMost = 430 - (((fontSize * kalmLines.length) / 2) + ((10 * (kalmLines.length - 1)) / 2));
+    for (let i = 0; i < kalmLines.length; i++) {
+        const height = kalmTopMost + ((fontSize + 10) * i);
+        ctx.fillText(kalmLines[i], 150, height);
+    }
+    ctx.font = '40px Noto Regular';
+    fontSize = 40;
+    while (ctx.measureText(panik2).width > 1136) {
+        fontSize--;
+        ctx.font = `${fontSize}px Noto Regular`;
+    }
+    const panik2Lines = await wrapText(ctx, panik2, 284);
+    const panik2TopMost = 730 - (((fontSize * panik2Lines.length) / 2) + ((10 * (panik2Lines.length - 1)) / 2));
+    for (let i = 0; i < panik2Lines.length; i++) {
+        const height = panik2TopMost + ((fontSize + 10) * i);
+        ctx.fillText(panik2Lines[i], 150, height);
+    }
+    return canvas.toBuffer();
+};
+
+const PhoebeTeachingJoey = async (correct, incorrect) => {
+    correct = parsecorrect(correct);
+    const coord = [
+        [[136, 135], [416, 135]],
+        [[136, 328], [416, 328]],
+        [[136, 517], [416, 517]],
+        [[136, 712], [416, 712]]
+    ];
+    const steps = [...correct, incorrect];
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'phoebe-teaching-joey.png'));
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    ctx.fillStyle = 'white';
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 5;
+    ctx.textBaseline = 'top';
+    ctx.textAlign = 'center';
+    let i = 0;
+    for (const coords of coord) {
+        let j = 0;
+        for (const [x, y] of coords) {
+            ctx.font = '20px Noto Regular';
+            let step = steps[i];
+            if (step === incorrect && j === 0) step = correct.join(' ');
+            let fontSize = 20;
+            while (ctx.measureText(step).width > 260) {
+                fontSize--;
+                ctx.font = `${fontSize}px Noto Regular`;
+            }
+            ctx.strokeText(step, x, y, 260);
+            ctx.fillText(step, x, y, 260);
+            j++;
+        }
+        i++;
+    }
+    return canvas.toBuffer();
+};
+
+function parsecorrect(correct) {
+    const words = correct.split(' ');
+    const divided = Math.floor(words.length / 3);
+    const first = words.slice(0, divided).join(' ');
+    const second = words.slice(divided, divided * 2).join(' ');
+    const third = words.slice(divided * 2, words.length).join(' ');
+    return [first, second, third];
+}
+
+const pills = async (text) => {
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'pills.png'));
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.font = '32px Noto Regular';
+    let fontSize = 32;
+    while (ctx.measureText(text).width > 1260) {
+        fontSize--;
+        ctx.font = `${fontSize}px Noto Regular`;
+    }
+    const lines = await wrapText(ctx, text, 280);
+    const topMost = 455 - (((fontSize * lines.length) / 2) + ((10 * (lines.length - 1)) / 2));
+    for (let i = 0; i < lines.length; i++) {
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 5;
+        const height = topMost + ((fontSize + 10) * i);
+        ctx.strokeText(lines[i], 183, height);
+        ctx.fillText(lines[i], 183, height);
+    }
+};
+
 function contrast(ctx, x, y, width, height) {
     const data = ctx.getImageData(x, y, width, height);
     const factor = (259 / 100) + 1;
@@ -404,6 +857,7 @@ function contrast(ctx, x, y, width, height) {
     return ctx;
 }
 
+
 function desaturate(ctx, level, x, y, width, height) {
     const data = ctx.getImageData(x, y, width, height);
     for (let i = 0; i < height; i++) {
@@ -416,6 +870,30 @@ function desaturate(ctx, level, x, y, width, height) {
             data.data[dest + 1] += level * (grey - data.data[dest + 1]);
             data.data[dest + 2] += level * (grey - data.data[dest + 2]);
         }
+    }
+    ctx.putImageData(data, x, y);
+    return ctx;
+}
+
+function drawImageWithTint(ctx, image, color, x, y, width, height) {
+    const { fillStyle, globalAlpha } = ctx;
+    ctx.fillStyle = color;
+    ctx.drawImage(image, x, y, width, height);
+    ctx.globalAlpha = 0.5;
+    ctx.fillRect(x, y, width, height);
+    ctx.fillStyle = fillStyle;
+    ctx.globalAlpha = globalAlpha;
+    return ctx;
+}
+
+
+function greyscale(ctx, x, y, width, height) {
+    const data = ctx.getImageData(x, y, width, height);
+    for (let i = 0; i < data.data.length; i += 4) {
+        const brightness = (0.34 * data.data[i]) + (0.5 * data.data[i + 1]) + (0.16 * data.data[i + 2]);
+        data.data[i] = brightness;
+        data.data[i + 1] = brightness;
+        data.data[i + 2] = brightness;
     }
     ctx.putImageData(data, x, y);
     return ctx;
@@ -534,5 +1012,24 @@ module.exports = {
     EddFactBook,
     enslaved,
     FoodBroke,
-    ForFiveHours
+    ForFiveHours,
+    genieRules,
+    girlWorthFightingFor,
+    gruPlan,
+    iFearNoMan,
+    ifThoseKidsCouldRead,
+    kyonGun,
+    like,
+    LisaPresentation,
+    LookAtThisPhotograph,
+    MarioBrosViews,
+    memeGenClassic,
+    memeGenModern,
+    metamorphosis,
+    MyCollectionGrows,
+    newPassword,
+    nikeAd,
+    PanikKalmPanik,
+    PhoebeTeachingJoey,
+    pills
 };

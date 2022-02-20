@@ -20,6 +20,25 @@ const {
     enslaved,
     FoodBroke,
     ForFiveHours,
+    genieRules,
+    girlWorthFightingFor,
+    gruPlan,
+    iFearNoMan,
+    ifThoseKidsCouldRead,
+    kyonGun,
+    like,
+    LisaPresentation,
+    LookAtThisPhotograph,
+    MarioBrosViews,
+    memeGenClassic,
+    memeGenModern,
+    metamorphosis,
+    MyCollectionGrows,
+    newPassword,
+    nikeAd,
+    PanikKalmPanik,
+    PhoebeTeachingJoey,
+    pills,
 
 } = require('../Functions/edit-meme');
 
@@ -270,6 +289,268 @@ router.get('/for-five-hours', async (req, res) => {
     try {
         const buffer = await ForFiveHours(image);
         if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+router.get('/genie-rules', async (req, res) => {
+    const text = req.query.text;
+    if (!text) return res.status(406).send(JSON.stringify({ error: 'No text provided' }));
+    if (text.length > 500) return res.status(406).send(JSON.stringify({ error: 'Text too long' }));
+    try {
+        const buffer = await genieRules(text);
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+router.get('/girl-worth-fighting-for', async (req, res) => {
+    const image = req.query.image;
+    if (!image) return res.status(400).json({ message: 'Please provide an image' });
+    try {
+        const buffer = await girlWorthFightingFor(image);
+        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+
+router.get('/gru-plan', async (req, res) => {
+    const { step1, step2, step3 } = req.query;
+    if (!step1 || !step2 || !step3) return res.status(406).send(JSON.stringify({ error: 'Missing Parameters' }));
+    if (step1.length > 150 || step2.length > 150 || step3.length > 150) return res.status(406).send(JSON.stringify({ error: 'Parameters provided should be less than 150 characters' }));
+    try {
+        const buffer = await gruPlan(step1, step2, step3);
+        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+router.get('/i-fear-no-man', async (req, res) => {
+    const image = req.query.image;
+    if (!image) return res.status(400).json({ message: 'Please provide an image' });
+    try {
+        const buffer = await iFearNoMan(image);
+        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+router.get('/if-those-kids-could-read', async (req, res) => {
+    const text = req.query.text;
+    if (!text) return res.status(406).send(JSON.stringify({ error: 'No text provided' }));
+    if (text.length > 500) return res.status(406).send(JSON.stringify({ error: 'Text too long' }));
+    try {
+        const buffer = await ifThoseKidsCouldRead(text);
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+router.get('/kyonGun', async (req, res) => {
+    const image = req.query.image;
+    if (!image) return res.status(400).json({ message: 'Please provide an image' });
+    try {
+        const buffer = await kyonGun(image);
+        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+router.get('/like', async (req, res) => {
+    const image = req.query.image;
+    if (!image) return res.status(400).json({ message: 'Please provide an image' });
+    try {
+        const buffer = await like(image);
+        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+router.get('/lisa-presentation', async (req, res) => {
+    const text = req.query.text;
+    if (!text) return res.status(406).send(JSON.stringify({ error: 'No text provided' }));
+    if (text.length > 500) return res.status(406).send(JSON.stringify({ error: 'Text too long' }));
+    try {
+        const buffer = await LisaPresentation(text);
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+router.get('/look-at-this-photograph', async (req, res) => {
+    const image = req.query.image;
+    if (!image) return res.status(400).json({ message: 'Please provide an image' });
+    try {
+        const buffer = await LookAtThisPhotograph(image);
+        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+router.get('/mario-bros-view', async (req, res) => {
+    const {thing, mario, luigi}= req.query;
+    if (!thing, !mario, !luigi) return res.status(406).send(JSON.stringify({ error: 'Missing Parameters' }));
+    if (thing.length > 20 || mario.length > 280 || luigi.length > 280) return res.status(406).send(JSON.stringify({ error: 'too long' }));
+    try {
+        const buffer = await MarioBrosViews(thing, mario, luigi);
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+router.get('/meme-gen-classic', async (req, res) => {
+    const { top, bottom, image }= req.query;
+    if (!image) return res.status(400).json({ message: 'Please provide an image' });
+    if (!top || !bottom) return res.status(400).json({ message: 'Please provide a top and bottom text' });
+    if (top.length > 50 || bottom.length > 50) return res.status(406).send(JSON.stringify({ error: 'Parameters provided should be less than 50 characters' }));
+    try {
+        const buffer = await memeGenClassic(top, bottom, image);
+        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 406) return res.status(406).send(JSON.stringify({ error: 'There\'s not enough width to make a meme with this image.'}));
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+router.get('/meme-gen-modern', async (req, res) => {
+    const { text, image }= req.query;
+    if (!image) return res.status(400).json({ message: 'Please provide an image' });
+    if (!text ) return res.status(400).json({ message: 'Missing Parameters' });
+    try {
+        const buffer = await memeGenModern(text, image);
+        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+router.get('/metamorphosis', async (req, res) => {
+    const { name, image }= req.query;
+    if (!image) return res.status(400).json({ message: 'Please provide an image' });
+    if (!name ) return res.status(400).json({ message: 'Missing Parameters' });
+    if (name.length > 280) return res.status(406).send(JSON.stringify({ error: 'Name too long' }));
+    try {
+        const buffer = await metamorphosis(name, image);
+        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+router.get('/my-collection-grows', async (req, res) => {
+    const image = req.query.image;
+    if (!image) return res.status(400).json({ message: 'Please provide an image' });
+    try {
+        const buffer = await MyCollectionGrows(image);
+        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+
+router.get('/new-password', async (req, res) => {
+    const {weak, strong}= req.query;
+    if (!weak, !strong) return res.status(406).send(JSON.stringify({ error: 'Missing Parameters' }));
+    if (weak.length > 50 || strong.length > 50) return res.status(406).send(JSON.stringify({ error: 'too long' }));
+    try {
+        const buffer = await newPassword(weak, strong);
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+
+router.get('/nike-ad', async (req, res) => {
+    const { something, sacrifice, image }= req.query;
+    if (!image) return res.status(400).json({ message: 'Please provide an image' });
+    if (!something || !sacrifice) return res.status(400).json({ message: 'Missing Parameters' });
+    if (something.length > 50 || sacrifice.length > 50) return res.status(406).send(JSON.stringify({ error: 'Parameters provided should be less than 50 characters' }));
+    try {
+        const buffer = await nikeAd(image, something, sacrifice);
+        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 406) return res.status(406).send(JSON.stringify({ error: 'There\'s not enough width to make a Nike ad with this image.'}));
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+router.get('/panik-kalm-panik', async (req, res) => {
+    const {panik, kalm, panik2} = req.query;
+    if (!panik || !kalm || !panik2) return res.status(400).json({ message: 'Missing Parameters' });
+    if (panik.length > 500 || kalm.length > 500 || panik2.length > 500) return res.status(406).send(JSON.stringify({ error: 'Parameters provided should be less than 500 characters' }));
+    try {
+        const buffer = await PanikKalmPanik(panik, kalm, panik2);
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+router.get('/phoebe-teaching-joey', async (req, res) => {
+    const { correct, incorrect } = req.query;
+    if (!correct || !incorrect) return res.status(400).json({ message: 'Missing Parameters' });
+    if (correct.split(' ') < 3) return res.status(406).send(JSON.stringify({ error: 'Correct answer should be at least 3 words' }));
+    if (correct.length > 50) return res.status(406).send(JSON.stringify({ error: 'Correct answer should be less than 50 characters' }));   
+    try {
+        const buffer = await PhoebeTeachingJoey(correct, incorrect);
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+
+router.get('/pills', async (req, res) => {
+    const text = req.query.text;
+    if (!text) return res.status(406).send(JSON.stringify({ error: 'No text provided' }));
+    if (text.length > 500) return res.status(406).send(JSON.stringify({ error: 'Text too long' }));
+    try {
+        const buffer = await pills(text);
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
