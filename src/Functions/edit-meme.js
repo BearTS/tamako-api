@@ -844,6 +844,417 @@ const pills = async (text) => {
     }
 };
 
+const PlanktonPlan = async (step1, step2, step3) => {
+    const coord = [[240, 63], [689, 63], [705, 383], [220, 380]];
+    const steps = [step1, step2, step3, step3];
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'plankton-plan.png'));
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    ctx.fillStyle = 'black';
+    ctx.textBaseline = 'top';
+    let i = 0;
+    for (const [x, y] of coord) {
+        ctx.font = '35px Noto Regular';
+        const step = steps[i];
+        let fontSize = 35;
+        while (ctx.measureText(step).width > 420) {
+            fontSize--;
+            ctx.font = `${fontSize}px Noto Regular`;
+        }
+        const lines = await wrapText(ctx, step, 155);
+        ctx.fillText(lines.join('\n'), x, y);
+        i++;
+    }
+    return canvas.toBuffer();
+};
+
+const pogchamp = async (amount) => {
+    const pog = await loadImage(join(__dirname, '..', 'assets', 'images', 'pogchamp.png'));
+    const rows = Math.ceil(amount / 10);
+    const canvas = createCanvas(pog.width * (rows > 1 ? 10 : amount), pog.height * rows);
+    const ctx = canvas.getContext('2d');
+    let width = 0;
+    for (let i = 0; i < amount; i++) {
+        const row = Math.ceil((i + 1) / 10);
+        ctx.drawImage(pog, width, pog.height * (row - 1));
+        if ((width + pog.width) === (pog.width * (rows > 1 ? 10 : amount))) width = 0;
+        else width += pog.width;
+    }
+    return canvas.toBuffer();
+};
+
+const ScrollOfTruth = async (text) => {
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'scroll-of-truth.png'));
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.font = '60px Noto Regular';
+    let fontSize = 60;
+    while (ctx.measureText(text).width > 542) {
+        fontSize--;
+        ctx.font = `${fontSize}px Noto Regular`;
+    }
+    const lines = await wrapText(ctx, text, 217);
+    const topMost = 850 - (((fontSize * lines.length) / 2) + ((20 * (lines.length - 1)) / 2));
+    for (let i = 0; i < lines.length; i++) {
+        const height = topMost + ((fontSize + 20) * i);
+        ctx.fillText(lines[i], 350, height);
+    }
+    return canvas.toBuffer();
+};
+
+const SkyrimSkill = async (skill, image) => {
+    skill = skill.toUpperCase();
+    if (!isImageUrl(image)) return 0;
+    const { body } = await request.get(image);
+    const base = await loadImage(body);
+    const plate = await loadImage(join(__dirname, '..', 'assets', 'images', 'skyrim-skill.png'));
+    const scaleH = plate.width / base.width;
+    const height = Math.round(base.height * scaleH);
+    const canvas = createCanvas(plate.width, plate.height + height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0, plate.width, height);
+    ctx.drawImage(plate, 0, height + 1);
+    ctx.font = '77px Futura Condensed';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.fillStyle = 'black';
+    ctx.fillText(skill, 189 + 5, height + 75 + 3, 300);
+    ctx.fillStyle = 'white';
+    ctx.fillText(skill, 189, height + 75, 300);
+    return canvas.toBuffer();
+};
+
+const SonicSays = async (text) => {
+    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'sonic-says.png'));
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.textBaseline = 'top';
+    ctx.drawImage(base, 0, 0);
+    ctx.font = '24px Noto Regular';
+    let fontSize = 24;
+    while (ctx.measureText(text).width > 648) {
+        fontSize--;
+        ctx.font = `${fontSize}px Noto Regular`;
+    }
+    const lines = await wrapText(ctx, text, 185);
+    ctx.fillStyle = 'white';
+    ctx.fillText(lines.join('\n'), 92, 67, 185);
+    return canvas.toBuffer();
+};
+
+const soraSelfie = async (image) => {
+    if (!isImageUrl(image)) return 0;
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'sora-selfie.png'));
+    const { body } = await request.get(image);
+    const data = await loadImage(body);
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, base.width, base.height);
+    const ratio = data.width / data.height;
+    const width = Math.round(base.height * ratio);
+    ctx.drawImage(data, (base.width / 2) - (width / 2), 0, width, base.height);
+    ctx.drawImage(base, 0, 0);
+    return canvas.toBuffer();
+};
+
+const sos = async (message) => {
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'sos.png'));
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    ctx.font = '90px SunDried';
+    ctx.fillStyle = 'black';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.rotate(15 * (Math.PI / 180));
+    let fontSize = 90;
+    while (ctx.measureText(message).width > 140) {
+        fontSize--;
+        ctx.font = `${fontSize}px SunDried`;
+    }
+    ctx.fillText(message.toUpperCase(), 362, 522);
+    ctx.rotate(-15 * (Math.PI / 180));
+    return canvas.toBuffer();
+};
+
+const SpidermanPointing = async (first, second) => {
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'spiderman-pointing.png'));
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.font = '50px Noto Regular';
+    ctx.fillStyle = 'white';
+    let fontSize = 50;
+    while (ctx.measureText(first).width > 725) {
+        fontSize--;
+        ctx.font = `${fontSize}px Noto Regular`;
+    }
+    const lines = await wrapText(ctx, first, 290);
+    const topMost = 189 - (((fontSize * lines.length) / 2) + ((10 * (lines.length - 1)) / 2));
+    for (let i = 0; i < lines.length; i++) {
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 5;
+        const height = topMost + ((fontSize + 10) * i);
+        ctx.strokeText(lines[i], 222, height);
+        ctx.fillText(lines[i], 222, height);
+    }
+    ctx.font = '50px Noto Regular';
+    fontSize = 50;
+    while (ctx.measureText(second).width > 725) {
+        fontSize--;
+        ctx.font = `${fontSize}px Noto Regular`;
+    }
+    const lines2 = await wrapText(ctx, second, 290);
+    const topMost2 = 190 - (((fontSize * lines2.length) / 2) + ((10 * (lines2.length - 1)) / 2));
+    for (let i = 0; i < lines2.length; i++) {
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 5;
+        const height = topMost2 + ((fontSize + 10) * i);
+        ctx.strokeText(lines2[i], 596, height);
+        ctx.fillText(lines2[i], 596, height);
+    }
+    return canvas.toBuffer();
+};
+
+const SpongebobBurn = async (burn, person) => {
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'spongebob-burn.png'));
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    ctx.fillStyle = 'black';
+    ctx.textBaseline = 'top';
+    ctx.font = '35px Noto Regular';
+    let fontSize = 35;
+    while (ctx.measureText(burn).width > 400) {
+        fontSize--;
+        ctx.font = `${fontSize}px Noto Regular`;
+    }
+    const lines = await wrapText(ctx, burn, 180);
+    ctx.fillText(lines.join('\n'), 55, 103);
+    ctx.font = '25px Noto Regular';
+    ctx.fillText(person, 382, 26);
+    ctx.font = '20px Noto Regular';
+    ctx.fillText(person, 119, 405);
+    ctx.fillText(person, 439, 434);
+};
+
+const ThatSignWontStopMe = async (text) => {
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'that-sign-wont-stop-me.png'));
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.font = '62px TragicMarker';
+    let fontSize = 62;
+    while (ctx.measureText(text).width > 1002) {
+        fontSize--;
+        ctx.font = `${fontSize}px TragicMarker`;
+    }
+    const lines = await wrapText(ctx, text, 334);
+    const topMost = 240 - (((fontSize * lines.length) / 2) + ((10 * (lines.length - 1)) / 2));
+    for (let i = 0; i < lines.length; i++) {
+        const height = topMost + ((fontSize + 10) * i);
+        ctx.fillText(lines[i], 210, height);
+    }
+    ctx.font = '16px TragicMarker';
+    fontSize = 16;
+    while (ctx.measureText(text).width > 264) {
+        fontSize--;
+        ctx.font = `${fontSize}px TragicMarker`;
+    }
+    const bLines = await wrapText(ctx, text, 88);
+    const bTopMost = 645 - (((fontSize * bLines.length) / 2) + ((2 * (bLines.length - 1)) / 2));
+    for (let i = 0; i < bLines.length; i++) {
+        const height = bTopMost + ((fontSize + 2) * i);
+        ctx.fillText(bLines[i], 280, height);
+    }
+    return canvas.toBuffer();
+};
+
+const ThisGuy = async (image) => {
+    if (!isImageUrl(image)) return 0;
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'this-guy.png'));
+    const { body } = await request.get(image);
+    const data = await loadImage(body);
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    const { x, y, width, height } = centerImagePart(data, 361, 361, 76, 62);
+    ctx.drawImage(data, x, y, width, height);
+    return canvas.toBuffer();
+};
+
+const ThugLife = async (image) => {
+    if (!isImageUrl(image)) return 0;
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'thug-life.png'));
+    const { body } = await request.get(image);
+    const data = await loadImage(body);
+    const canvas = createCanvas(data.width, data.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(data, 0, 0);
+    greyscale(ctx, 0, 0, data.width, data.height);
+    const ratio = base.width / base.height;
+    const width = data.width / 2;
+    const height = Math.round(width / ratio);
+    ctx.drawImage(base, (data.width / 2) - (width / 2), data.height - height, width, height);
+    return canvas.toBuffer();
+};
+
+const ToBeContinued = async (image) => {
+    if (!isImageUrl(image)) return 0;
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'to-be-continued.png'));
+    const { body } = await request.get(image);
+    const data = await loadImage(body);
+    const canvas = createCanvas(data.width, data.height);
+    const ctx = canvas.getContext('2d');
+    drawImageWithTint(ctx, data, '#704214', 0, 0, data.width, data.height);
+    const ratio = base.width / base.height;
+    const width = canvas.width / 2;
+    const height = Math.round(width / ratio);
+    ctx.drawImage(base, 0, canvas.height - height, width, height);
+    return canvas.toBuffer();
+}; 
+
+const TuxedoPooh = async (normal, tuxedo) => {
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'tuxedo-pooh.png'));
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.font = '50px Noto Regular';
+    let fontSize = 50;
+    while (ctx.measureText(normal).width > 1320) {
+        fontSize--;
+        ctx.font = `${fontSize}px Noto Regular`;
+    }
+    const normalLines = await wrapText(ctx, normal, 440);
+    const normalTopMost = 145 - (((fontSize * normalLines.length) / 2) + ((10 * (normalLines.length - 1)) / 2));
+    for (let i = 0; i < normalLines.length; i++) {
+        const height = normalTopMost + ((fontSize + 10) * i);
+        ctx.fillText(normalLines[i], 570, height);
+    }
+    ctx.font = '50px Noto Regular';
+    fontSize = 50;
+    while (ctx.measureText(tuxedo).width > 1320) {
+        fontSize--;
+        ctx.font = `${fontSize}px Noto Regular`;
+    }
+    const tuxedoLines = await wrapText(ctx, tuxedo, 440);
+    const tuxedoTopMost = 436 - (((fontSize * tuxedoLines.length) / 2) + ((10 * (tuxedoLines.length - 1)) / 2));
+    for (let i = 0; i < tuxedoLines.length; i++) {
+        const height = tuxedoTopMost + ((fontSize + 10) * i);
+        ctx.fillText(tuxedoLines[i], 570, height);
+    }
+    return canvas.toBuffer();
+};
+
+const TwoButtons = async (first, second) => {
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'two-buttons.png'));
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.textBaseline = 'top';
+    ctx.drawImage(base, 0, 0);
+    ctx.rotate(-12 * (Math.PI / 180));
+    ctx.font = '34px Noto Regular';
+    let fontSize = 34;
+    while (ctx.measureText(first).width > 366) {
+        fontSize--;
+        ctx.font = `${fontSize}px Noto Regular`; 
+    }
+    const firstLines = await wrapText(ctx, first, 183);
+    let lineOffset = 0;
+    for (let i = 0; i < firstLines.length; i++) {
+        ctx.fillText(firstLines[i], 25 + lineOffset, 116 + (fontSize * i) + (10 * i), 183);
+        lineOffset += 5;
+    }
+    ctx.font = '34px Noto Regular';
+    fontSize = 34;
+    while (ctx.measureText(second).width > 244) {
+        fontSize--;
+        ctx.font = `${fontSize}px Noto Regular`;
+    }
+    const secondLines = await wrapText(ctx, second, 118);
+    lineOffset = 0;
+    for (let i = 0; i < secondLines.length; i++) {
+        ctx.fillText(secondLines[i], 254 + lineOffset, 130 + (fontSize * i) + (10 * i), 118);
+        lineOffset += 5;
+    }
+    ctx.rotate(12 * (Math.PI / 180));
+    return canvas.toBuffer();
+};
+
+const UltimateTattoo = async (image) => {
+    if (!isImageUrl(image)) return 0;
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'ultimate-tattoo.png'));
+    const { body } = await request.get(image);
+    const data = await loadImage(body);
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    ctx.rotate(-10 * (Math.PI / 180));
+    const { x, y, width, height } = centerImagePart(data, 300, 300, 84, 690);
+    ctx.drawImage(data, x, y, width, height);
+    ctx.rotate(10 * (Math.PI / 180));
+    return canvas.toBuffer();
+};
+
+const VietnamFlashbacks = async (image) => {
+    if (!isImageUrl(image)) return 0;
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'vietnam-flashbacks.png'));
+    const { body } = await request.get(image);
+    const data = await loadImage(body);
+    const canvas = createCanvas(data.width, data.height);
+    const ctx = canvas.getContext('2d');
+    const ratio = base.width / base.height;
+    const width = Math.round(data.height * ratio);
+    ctx.drawImage(base, (data.width / 2) - (width / 2), 0, width, data.height);
+    ctx.globalAlpha = 0.675;
+    ctx.drawImage(data, 0, 0);
+    return canvas.toBuffer();
+};
+
+const WorseThanHitler = async (image) => {
+    if (!isImageUrl(image)) return 0;
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'worse-than-hitler.png'));
+    const { body } = await request.get(image);
+    const avatar = await loadImage(body);
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    ctx.drawImage(avatar, 47, 42, 140, 140);
+    return canvas.toBuffer();
+};
+
+const worthless = async (image) => {
+    if (!isImageUrl(image)) return 0;
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'worthless.png'));
+    const { body } = await request.get(image);
+    const data = await loadImage(body);
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    ctx.rotate(6 * (Math.PI / 180));
+    const center1 = centerImagePart(data, 400, 400, 496, 183);
+    ctx.drawImage(data, center1.x, center1.y, center1.width, center1.height);
+    ctx.rotate(-6 * (Math.PI / 180));
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.rotate(160 * (Math.PI / 180));
+    ctx.translate(-(canvas.width / 2), -(canvas.height / 2));
+    const center2 = centerImagePart(data, 75, 75, 625, 55);
+    ctx.drawImage(data, center2.x, center2.y, center2.width, center2.height);
+    ctx.rotate(-160 * (Math.PI / 180));
+    return canvas.toBuffer();
+};
+
 function contrast(ctx, x, y, width, height) {
     const data = ctx.getImageData(x, y, width, height);
     const factor = (259 / 100) + 1;
@@ -856,7 +1267,6 @@ function contrast(ctx, x, y, width, height) {
     ctx.putImageData(data, x, y);
     return ctx;
 }
-
 
 function desaturate(ctx, level, x, y, width, height) {
     const data = ctx.getImageData(x, y, width, height);
@@ -1031,5 +1441,24 @@ module.exports = {
     nikeAd,
     PanikKalmPanik,
     PhoebeTeachingJoey,
-    pills
+    pills,
+    PlanktonPlan,
+    pogchamp,
+    ScrollOfTruth,
+    SkyrimSkill,
+    SonicSays,
+    soraSelfie,
+    sos,
+    SpidermanPointing,
+    SpongebobBurn,
+    ThatSignWontStopMe,
+    ThisGuy,
+    ThugLife,
+    ToBeContinued,
+    TuxedoPooh,
+    TwoButtons,
+    UltimateTattoo,
+    VietnamFlashbacks,
+    WorseThanHitler,
+    worthless
 };
