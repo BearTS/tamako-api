@@ -5,6 +5,7 @@ require('dotenv').config();
 require('./fonts');
 const apiRouter = require('./routes/api');
 const editimageRouter = require('./routes/edit-image');
+const editTextRouter = require('./routes/edit-text');
 const editavatarRouter = require('./routes/edit-avatar');
 
 const allowlist = ['::1'];
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, '../public/')));
 app.use('/api', apiRouter);
 app.use('/canvas/edit-image', editimageRouter);
 app.use('/canvas/edit-avatar', editavatarRouter);
+app.use('/edit-text', editTextRouter);
 app.get('*', (req, res) => {
     res.status(404).sendFile(path.join(__dirname, '../public/404.html'));
 });

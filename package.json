@@ -24,6 +24,7 @@
   "dependencies": {
     "canvas": "^2.9.0",
     "common-tags": "^1.8.2",
+    "custom-translate": "^2.2.8",
     "dotenv": "^16.0.0",
     "eslint": "^8.8.0",
     "express": "^4.17.1",
@@ -33,6 +34,7 @@
     "moment": "^2.29.1",
     "mongoose": "^6.2.0",
     "node-superfetch": "^0.2.3",
+    "nodemon": "^2.0.15",
     "path": "^0.12.7",
     "random-js": "^2.1.0",
     "stackblur-canvas": "^2.5.0"
