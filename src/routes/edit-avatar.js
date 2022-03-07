@@ -47,7 +47,7 @@ router.get('/eject', async (req, res) => {
     const imposter = req.query.imposter || '';
     const username = req.query.username;
     const userID = req.query.userID;
-    if (!username || !isNaN(userID)) return res.status(406).send(JSON.stringify({ error: 'Username not provided or userID' }));
+    if (!username || isNaN(userID)) return res.status(406).send(JSON.stringify({ error: 'Username not provided or userID' }));
     try {
         const image = await eject(avatarURL, imposter, username, userID);
         if (image === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
