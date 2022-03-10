@@ -7,6 +7,7 @@ const apiRouter = require('./routes/api');
 const editimageRouter = require('./routes/edit-image');
 const editTextRouter = require('./routes/edit-text');
 const editavatarRouter = require('./routes/edit-avatar');
+const eventsRouter = require('./routes/events');
 
 // const allowlist = ['::1'];
 
@@ -25,6 +26,7 @@ app.use('/api', apiRouter);
 app.use('/canvas/edit-image', editimageRouter);
 app.use('/canvas/edit-avatar', editavatarRouter);
 app.use('/edit-text', editTextRouter);
+app.use('/events', eventsRouter);
 app.get('*', (req, res) => {
     res.status(404).sendFile(path.join(__dirname, '../public/404.html'));
 });
