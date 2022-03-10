@@ -1,6 +1,6 @@
 {
   "name": "tamako-microservices",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Services For Tamako",
   "main": "src/index.js",
   "scripts": {
@@ -23,6 +23,7 @@
   "homepage": "https://github.com/bearts/tamako-microservices#readme",
   "dependencies": {
     "canvas": "^2.9.0",
+    "cheerio": "^1.0.0-rc.10",
     "common-tags": "^1.8.2",
     "custom-translate": "^2.2.8",
     "dotenv": "^16.0.0",
@@ -31,6 +32,7 @@
     "express-rate-limit": "^6.2.0",
     "gifencoder": "^2.0.1",
     "gm": "^1.23.1",
+    "html-entities": "^2.3.2",
     "is-image-url": "^1.1.8",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.34",
