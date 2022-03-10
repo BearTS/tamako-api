@@ -30,6 +30,7 @@
     "express": "^4.17.1",
     "express-rate-limit": "^6.2.0",
     "gifencoder": "^2.0.1",
+    "gm": "^1.23.1",
     "is-image-url": "^1.1.8",
     "moment": "^2.29.1",
     "mongoose": "^6.2.0",

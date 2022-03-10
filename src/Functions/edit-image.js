@@ -1,11 +1,13 @@
 require('dotenv').config();
 const { join } = require('path');
+const { wordTrans } = require('custom-translate');
 const { createCanvas, loadImage } = require('canvas');
 const GIFEncoder = require('gifencoder');
 const request = require('node-superfetch');
 const isImageUrl = require('is-image-url');
 const stackBlur = require('stackblur-canvas');
 const moment = require('moment');
+const gm = require('gm').subClass({ imageMagick: true });
 
 const minecraftachivement = async (text) => {
     const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'achievement.png'));
@@ -124,6 +126,16 @@ const certificate = async (reason, name) => {
     ctx.fillText(name, 518, 419);
     ctx.fillText(moment().format('MM/DD/YYYY'), 309, 503);
     return canvas.toBuffer();
+};
+
+const charcoal = async (image) => {
+    if (!isImageUrl(image)) return 0;
+    const { body } = await request.get(image);
+    const magik = gm(body);
+    magik.charcoal(1);
+    magik.setFormat('png');
+    const attachment = await magikToBuffer(magik);
+    return attachment;
 };
 
 const chineserestaurant = async (text) => {
@@ -273,7 +285,6 @@ const dannydevito = async (image) => {
 
 };
 
-
 const desaturate = async (level, image) => {
     if (!isImageUrl(image)) return 0;
     const { body } = await request.get(image);
@@ -310,6 +321,16 @@ const distort = async (level, image) => {
     fdistort(ctx, level, 0, 0, data.width, data.height);
     return canvas.toBuffer();
 
+};
+
+const emboss = async (image) => {
+    if (!isImageUrl(image)) return 0;
+    const { body } = await request.get(image);
+    const magik = gm(body);
+    magik.emboss();
+    magik.setFormat('png');
+    const attachment = await magikToBuffer(magik);
+    return attachment;
 };
 
 const eyes = async (image) => {
@@ -364,6 +385,17 @@ const fireframe = async (image) => {
     const ctx = canvas.getContext('2d');
     drawImageWithTint(ctx, data, '#fc671e', 0, 0, data.width, data.height);
     ctx.drawImage(base, 0, 0, data.width, data.height);
+    return canvas.toBuffer();
+};
+
+const fishEye = async (level, image) => {
+    if (!isImageUrl(image)) return 0;
+    const { body } = await request.get(image);
+    const data = await loadImage(body);
+    const canvas = createCanvas(data.width, data.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(data, 0, 0);
+    ffishEye(ctx, level, 0, 0, data.width, data.height);
     return canvas.toBuffer();
 };
 
@@ -581,6 +613,38 @@ const licensePlate = async (text) => {
     return canvas.toBuffer();
 };
 
+const liquidRescale = async (image) => {
+    if (!isImageUrl(image)) return 0;
+    const { body } = await request.get(image);
+    const magik = gm(body);
+    magik.out('-liquid-rescale');
+    magik.out('50%');
+    magik.implode(0.25);
+    magik.setFormat('png');
+    const attachment = await magikToBuffer(magik);
+    return attachment;
+};
+
+const noise = async (type, image) => {
+    if (!isImageUrl(image)) return 0;
+    const { body } = await request.get(image);
+    const magik = gm(body);
+    magik.noise(type);
+    magik.setFormat('png');
+    const attachment = await magikToBuffer(magik);
+    return attachment;
+};
+
+const oilPainting = async (image) => {
+    if (!isImageUrl(image)) return 0;
+    const { body } = await request.get(image);
+    const magik = gm(body);
+    magik.paint(5);
+    magik.setFormat('png');
+    const attachment = await magikToBuffer(magik);
+    return attachment;
+};
+
 const mirror = async (type, image) => {
     if (!isImageUrl(image)) return 0;
     const { body } = await request.get(image);
@@ -721,7 +785,6 @@ const rotate = async (degrees, image) => {
     return canvas.toBuffer();
 };
 
-
 const silouette = async (image) => {
     if (!isImageUrl(image)) return 0;
     const { body } = await request.get(image);
@@ -804,6 +867,31 @@ const spotifyNowPlaying = async (name, artist, image) => {
     return canvas.toBuffer();
 };
 
+const squish = async (axis, image) => {
+    if (!isImageUrl(image)) return 0;
+    axis = axis.toLowerCase();
+    let command;
+    if (axis === 'x') command = '15%x100%';
+    if (axis === 'y') command = '100%x15%';
+    const { body } = await request.get(image);
+    const magik = gm(body);
+    magik.out('-liquid-rescale');
+    magik.out(command);
+    magik.setFormat('png');
+    const attachment = await magikToBuffer(magik);
+    return attachment;
+};
+
+const swirl = async (degrees, image) => {
+    if (!isImageUrl(image)) return 0;
+    const { body } = await request.get(image);
+    const magik = gm(body);
+    magik.swirl(degrees);
+    magik.setFormat('png');
+    const attachment = await magikToBuffer(magik);
+    return attachment;
+};
+
 const tint = async (color, image) => {
     if (!isImageUrl(image)) return 0;
     const { body } = await request.get(image);
@@ -812,6 +900,54 @@ const tint = async (color, image) => {
     const ctx = canvas.getContext('2d');
     drawImageWithTint(ctx, data, color, 0, 0, data.width, data.height);
     return canvas.toBuffer();
+};
+
+const undertale = async(character, quote) => {
+    character = character.toLowerCase();
+    const base = await loadImage(
+        join(__dirname, '..', 'assets', 'images', 'undertale', `${character}.png`)
+    );
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    let font = 'DeterminationMono';
+    let space = -3;
+    switch (character) {
+    case 'sans':
+        font = 'UndertaleSans';
+        quote = quote.toLowerCase();
+        space = -4;
+        break;
+    case 'papyrus':
+        font = 'UndertalePapyrus';
+        quote = quote.toUpperCase();
+        space = -5;
+        break;
+    case 'napstablook':
+        quote = quote.toLowerCase();
+        break;
+    case 'gaster':
+        font = 'pixelated-wingdings';
+        space = -4;
+        break;
+    case 'ness':
+        font = 'apple_kid';
+        space = -2;
+        break;
+    case 'temmie':
+        quote = temmize(quote);
+        break;
+    }
+    ctx.font = `32px ${font}`;
+    ctx.fillStyle = 'white';
+    ctx.textBaseline = 'top';
+    const text = await wrapText(ctx, quote, 385);
+    const lines = text.length > 3 ? 3 : text.length;
+    for (let i = 0; i < lines; i++) {
+        ctx.fillText(text[i], 174, 22 + (22 * i) + (22 * i) + (space * i));
+    }
+    return canvas.toBuffer();
+
 };
 
 const wanted = async (image) => {
@@ -825,6 +961,23 @@ const wanted = async (image) => {
     const { x, y, width, height } = centerImagePart(data, 430, 430, 150, 360);
     ctx.drawImage(data, x, y, width, height);
     sepia(ctx, x, y, width, height);
+    return canvas.toBuffer();
+};
+
+const wildPokemon = async (name, image) => {
+    if (!isImageUrl(image)) return 0;
+    const base = await loadImage(join(__dirname, '..', 'assets', 'images', 'wild-pokemon.png'));
+    const { body } = await request.get(image);
+    const data = await loadImage(body);
+    const canvas = createCanvas(base.width, base.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(base, 0, 0);
+    const { x, y, width, height } = centerImagePart(data, 100, 100, 227, 11);
+    fpixelize(ctx, canvas, data, 0.30, x, y, width, height);
+    fgreyscale(ctx, x, y, width, height);
+    ctx.textBaseline = 'top';
+    ctx.font = '16px PokemonGb';
+    ctx.fillText(name.toUpperCase(), 110, 203, 215);  
     return canvas.toBuffer();
 };
 
@@ -849,6 +1002,15 @@ function shortenText(ctx, text, maxWidth) {
         text = text.substr(0, text.length - 1);
     }
     return shorten ? `${text}...` : text;
+}
+
+function magikToBuffer(magik) {
+    return new Promise((res, rej) => {
+        magik.toBuffer((err, buffer) => {
+            if (err) return rej(err);
+            return res(buffer);
+        });
+    });
 }
 
 function centerImage(base, data) {
@@ -1018,6 +1180,27 @@ function finvert(ctx, x, y, width, height) {
     return ctx;
 }
 
+function  ffishEye(ctx, level, x, y, width, height) {
+    const frame = ctx.getImageData(x, y, width, height);
+    const source = new Uint8Array(frame.data);
+    for (let i = 0; i < frame.data.length; i += 4) {
+        const sx = (i / 4) % frame.width;
+        const sy = Math.floor(i / 4 / frame.width);
+        const dx = Math.floor(frame.width / 2) - sx;
+        const dy = Math.floor(frame.height / 2) - sy;
+        const dist = Math.sqrt((dx * dx) + (dy * dy));
+        const x2 = Math.round((frame.width / 2) - (dx * Math.sin(dist / (level * Math.PI) / 2)));
+        const y2 = Math.round((frame.height / 2) - (dy * Math.sin(dist / (level * Math.PI) / 2)));
+        const i2 = ((y2 * frame.width) + x2) * 4;
+        frame.data[i] = source[i2];
+        frame.data[i + 1] = source[i2 + 1];
+        frame.data[i + 2] = source[i2 + 2];
+        frame.data[i + 3] = source[i2 + 3];
+    }
+    ctx.putImageData(frame, x, y);
+    return ctx;
+}
+
 function fmotionBlur(ctx, image, x, y, width, height) {
     ctx.drawImage(image, x, y, width, height);
     ctx.globalAlpha = 0.2;
@@ -1054,6 +1237,15 @@ function  base64(text, mode = 'encode') {
     if (mode === 'encode') return Buffer.from(text).toString('base64');
     if (mode === 'decode') return Buffer.from(text, 'base64').toString('utf8') || null;
     throw new TypeError(`${mode} is not a supported base64 mode.`);
+}
+
+function temmize(text) {
+    const dictionary = require(join(__dirname, '..', 'assets', 'json', 'temmie.json'));
+    return wordTrans(text, dictionary)
+        .replaceAll('ing', 'in')
+        .replaceAll('ING', 'IN')
+        .replaceAll('!', '!!!!111!1!')
+        .replaceAll('\'', '');
 }
 
 function streamToArray(stream) {
@@ -1109,6 +1301,7 @@ module.exports = {
     brazzers,
     caution,
     certificate,
+    charcoal,
     chineserestaurant,
     circle,
     color,
@@ -1120,8 +1313,10 @@ module.exports = {
     desaturate,
     dexter,
     distort,
+    emboss,
     eyes,
     fireframe,
+    fishEye,
     gandhiquote,
     ghost,
     glassshatter,
@@ -1136,9 +1331,12 @@ module.exports = {
     jeopardyQuestion,
     legoIcon,
     licensePlate,
+    liquidRescale,
     mirror,
     motionBlur,
     newspaper,
+    noise,
+    oilPainting,
     pet,
     pixelize,
     policeTape,
@@ -1150,7 +1348,11 @@ module.exports = {
     speedLimit,
     SpongebobTimeCard,
     spotifyNowPlaying,
+    squish,
+    swirl,
     tint,
+    undertale,
     wanted,
+    wildPokemon,
     youDied
 };

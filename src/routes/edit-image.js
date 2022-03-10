@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { join } = require('path');
 const { 
     minecraftachivement,
     approve,
@@ -51,7 +52,17 @@ const {
     spotifyNowPlaying,
     tint,
     wanted,
-    youDied
+    youDied,
+    charcoal,
+    emboss,
+    fishEye,
+    liquidRescale,
+    noise,
+    oilPainting,
+    squish,
+    swirl,
+    undertale,
+    wildPokemon
 } = require('../Functions/edit-image');
 
 router.get('/achievement/:text', async (req, res) => {
@@ -138,6 +149,18 @@ router.get('/brazzers', async (req, res) => {
     }
 });
 
+router.get('/charcoal', async (req, res) => {
+    const image = req.query.image; 
+    if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
+    try {
+        const buffer = await charcoal(image);
+        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
 
 router.get('/caution', async (req, res) => {
     const text = req.query.text; 
@@ -178,7 +201,6 @@ router.get('/chineserestaurant', async (req, res) => {
     }
 });
 
-
 router.get('/circle', async (req, res) => {
     const image = req.query.image;
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
@@ -203,7 +225,6 @@ router.get('/color', async (req, res) => {
         res.status(500).send(JSON.stringify({ error: err }));
     }
 });
-
 
 router.get('/communist', async (req, res) => {
     const image = req.query.image;
@@ -317,6 +338,19 @@ router.get('/distort', async (req, res) => {
     }
 });
 
+router.get('/emboss', async (req, res) => {
+    const image = req.query.image; 
+    if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
+    try {
+        const buffer = await emboss(image);
+        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
 router.get('/eyes', async (req, res) => {
     const image = req.query.image;
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
@@ -334,12 +368,27 @@ router.get('/eyes', async (req, res) => {
     }
 });
 
-
 router.get('/fireframe', async (req, res) => {
     const image = req.query.image;
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await fireframe(image);
+        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+router.get('/fisheye', async (req, res) => {
+    const image = req.query.image;
+    const level = req.query.level;
+    if (!level) return res.status(406).send(JSON.stringify({ error: 'No level provided'}));
+    if (level > 100 || level <= 0) return res.status(406).send(JSON.stringify({ error: 'Invalid level, should be a number between 1 and 100'}));  
+    if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
+    try {
+        const buffer = await fishEye(level, image);
         if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
@@ -517,6 +566,19 @@ router.get('/legoIcon', async (req, res) => {
     }
 });
 
+router.get('/liquidRescale', async (req, res) => {
+    const image = req.query.image; 
+    if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
+    try {
+        const buffer = await liquidRescale(image);
+        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
 router.get('/licensePlate', async (req, res) => {
     const text = req.query.text;
     if (!text) return res.status(406).send(JSON.stringify({ error: 'No text provided'}));
@@ -552,6 +614,23 @@ router.get('/motionBlur', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await motionBlur(image);
+        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+router.get('/noise', async (req, res) => {
+    const image = req.query.image; 
+    const type = req.query.type;
+    if (!type) return res.status(406).send(JSON.stringify({ error: 'No type provided'}));
+    const types = ['uniform', 'gaussian', 'multiplicative', 'impulse', 'laplacian', 'poisson'];
+    if (!types.includes(type)) return res.status(406).send(JSON.stringify({ error: 'Invalid type', available: types}));
+    if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
+    try {
+        const buffer = await noise(type, image);
         if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
@@ -708,7 +787,6 @@ router.get('/spongebobTimeCard', async (req, res) => {
     }
 });
 
-
 router.get('/spotifyNowPlaying', async (req, res) => {
     const name = req.query.name;
     const artist = req.query.artist;
@@ -720,6 +798,19 @@ router.get('/spotifyNowPlaying', async (req, res) => {
     try {
         const buffer = await spotifyNowPlaying(name, artist, image);
         if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' })); 
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+router.get('/oilPainting', async (req, res) => {
+    const image = req.query.image; 
+    if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
+    try {
+        const buffer = await oilPainting(image);
+        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
@@ -743,11 +834,77 @@ router.get('/tint', async (req, res) => {
     }
 });
 
+router.get('/squish', async (req, res) => {
+    const image = req.query.image; 
+    let axis = req.query.axis;
+    if (!axis) return res.status(406).send(JSON.stringify({ error: 'No axis provided', axis: 'x or y'}));
+    axis = axis.toLowerCase();
+    if (!(axis === 'x' || axis === 'y')) return res.status(406).send(JSON.stringify({ error: 'Invalid axis'}));
+    if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
+    try {
+        const buffer = await squish(axis, image);
+        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+router.get('/swirl', async (req, res) => {
+    const image = req.query.image; 
+    const degrees = req.query.degrees;
+    if (degrees > 360) return res.status(406).send(JSON.stringify({ error: 'Degrees should be less than 360'}));
+    if (degrees < -360) return res.status(406).send(JSON.stringify({ error: 'Degrees should be greater than -360'}));
+    if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
+    try {
+        const buffer = await swirl(degrees, image);
+        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+router.get('/undertale', async (req, res) => {
+    const characters = require(join(__dirname, '..', 'assets', 'json', 'undertale.json'));
+    let character = req.query.character;
+    const quote = req.query.quote;
+    if (!quote) return res.status(406).send(JSON.stringify({ error: 'No quote provided'}));
+    if (quote.length > 250) return res.status(406).send(JSON.stringify({ error: 'String should be less than 250 characters'}));
+    // check if character is one of characters
+    if (!characters.includes(character)) return res.status(406).send(JSON.stringify({ error: 'Invalid character', available: characters }));
+    try {
+        const buffer = await undertale(character, quote);
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
 router.get('/wanted', async (req, res) => {
     const image = req.query.image;
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await wanted(image);
+        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' })); 
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+router.get('/wildPokemon', async (req, res) => {
+    const name = req.query.name;
+    const image = req.query.image;
+    if (!name) return res.status(406).send(JSON.stringify({ error: 'No name provided'}));
+    if (name.length > 13) return res.status(406).send(JSON.stringify({ error: 'Name should be less than 13 characters'}));
+    if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
+    try {
+        const buffer = await wildPokemon(name, image);
         if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' })); 
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
