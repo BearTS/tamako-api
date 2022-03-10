@@ -92,6 +92,10 @@ const reverse = async (text) => {
     return text.split('').reverse().join('');
 };
 
+const shipName = async (start, end) => {
+    return `${start.slice(0, Math.floor(start.length / 2))}${end.slice(Math.floor(end.length / 2))}`;
+};
+
 const shortenURl = async (url) =>{
     const { body } = await request
         .post('https://api-ssl.bitly.com/v4/shorten')
@@ -135,5 +139,6 @@ module.exports = {
     shortenURl,
     superscript,
     yodaSpeak,
-    upsideDown
+    upsideDown,
+    shipName
 };

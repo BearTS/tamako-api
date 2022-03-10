@@ -17,7 +17,8 @@ const {
     shortenURl,
     superscript,
     yodaSpeak,
-    upsideDown
+    upsideDown,
+    shipName
 } = require('../Functions/edit-text');
 
 router.get('/base64', async (req, res) => {
@@ -194,6 +195,22 @@ router.get('/shortenURL', async (req, res) => {
     if (encodeURI(url).length > 2083) return  res.status(400).send(JSON.stringify({ err: 'URL is too long' }));
     try {
         const result = await shortenURl(url);
+        res.status(200).send(JSON.stringify({ response: result }));
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+router.get('/ship', async (req, res) => {
+    let first = req.query.first;
+    let last = req.query.last;
+    if (!first || !last) return res.status(400).send(JSON.stringify({ err: 'Missing Parameters!' }));
+    first = first.toLowerCase();
+    last = last.toLowerCase();
+    if (first.length > 500 || last.length > 500) return res.status(400).send(JSON.stringify({ err: 'Too long!' }));
+
+    try {
+        const result = await shipName(first, last);
         res.status(200).send(JSON.stringify({ response: result }));
     } catch (err) {
         res.status(500).send(JSON.stringify({ error: err }));
