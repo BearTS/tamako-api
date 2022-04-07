@@ -2,37 +2,37 @@ const express = require('express');
 const path = require('path');
 // const rateLimit = require('express-rate-limit');
 require('dotenv').config();
-require('./fonts');
-const apiRouter = require('./routes/api');
-const editimageRouter = require('./routes/edit-image');
-const editTextRouter = require('./routes/edit-text');
-const editavatarRouter = require('./routes/edit-avatar');
-const eventsRouter = require('./routes/events');
-const searchRouter = require('./routes/search');
-// const allowlist = ['::1'];
+require('./resources/fonts');
 
-// const limiter = rateLimit({
-//     windowMs: 60 * 60 * 1000, // 60 min
-//     max: process.env.rateLimit, // Limit each IP to rateLimit requests per windowMs
-//     standardHeaders: true, 
-//     legacyHeaders: false,
-//     skip: (request) => allowlist.includes(request.ip),
-// });
+// eslint-disable-next-line no-unused-vars
+const { handleNotFound, handleInternalError } = require('./middleware/errorHandler');
 
+// Main App
 const app = express();
-// app.use(limiter);
+
+// Middlewares
+app.set('trust proxy', 1);
+app.set('json spaces', 2);
+
+// Express App Configuration 
+
+app.use(express.json()); // for parsing application/json
+app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(express.static(path.join(__dirname, '../public/')));
-app.use('/api', apiRouter);
-app.use('/canvas/edit-image', editimageRouter);
-app.use('/canvas/edit-avatar', editavatarRouter);
-app.use('/edit-text', editTextRouter);
-app.use('/events', eventsRouter);
-app.use('/search', searchRouter);
-app.get('*', (req, res) => {
-    res.status(404).sendFile(path.join(__dirname, '../public/404.html'));
-});
+app.set('views', path.join(__dirname, '../public/views'));
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
 
+// Main route
+app.use('/', require('./routes/index'));
 
+// Back Middlewares
+// App configurations
+app.use(handleNotFound);
+// app.use(authorize);
+app.use(handleInternalError);
+
+// App Listener Event
 app.listen(process.env.PORT || 3000, () => {
     console.log(`Listening on Port ${process.env.PORT || 3000}`);
 });
