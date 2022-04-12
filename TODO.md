@@ -14,3 +14,4 @@
 - [ ] Add a request logger using discord webhook integration (Optional)
 - [ ] Use/Add cors, helmet, and favicon
 - [ ] Limit json response to 1 - 3 MB for faster response using body-parser library
+- [ ] Test all endpoints if its all working with auth
