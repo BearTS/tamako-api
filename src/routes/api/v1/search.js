@@ -2,8 +2,9 @@ const router = require('express').Router();
 const {
     anime, book, company, country, define, github, npm, steam, knowYourMeme
 } = require('../../../controllers/search');
+const { authorizeUser } = require('../../../middleware/authorize');
 
-router.get('/anime', async(req, res) => {
+router.get('/anime', authorizeUser, async (req, res) => {
     const { query } = req.query;
     if (!query) return res.status(400).json({ error: 'Please provide a query!' });
     try {
@@ -16,7 +17,7 @@ router.get('/anime', async(req, res) => {
     }
 });
 
-router.get('/book', async(req, res) => {
+router.get('/book', authorizeUser, async (req, res) => {
     const { query } = req.query;
     if (!query) return res.status(400).json({ error: 'Please provide a query!' });
     try {
@@ -29,7 +30,7 @@ router.get('/book', async(req, res) => {
     }
 });
 
-router.get('/company', async(req, res) => {
+router.get('/company', authorizeUser, async (req, res) => {
     const { query } = req.query;
     if (!query) return res.status(400).json({ error: 'Please provide a query!' });
     try {
@@ -42,7 +43,7 @@ router.get('/company', async(req, res) => {
     }
 });
 
-router.get('/country', async(req, res) => {
+router.get('/country', authorizeUser, async (req, res) => {
     const { query } = req.query;
     if (!query) return res.status(400).json({ error: 'Please provide a query!' });
     try {
@@ -55,7 +56,7 @@ router.get('/country', async(req, res) => {
     }
 });
 
-router.get('/define', async(req, res) => {
+router.get('/define', authorizeUser, async (req, res) => {
     const { query } = req.query;
     if (!query) return res.status(400).json({ error: 'Please provide a query!' });
     try {
@@ -68,7 +69,7 @@ router.get('/define', async(req, res) => {
     }
 });
 
-router.get('/github', async(req, res) => {
+router.get('/github', authorizeUser, async (req, res) => {
     const { author, repository } = req.query;
     if (!author || !repository) return res.status(400).json({ error: 'Please provide an author and a repository!' });
     try {
@@ -81,7 +82,7 @@ router.get('/github', async(req, res) => {
     }
 });
 
-router.get('/npm', async(req, res) => {
+router.get('/npm', authorizeUser, async (req, res) => {
     const { query } = req.query;
     if (!query) return res.status(400).json({ error: 'Please provide a query!' });
     try {
@@ -94,7 +95,7 @@ router.get('/npm', async(req, res) => {
     }
 });
 
-router.get('/steam', async(req, res) => {
+router.get('/steam', authorizeUser, async (req, res) => {
     const { query } = req.query;
     if (!query) return res.status(400).json({ error: 'Please provide a query!' });
     try {
@@ -107,7 +108,7 @@ router.get('/steam', async(req, res) => {
     }
 });
 
-router.get('/knowYourMeme', async(req, res) => {
+router.get('/knowYourMeme', authorizeUser, async (req, res) => {
     const { query } = req.query;
     if (!query) return res.status(400).json({ error: 'Please provide a query!' });
     try {

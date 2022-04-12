@@ -20,8 +20,9 @@ const {
     upsideDown,
     shipName
 } = require('../../../controllers/edit-text');
+const { authorizeUser } = require('../../../middleware/authorize');
 
-router.get('/base64', async (req, res) => {
+router.get('/base64', authorizeUser, async (req, res) => {
     let { mode, text } = req.query;
     if (!mode) mode = 'encode';
     mode = mode.toLowerCase();
@@ -35,7 +36,7 @@ router.get('/base64', async (req, res) => {
     }
 });
 
-router.get('/binary', async (req, res) => {
+router.get('/binary', authorizeUser, async (req, res) => {
     const { text } = req.query;
     if (!text) return res.status(400).send(JSON.stringify({ err: 'No text provided' }));
     try {
@@ -46,7 +47,7 @@ router.get('/binary', async (req, res) => {
     }
 });
 
-router.get('/braille', async (req, res) => {
+router.get('/braille', authorizeUser, async (req, res) => {
     const { text } = req.query;
     if (!text) return res.status(400).send(JSON.stringify({ err: 'No text provided' }));
     try {
@@ -57,7 +58,7 @@ router.get('/braille', async (req, res) => {
     }
 });
 
-router.get('/brony-speak', async (req, res) => {
+router.get('/brony-speak', authorizeUser, async (req, res) => {
     const { text } = req.query;
     if (!text) return res.status(400).send(JSON.stringify({ err: 'No text provided' }));
     try {
@@ -68,7 +69,7 @@ router.get('/brony-speak', async (req, res) => {
     }
 });
 
-router.get('/clap', async (req, res) => {
+router.get('/clap', authorizeUser, async (req, res) => {
     const { text } = req.query;
     if (!text) return res.status(400).send(JSON.stringify({ err: 'No text provided' }));
     try {
@@ -79,7 +80,7 @@ router.get('/clap', async (req, res) => {
     }
 });
 
-router.get('/cow-say', async (req, res) => {
+router.get('/cow-say', authorizeUser, async (req, res) => {
     const { text } = req.query;
     if (!text) return res.status(400).send(JSON.stringify({ err: 'No text provided' }));
     try {
@@ -90,7 +91,7 @@ router.get('/cow-say', async (req, res) => {
     }
 });
 
-router.get('/cursive', async (req, res) => {
+router.get('/cursive', authorizeUser, async (req, res) => {
     const { text } = req.query;
     if (!text) return res.status(400).send(JSON.stringify({ err: 'No text provided' }));
     try {
@@ -101,7 +102,7 @@ router.get('/cursive', async (req, res) => {
     }
 });
 
-router.get('/dvorak', async (req, res) => {
+router.get('/dvorak', authorizeUser, async (req, res) => {
     const { text } = req.query;
     if (!text) return res.status(400).send(JSON.stringify({ err: 'No text provided' }));
     try {
@@ -112,7 +113,7 @@ router.get('/dvorak', async (req, res) => {
     }
 });
 
-router.get('/emojify', async (req, res) => {
+router.get('/emojify', authorizeUser, async (req, res) => {
     const { text } = req.query;
     if (!text) return res.status(400).send(JSON.stringify({ err: 'No text provided' }));
     try {
@@ -123,7 +124,7 @@ router.get('/emojify', async (req, res) => {
     }
 });
 
-router.get('/fancy', async (req, res) => {
+router.get('/fancy', authorizeUser, async (req, res) => {
     const { text } = req.query;
     if (!text) return res.status(400).send(JSON.stringify({ err: 'No text provided' }));
     try {
@@ -134,7 +135,7 @@ router.get('/fancy', async (req, res) => {
     }
 });
 
-router.get('/hex', async (req, res) => {
+router.get('/hex', authorizeUser, async (req, res) => {
     const { text } = req.query;
     if (!text) return res.status(400).send(JSON.stringify({ err: 'No text provided' }));
     try {
@@ -145,7 +146,7 @@ router.get('/hex', async (req, res) => {
     }
 });
 
-router.get('/mocking', async (req, res) => {
+router.get('/mocking', authorizeUser, async (req, res) => {
     const { text } = req.query;
     if (!text) return res.status(400).send(JSON.stringify({ err: 'No text provided' }));
     try {
@@ -156,7 +157,7 @@ router.get('/mocking', async (req, res) => {
     }
 });
 
-router.get('/morse', async (req, res) => {
+router.get('/morse', authorizeUser, async (req, res) => {
     const { text } = req.query;
     if (!text) return res.status(400).send(JSON.stringify({ err: 'No text provided' }));
     try {
@@ -167,7 +168,7 @@ router.get('/morse', async (req, res) => {
     }
 });
 
-router.get('/owo', async (req, res) => {
+router.get('/owo', authorizeUser, async (req, res) => {
     const { text } = req.query;
     if (!text) return res.status(400).send(JSON.stringify({ err: 'No text provided' }));
     try {
@@ -178,7 +179,7 @@ router.get('/owo', async (req, res) => {
     }
 });
 
-router.get('/reverse', async (req, res) => {
+router.get('/reverse', authorizeUser, async (req, res) => {
     const { text } = req.query;
     if (!text) return res.status(400).send(JSON.stringify({ err: 'No text provided' }));
     try {
@@ -189,7 +190,7 @@ router.get('/reverse', async (req, res) => {
     }
 });
 
-router.get('/shortenURL', async (req, res) => {
+router.get('/shortenURL', authorizeUser, async (req, res) => {
     const { url } = req.query;
     if (!url) return res.status(400).send(JSON.stringify({ err: 'No url provided' }));
     if (encodeURI(url).length > 2083) return  res.status(400).send(JSON.stringify({ err: 'URL is too long' }));
@@ -201,7 +202,7 @@ router.get('/shortenURL', async (req, res) => {
     }
 });
 
-router.get('/ship', async (req, res) => {
+router.get('/ship', authorizeUser, async (req, res) => {
     let first = req.query.first;
     let last = req.query.last;
     if (!first || !last) return res.status(400).send(JSON.stringify({ err: 'Missing Parameters!' }));
@@ -217,7 +218,7 @@ router.get('/ship', async (req, res) => {
     }
 });
 
-router.get('/superscript', async (req, res) => {
+router.get('/superscript', authorizeUser, async (req, res) => {
     const { text } = req.query;
     if (!text) return res.status(400).send(JSON.stringify({ err: 'No text provided' }));
     try {
@@ -228,7 +229,7 @@ router.get('/superscript', async (req, res) => {
     }
 });
 
-router.get('/yodaSpeak', async (req, res) => {
+router.get('/yodaSpeak', authorizeUser, async (req, res) => {
     const { text } = req.query;
     if (!text) return res.status(400).send(JSON.stringify({ err: 'No text provided' }));
     try {
@@ -239,7 +240,7 @@ router.get('/yodaSpeak', async (req, res) => {
     }
 });
 
-router.get('/upsideDown', async (req, res) => {
+router.get('/upsideDown', authorizeUser, async (req, res) => {
     const { text } = req.query;
     if (!text) return res.status(400).send(JSON.stringify({ err: 'No text provided' }));
     try {
