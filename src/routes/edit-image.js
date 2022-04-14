@@ -15,6 +15,7 @@ const {
     communist,
     contrast,
     createQr,
+    customtext,
     danger,
     dannydevito,
     desaturate,
@@ -260,6 +261,19 @@ router.get('/createqr', async (req, res) => {
         if (buffer === 0) return res.status(500).send(JSON.stringify({ error: 'some error occured' }));
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
+    } catch (err) {
+        res.status(500).send(JSON.stringify({ error: err }));
+    }
+});
+
+router.get('/customtext', async (req, res) => {
+    const url = req.query.image;
+    const text = req.query.text;
+    try {
+        const image = await customtext(url, text);
+        if (image === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        res.writeHead(200,{ 'Content-Type': 'image/jpg' });
+        res.end(image);
     } catch (err) {
         res.status(500).send(JSON.stringify({ error: err }));
     }
