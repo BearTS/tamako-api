@@ -8,10 +8,9 @@
 - [ ] Change externalKey
 
 
-- [ ] Add a ratelimiter using https://github.com/animir/node-rate-limiter-flexible
+- [x] Add a ratelimiter using https://github.com/animir/node-rate-limiter-flexible
 - [ ] Disable x-powered-by header
-- [ ] Use xss portection
+- [x] Use xss portection
 - [ ] Add a request logger using discord webhook integration (Optional)
-- [ ] Use/Add cors, helmet, and favicon
-- [ ] Limit json response to 1 - 3 MB for faster response using body-parser library
+- [x] Use/Add cors, ~~helmet~~, and favicon
 - [ ] Test all endpoints if its all working with auth
