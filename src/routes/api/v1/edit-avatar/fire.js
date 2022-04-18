@@ -32,12 +32,28 @@ router.get('/:uuid', async (req, res) => {
 
     try {
         const image = await fire(data[0].avatarURL);
-        if (image === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (image === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(image);
     } catch (err) {
         // console.log(err.stack);
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+        details: {
+            'path': req.baseUrl + req.path,
+            'content-type': req.headers['content-type'], 
+            'user-agent': req.headers['user-agent']
+        },
+        error: true,
+        message: err.message
+    });
     }
 });
 

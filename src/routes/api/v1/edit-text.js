@@ -32,7 +32,15 @@ router.get('/base64', authorizeUser, async (req, res) => {
         const result = await base64(mode, text);
         res.status(200).send(JSON.stringify({ response: result }));
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -43,7 +51,15 @@ router.get('/binary', authorizeUser, async (req, res) => {
         const result = await binary(text);
         res.status(200).send(JSON.stringify({ response: result }));
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -54,7 +70,15 @@ router.get('/braille', authorizeUser, async (req, res) => {
         const result = await braille(text);
         res.status(200).send(JSON.stringify({ response: result }));
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -65,7 +89,15 @@ router.get('/brony-speak', authorizeUser, async (req, res) => {
         const result = await bronySpeak(text);
         res.status(200).send(JSON.stringify({ response: result }));
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -76,7 +108,15 @@ router.get('/clap', authorizeUser, async (req, res) => {
         const result = text.replaceAll(' ', ' 👏 ');
         res.status(200).send(JSON.stringify({ response: result }));
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -87,7 +127,15 @@ router.get('/cow-say', authorizeUser, async (req, res) => {
         const result = await cowSay(text);
         res.status(200).send(JSON.stringify({ response: result }));
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -98,7 +146,15 @@ router.get('/cursive', authorizeUser, async (req, res) => {
         const result = await cursive(text);
         res.status(200).send(JSON.stringify({ response: result }));
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -109,7 +165,15 @@ router.get('/dvorak', authorizeUser, async (req, res) => {
         const result = await Dvorak(text);
         res.status(200).send(JSON.stringify({ response: result }));
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -120,7 +184,15 @@ router.get('/emojify', authorizeUser, async (req, res) => {
         const result = await emojify(text);
         res.status(200).send(JSON.stringify({ response: result }));
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -131,7 +203,15 @@ router.get('/fancy', authorizeUser, async (req, res) => {
         const result = await fancy(text);
         res.status(200).send(JSON.stringify({ response: result }));
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -142,7 +222,15 @@ router.get('/hex', authorizeUser, async (req, res) => {
         const result = await hex(text);
         res.status(200).send(JSON.stringify({ response: result }));
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -153,7 +241,15 @@ router.get('/mocking', authorizeUser, async (req, res) => {
         const result = await mocking(text);
         res.status(200).send(JSON.stringify({ response: result }));
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -164,7 +260,15 @@ router.get('/morse', authorizeUser, async (req, res) => {
         const result = await morse(text);
         res.status(200).send(JSON.stringify({ response: result }));
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -175,7 +279,15 @@ router.get('/owo', authorizeUser, async (req, res) => {
         const result = await owo(text);
         res.status(200).send(JSON.stringify({ response: result }));
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -186,7 +298,15 @@ router.get('/reverse', authorizeUser, async (req, res) => {
         const result = await reverse(text);
         res.status(200).send(JSON.stringify({ response: result }));
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -198,7 +318,15 @@ router.get('/shortenURL', authorizeUser, async (req, res) => {
         const result = await shortenURl(url);
         res.status(200).send(JSON.stringify({ response: result }));
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -214,7 +342,15 @@ router.get('/ship', authorizeUser, async (req, res) => {
         const result = await shipName(first, last);
         res.status(200).send(JSON.stringify({ response: result }));
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -225,7 +361,15 @@ router.get('/superscript', authorizeUser, async (req, res) => {
         const result = await superscript(text);
         res.status(200).send(JSON.stringify({ response: result }));
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -236,7 +380,15 @@ router.get('/yodaSpeak', authorizeUser, async (req, res) => {
         const result = await yodaSpeak(text);
         res.status(200).send(JSON.stringify({ response: result }));
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -247,7 +399,15 @@ router.get('/upsideDown', authorizeUser, async (req, res) => {
         const result = await upsideDown(text);
         res.status(200).send(JSON.stringify({ response: result }));
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 

@@ -73,7 +73,15 @@ router.get('/achievement/:text', async (req, res) => {
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(image);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -81,11 +89,27 @@ router.get('/approve', async (req, res) => {
     const url = req.query.image;
     try {
         const image = await approve(url);
-        if (image === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (image === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(image);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -104,7 +128,15 @@ router.get('/axis-cult', async (req, res) => {
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(image);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -115,11 +147,27 @@ router.get('/blur', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const imageBlur = await blur(radius, image);
-        if (imageBlur === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (imageBlur === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(imageBlur);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -128,11 +176,27 @@ router.get('/bobross', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const imageBlur = await bobross(image);
-        if (imageBlur === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (imageBlur === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(imageBlur);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -141,11 +205,27 @@ router.get('/brazzers', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await brazzers(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -154,11 +234,27 @@ router.get('/charcoal', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await charcoal(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -171,7 +267,15 @@ router.get('/caution', async (req, res) => {
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -185,7 +289,15 @@ router.get('/certificate', async (req, res) => {
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -197,7 +309,15 @@ router.get('/chineserestaurant', async (req, res) => {
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -206,11 +326,27 @@ router.get('/circle', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await circle(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -222,7 +358,15 @@ router.get('/color', async (req, res) => {
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -231,11 +375,27 @@ router.get('/communist', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await communist(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -244,11 +404,27 @@ router.get('/contrast', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await contrast(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -261,7 +437,15 @@ router.get('/createqr', async (req, res) => {
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -274,7 +458,15 @@ router.get('/danger', async (req, res) => {
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -283,7 +475,15 @@ router.get('/devito', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await dannydevito(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         if (buffer === 400) return res.status(406).send(JSON.stringify({ error: 'No faces in this image' }));
         if (buffer === 2) return res.status(406).send(JSON.stringify({ error: 'Image too large' }));
         if (buffer === 403) return res.status(406).send(JSON.stringify({ error: 'The command is overloaded! Try again soon' }));
@@ -291,7 +491,15 @@ router.get('/devito', async (req, res) => {
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -302,11 +510,27 @@ router.get('/desaturate', async (req, res) => {
     if (isNaN(level)) return res.status(406).send(JSON.stringify({ error: 'Invalid level, should be a number'}));
     try {
         const buffer = await desaturate(level, image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -315,11 +539,27 @@ router.get('/dexter', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await dexter(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -330,11 +570,27 @@ router.get('/distort', async (req, res) => {
     if (isNaN(level)) return res.status(406).send(JSON.stringify({ error: 'Invalid level, should be a number'}));
     try {
         const buffer = await distort(level, image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -343,11 +599,27 @@ router.get('/emboss', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await emboss(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -356,7 +628,15 @@ router.get('/eyes', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await eyes(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         if (buffer === 400) return res.status(406).send(JSON.stringify({ error: 'No faces in this image' }));
         if (buffer === 2) return res.status(406).send(JSON.stringify({ error: 'Image too large' }));
         if (buffer === 403) return res.status(406).send(JSON.stringify({ error: 'The command is overloaded! Try again soon' }));
@@ -364,7 +644,15 @@ router.get('/eyes', async (req, res) => {
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -373,11 +661,27 @@ router.get('/fireframe', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await fireframe(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -389,11 +693,27 @@ router.get('/fisheye', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await fishEye(level, image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -406,7 +726,15 @@ router.get('/gandhiquote', async (req, res) => {
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -415,11 +743,27 @@ router.get('/ghost', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await ghost(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -428,11 +772,27 @@ router.get('/glass-shatter', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await glassshatter(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -441,11 +801,27 @@ router.get('/glitch', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await glitch(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -454,11 +830,27 @@ router.get('/greyscale', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await greyscale(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -467,11 +859,27 @@ router.get('/gun', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await gun(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -480,11 +888,27 @@ router.get('/hands', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await hands(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -497,7 +921,15 @@ router.get('/highwaysign', async (req, res) => {
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -510,7 +942,15 @@ router.get('/hollywoodstar', async (req, res) => {
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -519,11 +959,27 @@ router.get('/ifunny', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await ifunny(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -532,11 +988,27 @@ router.get('/invert', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await invert(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -549,7 +1021,15 @@ router.get('/jeopardyQuestion', async (req, res) => {
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -558,11 +1038,27 @@ router.get('/legoIcon', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await legoIcon(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -571,11 +1067,27 @@ router.get('/liquidRescale', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await liquidRescale(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -588,7 +1100,15 @@ router.get('/licensePlate', async (req, res) => {
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -601,11 +1121,27 @@ router.get('/mirror', async (req, res) => {
     if (!(type === 'x' || type === 'y' || type == 'both')) return res.status(406).send(JSON.stringify({ error: 'Type should be x or y or both'}));
     try {
         const buffer = await mirror(type, image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -614,11 +1150,27 @@ router.get('/motionBlur', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await motionBlur(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -631,11 +1183,27 @@ router.get('/noise', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await noise(type, image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -650,7 +1218,15 @@ router.get('/newspaper', async (req, res) => {
         res.writeHead(200,{ 'Content-Type': 'image/gif' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -659,11 +1235,27 @@ router.get('/pet', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await pet(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' })); 
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        }); 
         res.writeHead(200,{ 'Content-Type': 'image/gif' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -672,11 +1264,27 @@ router.get('/pixelize', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await pixelize(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' })); 
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        }); 
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -685,11 +1293,27 @@ router.get('/policeTape', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await policeTape(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' })); 
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        }); 
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -698,11 +1322,27 @@ router.get('/rainbow', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await rainbow(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' })); 
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        }); 
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -711,11 +1351,27 @@ router.get('/rejected', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await rejected(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' })); 
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        }); 
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -727,11 +1383,27 @@ router.get('/rotate', async (req, res) => {
     if (degrees < -360 || degrees > 360) return res.status(406).send(JSON.stringify({ error: 'Degrees should be between -360 and 360'}));
     try {
         const buffer = await rotate(degrees, image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' })); 
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        }); 
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -740,11 +1412,27 @@ router.get('/silouette', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await silouette(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' })); 
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        }); 
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -753,11 +1441,27 @@ router.get('/simp', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await simp(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' })); 
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        }); 
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -770,7 +1474,15 @@ router.get('/speedLimit', async (req, res) => {
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -783,7 +1495,15 @@ router.get('/spongebobTimeCard', async (req, res) => {
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -797,11 +1517,27 @@ router.get('/spotifyNowPlaying', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await spotifyNowPlaying(name, artist, image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' })); 
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        }); 
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -810,11 +1546,27 @@ router.get('/oilPainting', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await oilPainting(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -826,11 +1578,27 @@ router.get('/tint', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await tint(color, image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' })); 
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        }); 
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -843,11 +1611,27 @@ router.get('/squish', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await squish(axis, image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -859,11 +1643,27 @@ router.get('/swirl', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await swirl(degrees, image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' }));
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        });
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -880,7 +1680,15 @@ router.get('/undertale', async (req, res) => {
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -889,11 +1697,27 @@ router.get('/wanted', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await wanted(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' })); 
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        }); 
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -905,11 +1729,27 @@ router.get('/wildPokemon', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await wildPokemon(name, image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' })); 
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        }); 
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
@@ -918,11 +1758,27 @@ router.get('/youDied', async (req, res) => {
     if (!image) return res.status(406).send(JSON.stringify({ error: 'No image provided'}));
     try {
         const buffer = await youDied(image);
-        if (buffer === 0) return res.status(406).send(JSON.stringify({ error: 'Invalid image url' })); 
+        if (buffer === 0) return res.status(406).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: 'Invalid image url'
+        }); 
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
     } catch (err) {
-        res.status(500).send(JSON.stringify({ error: err }));
+        res.status(500).json({
+            details: {
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'], 
+                'user-agent': req.headers['user-agent']
+            },
+            error: true,
+            message: err.message
+        });
     }
 });
 
