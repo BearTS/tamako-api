@@ -4,9 +4,9 @@ const handleNotFound = (req, res) => {
     case 'api':
         res.status(404).json({
             details: {
-                'path': req.baseUrl + req.path, // 
-                'content-type': req.headers['content-type'], // 
-                'user-agent': req.headers['user-agent'] // 
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'],
+                'user-agent': req.headers['user-agent']
             },
             error: true,
             message: 'The requested URL was not found on this server. That\'s all we know.' // TODO: Add a better response
@@ -26,9 +26,9 @@ const handleInternalError = (err, req, res, next) => {
 
     res.status(err.statusCode).json({
         details: {
-            'path': req.baseUrl + req.path, // 
-            'content-type': req.headers['content-type'], // 
-            'user-agent': req.headers['user-agent'] // 
+            'path': req.baseUrl + req.path,
+            'content-type': req.headers['content-type'], 
+            'user-agent': req.headers['user-agent']
         },
         error: true,
         message: errorMessage // TODO: Add a better response
@@ -36,5 +36,18 @@ const handleInternalError = (err, req, res, next) => {
     next();
 };
 
-module.exports.handleNotFound = handleNotFound; 
+const handleRateLimit = (req, res) => {
+    res.status(429).json({
+        details: {
+            'path': req.baseUrl + req.path,
+            'content-type': req.headers['content-type'], 
+            'user-agent': req.headers['user-agent']
+        },
+        error: true,
+        message: 'The rate limit is limited to 90 request per 1 minutes' // TODO: Add a better response
+    });
+};
+
+module.exports.handleNotFound = handleNotFound;
+module.exports.handleRateLimit = handleRateLimit;
 module.exports.handleInternalError = handleInternalError; 
