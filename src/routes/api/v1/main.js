@@ -2,6 +2,7 @@ const router = require('express').Router();
 const path = require('path');
 const request = require('node-superfetch');
 const randomize = require('../../../controllers/randomize');
+const { authorizeUser } = require('../../../middleware/authorize');
 
 router.get('/', async (req, res) => {
     res.status(404).json({
@@ -31,7 +32,7 @@ router.get('/', async (req, res) => {
 });
 
 // joke
-router.get('/joke',async (req,res) => {
+router.get('/joke', authorizeUser, async (req,res) => {
     try {
         res.status(200).json({ 
             Api: 'Tamako API',
@@ -44,7 +45,7 @@ router.get('/joke',async (req,res) => {
 });
 
 // animalfact
-router.get('/animalfact',async (req,res) => {
+router.get('/animalfact', authorizeUser, async (req,res) => {
     const animalfactA = ['bird', 'bunny', 'cat', 'dog', 'fox', 'giraffe', 'kangaroo', 'koala', 'panda', 'racoon', 'whale'];
 
     var animal = req.query.animal;
@@ -69,7 +70,7 @@ router.get('/animalfact',async (req,res) => {
 });
 
 // Images
-router.get('/images/:type',async (req,res) => {
+router.get('/images/:type', authorizeUser, async (req,res) => {
     const imagesA = ['bird', 'cat', 'dog', 'fox','koala', 'mai', 'mai-nsfw', 'panda', 'redpanda', 'sabrina', 'tamako', 'tamako-nsfw', 'waifu'];
 
     var type = req.params.type;
@@ -94,7 +95,7 @@ router.get('/images/:type',async (req,res) => {
 });
 
 // roleplay
-router.get('/roleplay/:type',async (req,res) => {
+router.get('/roleplay/:type', authorizeUser, async (req,res) => {
     const roleplayA = ['baka', 'blush', 'bite', 'celebrate', 'cry', 'dance', 'disgust', 'eat', 'explode', 'feed', 'fistbump', 'happy', 'highfive', 'holdhands', 'hug', 'hug', 'inhale', 'kill', 'kiss', 'lick', 'midfing', 'pat', 'poke', 'punch', 'slap', 'sleep', 'smile', 'smug', 'suicide', 'tickle', 'wave', 'wink'];
     var type = req.params.type;
     try {
@@ -117,7 +118,7 @@ router.get('/roleplay/:type',async (req,res) => {
     }
 });
 
-router.get('/chat', async (req,res) => {
+router.get('/chat', authorizeUser, async (req,res) => {
     const regex = new RegExp(/\d{18}/g);
     // const token = req.query.token;
     const message = req.query.message;
