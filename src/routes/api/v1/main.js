@@ -36,7 +36,7 @@ router.get('/joke',async (req,res) => {
         res.status(200).json({ 
             Api: 'Tamako API',
             Type: 'Joke API',
-            joke: `${randomize(path.join(__dirname, '..', 'assets', 'json' , 'jokeapi', 'am9rZ.json'))}`
+            joke: `${randomize(path.join(__dirname, '..', '..', '..', 'resources', 'assets', 'json' , 'jokeapi', 'am9rZ.json'))}`
         });
     } catch (error) {
         res.status(500).json(error);
@@ -53,7 +53,7 @@ router.get('/animalfact',async (req,res) => {
             res.status(200).json({ 
                 Api: 'Tamako API',
                 Type: 'Animal Fact API',
-                fact: `${randomize(path.join(__dirname, '..', 'assets', 'json' , 'animalfact', `${animal}.json`))}`
+                fact: `${randomize(path.join(__dirname, '..', '..', '..', 'resources', 'assets', 'json' , 'animalfact', `${animal}.json`))}`
             });
         } else {
             res.status(404).json({ 
@@ -78,7 +78,7 @@ router.get('/images/:type',async (req,res) => {
             res.status(200).json({ 
                 Api: 'Tamako API',
                 Type: 'Images API',
-                url: `${randomize(path.join(__dirname, '..', 'assets', 'json' , 'image', `${type}.json`))}`
+                url: `${randomize(path.join(__dirname, '..', '..', '..', 'resources', 'assets', 'json' , 'image', `${type}.json`))}`
             });
         } else {
             res.status(404).json({ 
@@ -102,7 +102,7 @@ router.get('/roleplay/:type',async (req,res) => {
             res.status(200).json({ 
                 Api: 'Tamako API',
                 Type: 'Roleplay API',
-                url: `${randomize(path.join(__dirname, '..', 'assets', 'json' , 'roleplay', `${type}.json`))}`
+                url: `${randomize(path.join(__dirname, '..', '..', '..', 'resources', 'assets', 'json' , 'roleplay', `${type}.json`))}`
             });
         } else {
             res.status(404).json({ 
