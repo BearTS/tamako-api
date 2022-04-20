@@ -3,4 +3,8 @@
 .env
 package-lock.json
 yarn.lock
-/data
+
+# Runtime
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
