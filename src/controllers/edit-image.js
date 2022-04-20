@@ -248,11 +248,11 @@ const customtext = async (url, text) => {
     ctx.fillStyle = 'red';
     ctx.strokeStyle = 'red';
     const {
-      width,
-      actualBoundingBoxAscent,
-      actualBoundingBoxDescent,
-      actualBoundingBoxRight,
-      actualBoundingBoxLeft,
+        width,
+        actualBoundingBoxAscent,
+        actualBoundingBoxDescent,
+        actualBoundingBoxRight,
+        actualBoundingBoxLeft,
     } = ctx.measureText(text);
     const widthOffset = (actualBoundingBoxRight - actualBoundingBoxLeft)/2;
     const heightOffest = (actualBoundingBoxAscent - actualBoundingBoxDescent)/2;
@@ -274,13 +274,13 @@ const customtext = async (url, text) => {
     const scale = Math.min(imgW / textWidthR, imgH / textHeightR);
     createTransform(ctx, originX, originY, textAngle, scale * maxMultiplier);
     roundRect(
-      ctx,
-      originX - textWidth / 2,
-      originY - textHeight / 2,
-      textWidth,
-      textHeight,
-      1,
-      false
+        ctx,
+        originX - textWidth / 2,
+        originY - textHeight / 2,
+        textWidth,
+        textHeight,
+        1,
+        false
     );
     ctx.fillText(text, originX - widthOffset, originY + heightOffest);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -1359,13 +1359,13 @@ function createTransform(ctx, originX, originY, rotation, scale) {
 }
 
 function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
-    if (typeof stroke === "undefined") {
+    if (typeof stroke === 'undefined') {
         stroke = true;
     }
-    if (typeof radius === "undefined") {
+    if (typeof radius === 'undefined') {
         radius = 5;
     }
-    if (typeof radius === "number") {
+    if (typeof radius === 'number') {
         radius = { tl: radius, tr: radius, br: radius, bl: radius };
     } else {
         var defaultRadius = { tl: 0, tr: 0, br: 0, bl: 0 };
