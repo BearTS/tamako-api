@@ -229,6 +229,64 @@ const createQr = async (text) => {
     }
 };
 
+const customtext = async (url, text) => {
+    if (!isImageUrl(url)) return 0;
+    const { body } = await request.get(url);
+    const data = await loadImage(body);
+    const canvas = createCanvas(data.width, data.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(data, 0, 0);
+    const imgW = canvas.width;
+    const imgH = canvas.height;
+    const originX = imgW / 2;
+    const originY = imgH / 2;
+    const textAngleDeg = -15;
+    const boxPadding = 1;
+    const maxMultiplier = 0.8;
+    const textAngle = (textAngleDeg * Math.PI) / 180;
+    ctx.font = '10px Impact';
+    ctx.fillStyle = 'red';
+    ctx.strokeStyle = 'red';
+    const {
+      width,
+      actualBoundingBoxAscent,
+      actualBoundingBoxDescent,
+      actualBoundingBoxRight,
+      actualBoundingBoxLeft,
+    } = ctx.measureText(text);
+    const widthOffset = (actualBoundingBoxRight - actualBoundingBoxLeft)/2;
+    const heightOffest = (actualBoundingBoxAscent - actualBoundingBoxDescent)/2;
+    const textHeight = 
+      actualBoundingBoxAscent +
+      actualBoundingBoxDescent +
+      boxPadding * 2 +
+      ctx.lineWidth * 2;
+    const textWidth =
+      width +
+      boxPadding * 2 +
+      ctx.lineWidth * 2;
+    const textWidthR =
+      textHeight * Math.abs(Math.sin(textAngle)) +
+      textWidth * Math.abs(Math.cos(textAngle));
+    const textHeightR =
+      textHeight * Math.abs(Math.cos(textAngle)) +
+      textWidth * Math.abs(Math.sin(textAngle));
+    const scale = Math.min(imgW / textWidthR, imgH / textHeightR);
+    createTransform(ctx, originX, originY, textAngle, scale * maxMultiplier);
+    roundRect(
+      ctx,
+      originX - textWidth / 2,
+      originY - textHeight / 2,
+      textWidth,
+      textHeight,
+      1,
+      false
+    );
+    ctx.fillText(text, originX - widthOffset, originY + heightOffest);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    return canvas.toBuffer();
+};
+
 const danger = async (text) => {
     const base = await loadImage(join(__dirname, '..',  'resources', 'assets', 'images', 'danger.png'));
     const canvas = createCanvas(base.width, base.height);
@@ -1292,6 +1350,53 @@ async function detect(imgData) {
 }
 
 
+function createTransform(ctx, originX, originY, rotation, scale) {
+    var x, y;
+    x = Math.cos(rotation) * scale;
+    y = Math.sin(rotation) * scale;
+    ctx.setTransform(x, y, -y, x, originX, originY);
+    ctx.translate(-originX, -originY);
+}
+
+function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
+    if (typeof stroke === "undefined") {
+        stroke = true;
+    }
+    if (typeof radius === "undefined") {
+        radius = 5;
+    }
+    if (typeof radius === "number") {
+        radius = { tl: radius, tr: radius, br: radius, bl: radius };
+    } else {
+        var defaultRadius = { tl: 0, tr: 0, br: 0, bl: 0 };
+        for (var side in defaultRadius) {
+            radius[side] = radius[side] || defaultRadius[side];
+        }
+    }
+    ctx.beginPath();
+    ctx.moveTo(x + radius.tl, y);
+    ctx.lineTo(x + width - radius.tr, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius.tr);
+    ctx.lineTo(x + width, y + height - radius.br);
+    ctx.quadraticCurveTo(
+        x + width,
+        y + height,
+        x + width - radius.br,
+        y + height
+    );
+    ctx.lineTo(x + radius.bl, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
+    ctx.lineTo(x, y + radius.tl);
+    ctx.quadraticCurveTo(x, y, x + radius.tl, y);
+    ctx.closePath();
+    if (fill) {
+        ctx.fill();
+    }
+    if (stroke) {
+        ctx.stroke();
+    }
+}
+
 module.exports = {
     minecraftachivement,
     approve,
@@ -1308,6 +1413,7 @@ module.exports = {
     communist,
     contrast,
     createQr,
+    customtext,
     danger,
     dannydevito,
     desaturate,
