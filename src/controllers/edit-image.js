@@ -963,7 +963,7 @@ const tint = async (color, image) => {
 const undertale = async(character, quote) => {
     character = character.toLowerCase();
     const base = await loadImage(
-        join(__dirname, '..', 'assets', 'images', 'undertale', `${character}.png`)
+        join(__dirname, '..', 'resources', 'assets',  'images', 'undertale', `${character}.png`)
     );
     const canvas = createCanvas(base.width, base.height);
     const ctx = canvas.getContext('2d');
@@ -1298,7 +1298,7 @@ function  base64(text, mode = 'encode') {
 }
 
 function temmize(text) {
-    const dictionary = require(join(__dirname, '..', 'assets', 'json', 'temmie.json'));
+    const dictionary = require(join(__dirname, '..', 'resources', 'assets',  'json', 'temmie.json'));
     return wordTrans(text, dictionary)
         .replaceAll('ing', 'in')
         .replaceAll('ING', 'IN')
