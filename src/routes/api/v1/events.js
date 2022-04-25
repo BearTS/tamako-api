@@ -4,6 +4,10 @@ const {
 } = require('../../../controllers/events');
 const { authorizeUser } = require('../../../middleware/authorize');
 const { errorResponse } = require('../../../helper/ApiResponse');
+const { authRateLimiter } = require('../../../middleware/rateLimiter');
+
+// Ratelimiter
+router.use(authRateLimiter);
 
 router.get('/anime-airing', authorizeUser, async (req, res) => {
     try {

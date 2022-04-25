@@ -66,6 +66,10 @@ const {
     wildPokemon
 } = require('../../../controllers/edit-image');
 const { errorResponse } = require('../../../helper/ApiResponse');
+const { authRateLimiter } = require('../../../middleware/rateLimiter');
+
+// Ratelimiter
+router.use(authRateLimiter);
 
 router.get('/achievement/:text', async (req, res) => {
     const input = req?.params?.text;

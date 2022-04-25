@@ -59,6 +59,10 @@ const {
     worthless,
 } = require('../../../controllers/edit-meme');
 const { errorResponse } = require('../../../helper/ApiResponse');
+const { authRateLimiter } = require('../../../middleware/rateLimiter');
+
+// Ratelimiter
+router.use(authRateLimiter);
 
 router.get('/3000years', async (req, res) => {
     const image = req.query.image;
