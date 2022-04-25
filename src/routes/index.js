@@ -1,7 +1,8 @@
 const router = require('express').Router();
+const { mainRateLimiter } = require('../middleware/rateLimiter');
 
 // Main route
-router.get('/', async (req, res) => {
+router.get('/', mainRateLimiter, async (req, res) => {
     res.status(200).render('index.html');
 });
 
