@@ -33,6 +33,12 @@ app.set('view engine', 'html');
 // Main route
 app.use('/', require('./routes/index'));
 
+function log(req, res) {
+    console.log(req.path);
+}
+
+app.use(log);
+
 // Back Middlewares
 // App configurations
 app.use(handleNotFound);
