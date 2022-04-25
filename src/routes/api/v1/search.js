@@ -4,10 +4,6 @@ const {
 } = require('../../../controllers/search');
 const { authorizeUser } = require('../../../middleware/authorize');
 const { errorResponse } = require('../../../helper/ApiResponse');
-const { authRateLimiter } = require('../../../middleware/rateLimiter');
-
-// Ratelimiter
-router.use(authRateLimiter);
 
 router.get('/anime', authorizeUser, async (req, res) => {
     const { query } = req.query;

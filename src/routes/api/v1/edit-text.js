@@ -22,10 +22,6 @@ const {
 } = require('../../../controllers/edit-text');
 const { authorizeUser } = require('../../../middleware/authorize');
 const { errorResponse } = require('../../../helper/ApiResponse');
-const { authRateLimiter } = require('../../../middleware/rateLimiter');
-
-// Ratelimiter
-router.use(authRateLimiter);
 
 router.get('/base64', authorizeUser, async (req, res) => {
     let { mode, text } = req.query;

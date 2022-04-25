@@ -4,10 +4,6 @@ const { avatarFusion } = require('../../../../controllers/edit-avatar');
 const { canvasData } = require('../../../../database/main');
 const { authorizeUser } = require('../../../../middleware/authorize');
 const { errorResponse } = require('../../../../helper/ApiResponse');
-const { authRateLimiter } = require('../../../../middleware/rateLimiter');
-
-// Ratelimiter
-router.use(authRateLimiter);
 
 router.get('/', authorizeUser, async (req, res) => {
     const base = req.query.base;
