@@ -14,6 +14,7 @@ const app = express();
 // Middlewares
 // eslint-disable-next-line no-unused-vars
 const { handleNotFound, handleInternalError } = require('./middleware/errorHandler');
+const { mainRateLimiter } = require('./middleware/rateLimiter');
 
 // Express App Configuration 
 app.disable('x-powered-by');
@@ -30,14 +31,11 @@ app.use(express.static(path.join(__dirname, '../public/')));
 app.set('views', path.join(__dirname, '../public/views'));
 app.set('view engine', 'html');
 
+// Ratelimiter
+app.use(mainRateLimiter);
+
 // Main route
 app.use('/', require('./routes/index'));
-
-function log(req, res) {
-    console.log(req.path);
-}
-
-app.use(log);
 
 // Back Middlewares
 // App configurations
