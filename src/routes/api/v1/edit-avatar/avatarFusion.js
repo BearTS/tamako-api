@@ -3,6 +3,7 @@ const { v4: uuidv4, validate } = require('uuid');
 const { avatarFusion } = require('../../../../controllers/edit-avatar');
 const { canvasData } = require('../../../../database/main');
 const { authorizeUser } = require('../../../../middleware/authorize');
+const { errorResponse } = require('../../../../helper/ApiResponse');
 
 router.get('/', authorizeUser, async (req, res) => {
     const base = req.query.base;
@@ -30,27 +31,11 @@ router.get('/:uuid', async (req, res) => {
 
     try {
         const image = await avatarFusion(data[0].base, data[0].overlay);
-        if (image === 0) return res.status(406).json({
-            details: {
-                'path': req.baseUrl + req.path,
-                'content-type': req.headers['content-type'], 
-                'user-agent': req.headers['user-agent']
-            },
-            error: true,
-            message: 'Invalid image url'
-        });
+        if (image === 0) return errorResponse(req, res, 'Invalid Image URL');
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(image);
     } catch (err) {
-        res.status(500).json({
-            details: {
-                'path': req.baseUrl + req.path,
-                'content-type': req.headers['content-type'], 
-                'user-agent': req.headers['user-agent']
-            },
-            error: true,
-            message: err.message
-        });
+        errorResponse(req, res, err.message);
     }
 });
 

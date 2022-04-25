@@ -3,6 +3,7 @@ const { v4: uuidv4, validate } = require('uuid');
 const { eject } = require('../../../../controllers/edit-avatar');
 const { canvasData } = require('../../../../database/main');
 const { authorizeUser } = require('../../../../middleware/authorize');
+const { errorResponse } = require('../../../../helper/ApiResponse');
 
 router.get('/', authorizeUser, async (req, res) => {
     const avatarURL = req.query.avatarURL;
@@ -11,7 +12,7 @@ router.get('/', authorizeUser, async (req, res) => {
     const userID = req.query.userID;
 
     if (!username || isNaN(userID))
-        return res.status(406).send(JSON.stringify({ error: 'Username not provided or userID' }));
+        return errorResponse(req, res, 'Username not provided or userID', 406);
 
     const id = uuidv4();
     canvasData.push('canvasData', {
@@ -37,27 +38,11 @@ router.get('/:uuid', async (req, res) => {
 
     try {
         const image = await eject(data[0].avatarURL, data[0].imposter, data[0].username, data[0].userID);
-        if (image === 0) return res.status(406).json({
-            details: {
-                'path': req.baseUrl + req.path,
-                'content-type': req.headers['content-type'], 
-                'user-agent': req.headers['user-agent']
-            },
-            error: true,
-            message: 'Invalid image url'
-        });
+        if (image === 0) return errorResponse(req, res, 'Invalid Image URL');
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(image);
     } catch (err) {
-        res.status(500).json({
-        details: {
-            'path': req.baseUrl + req.path,
-            'content-type': req.headers['content-type'], 
-            'user-agent': req.headers['user-agent']
-        },
-        error: true,
-        message: err.message
-    });
+        errorResponse(req, res, err.message);
     }
 });
 

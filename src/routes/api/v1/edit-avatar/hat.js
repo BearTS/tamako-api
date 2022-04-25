@@ -3,6 +3,7 @@ const { v4: uuidv4, validate } = require('uuid');
 const { hat } = require('../../../../controllers/edit-avatar');
 const { canvasData } = require('../../../../database/main');
 const { authorizeUser } = require('../../../../middleware/authorize');
+const { errorResponse } = require('../../../../helper/ApiResponse');
 
 router.get('/', authorizeUser, async (req, res) => {
     const avatarURL = req.query.avatarURL;
@@ -13,9 +14,9 @@ router.get('/', authorizeUser, async (req, res) => {
     const hats = new Set(['anon','ash','becel','birthday','christmas','devil','disguise','dunce','leprechaun','mask','megumin','pilgrim','pirate','soviet','tophat','witch']);
     
     if (!addX || !addY || !scale || !type || scale > 1000 || scale < 0) 
-        return res.status(406).send(JSON.stringify({ error: 'Invalid parameters' }));
+        return errorResponse(req, res, 'Invalid parameters', 406);
     if (!hats.has(type)) 
-        return res.status(406).send(JSON.stringify({ error: 'Invalid hat type' }));
+        return errorResponse(req, res, 'Invalid hat type', 406);
 
     const id = uuidv4();
     canvasData.push('canvasData', {
@@ -39,27 +40,11 @@ router.get('/:uuid', async (req, res) => {
 
     try {
         const image = await hat(data[0].avatarURL, data[0].type, data[0].addX, data[0].addY, data[0].scale);
-        if (image === 0) return res.status(406).json({
-            details: {
-                'path': req.baseUrl + req.path,
-                'content-type': req.headers['content-type'], 
-                'user-agent': req.headers['user-agent']
-            },
-            error: true,
-            message: 'Invalid image url'
-        });
+        if (image === 0) return errorResponse(req, res, 'Invalid Image URL');
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(image);
     } catch (err) {
-        res.status(500).json({
-        details: {
-            'path': req.baseUrl + req.path,
-            'content-type': req.headers['content-type'], 
-            'user-agent': req.headers['user-agent']
-        },
-        error: true,
-        message: err.message
-    });
+        errorResponse(req, res, err.message);
     }
 });
 

@@ -3,6 +3,7 @@ const { v4: uuidv4, validate } = require('uuid');
 const { rip } = require('../../../../controllers/edit-avatar');
 const { canvasData } = require('../../../../database/main');
 const { authorizeUser } = require('../../../../middleware/authorize');
+const { errorResponse } = require('../../../../helper/ApiResponse');
 
 router.get('/', authorizeUser, async (req, res) => {
     const avatarURL = req.query.avatarURL;
@@ -10,11 +11,11 @@ router.get('/', authorizeUser, async (req, res) => {
     const cause = req.query.cause;
 
     if (!username) 
-        return res.status(406).send(JSON.stringify({ error: 'Username not provided' }));
+        return errorResponse(req, res, 'Username not provided', 406);
     if (!cause) 
-        return res.status(406).send(JSON.stringify({ error: 'Cause not provided' }));
+        return errorResponse(req, res, 'Cause not provided', 406);
     if (!avatarURL)
-        return res.status(406).send(JSON.stringify({ error: 'avatarURL not provided' }));
+        return errorResponse(req, res, 'avatarURL not provided', 406);
 
     const id = uuidv4();
     canvasData.push('canvasData', {
@@ -39,27 +40,11 @@ router.get('/:uuid', async (req, res) => {
 
     try {
         const image = await rip(data[0].avatarURL, data[0].username, data[0].cause);
-        if (image === 0) return res.status(406).json({
-            details: {
-                'path': req.baseUrl + req.path,
-                'content-type': req.headers['content-type'], 
-                'user-agent': req.headers['user-agent']
-            },
-            error: true,
-            message: 'Invalid image url'
-        });
+        if (image === 0) return errorResponse(req, res, 'Invalid Image URL');
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(image);
     } catch (err) {
-        res.status(500).json({
-        details: {
-            'path': req.baseUrl + req.path,
-            'content-type': req.headers['content-type'], 
-            'user-agent': req.headers['user-agent']
-        },
-        error: true,
-        message: err.message
-    });
+        errorResponse(req, res, err.message);
     }
 });
 

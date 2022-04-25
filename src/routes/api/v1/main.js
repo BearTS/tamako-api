@@ -3,6 +3,7 @@ const path = require('path');
 const request = require('node-superfetch');
 const randomize = require('../../../controllers/randomize');
 const { authorizeUser } = require('../../../middleware/authorize');
+const { errorResponse } = require('../../../helper/ApiResponse');
 
 router.get('/', async (req, res) => {
     res.status(404).json({
@@ -40,7 +41,7 @@ router.get('/joke', authorizeUser, async (req,res) => {
             joke: `${randomize(path.join(__dirname, '..', '..', '..', 'resources', 'assets', 'json' , 'jokeapi', 'am9rZ.json'))}`
         });
     } catch (error) {
-        res.status(500).json(error);
+        errorResponse(req, res, error.message, 500);
     }
 });
 
@@ -65,7 +66,7 @@ router.get('/animalfact', authorizeUser, async (req,res) => {
             });
         }
     } catch(error) {
-        res.status(500).json(error);
+        errorResponse(req, res, error.message, 500);
     }
 });
 
@@ -90,7 +91,7 @@ router.get('/images/:type', authorizeUser, async (req,res) => {
             });
         }
     } catch (error) {
-        res.status(500).json(error);
+        errorResponse(req, res, error.message, 500);
     }
 });
 
@@ -114,7 +115,7 @@ router.get('/roleplay/:type', authorizeUser, async (req,res) => {
             });    
         }
     } catch (error) {
-        res.status(500).json(error);
+        errorResponse(req, res, error.message, 500);
     }
 });
 
@@ -155,7 +156,7 @@ router.get('/chat', authorizeUser, async (req,res) => {
             message: respond
         });
     } catch (error) {
-        res.status(500).json(error);
+        errorResponse(req, res, error.message, 500);
     }
 });
 
