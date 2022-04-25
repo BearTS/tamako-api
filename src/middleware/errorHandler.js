@@ -36,7 +36,7 @@ const handleInternalError = (err, req, res, next) => {
     next();
 };
 
-const handleRateLimit = (req, res) => {
+const handleRateLimit = (req, res, message = 'The rate limit is limited to 90 request per 1 minute') => {
     res.status(429).json({
         details: {
             'path': req.baseUrl + req.path,
@@ -44,7 +44,7 @@ const handleRateLimit = (req, res) => {
             'user-agent': req.headers['user-agent']
         },
         error: true,
-        message: 'The rate limit is limited to 90 request per 1 minutes' // TODO: Add a better response
+        message: message // TODO: Add a better response
     });
 };
 
