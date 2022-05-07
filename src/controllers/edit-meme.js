@@ -203,7 +203,7 @@ const crush = async (image) => {
 };
 
 const cursedSponge = async (amount) => {
-    const sponge = await loadImage(join(__dirname, '..',  'resources', 'assets', 'images', 'cursed-spong.png'));
+    const sponge = await loadImage(join(__dirname, '..',  'resources', 'assets', 'images', 'cursed-sponge.png'));
     const rows = Math.ceil(amount / 10);
     const canvas = createCanvas(sponge.width * (rows > 1 ? 10 : amount), sponge.height * rows);
     const ctx = canvas.getContext('2d');
