@@ -271,7 +271,7 @@ const dislike = async (image) => {
 
 const distractedBF = async (otherGirlAvatarURL, boyfriendAvatarURL, girlfriendAvatarURL) => {
     if (!isImageUrl(otherGirlAvatarURL) || !isImageUrl(boyfriendAvatarURL) || !isImageUrl(girlfriendAvatarURL)) return 0;
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'distracted-boyfriend.png'));
+    const base = await loadImage(join(__dirname, '..', 'resources', 'assets', 'images', 'distracted-boyfriend.png'));
     const boyfriendAvatarData = await request.get(boyfriendAvatarURL);
     const boyfriendAvatar = await loadImage(boyfriendAvatarData.body);
     const girlfriendAvatarData = await request.get(girlfriendAvatarURL);
@@ -380,7 +380,7 @@ const ForFiveHours = async (image) => {
     if (!isImageUrl(image)) return 0;
     const { body } = await request.get(image);
     const base = await loadImage(body);
-    const plate = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'for-five-hours.png'));
+    const plate = await loadImage(join(__dirname, '..', 'resources', 'assets', 'images', 'for-five-hours.png'));
     const scaleH = plate.width / base.width;
     const height = Math.round(base.height * scaleH);
     const canvas = createCanvas(plate.width, plate.height + height);
@@ -427,7 +427,7 @@ const girlWorthFightingFor = async (image) => {
 const gruPlan = async (step1, step2, step3) => {
     const coord = [[450, 129], [1200, 134], [450, 627], [1200, 627]];
     const steps = [step1, step2, step3, step3];
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'gru-plan.png'));
+    const base = await loadImage(join(__dirname, '..', 'resources', 'assets', 'images', 'gru-plan.png'));
     const canvas = createCanvas(base.width, base.height);
     const ctx = canvas.getContext('2d');
     ctx.drawImage(base, 0, 0);
@@ -929,7 +929,7 @@ const SkyrimSkill = async (skill, image) => {
 };
 
 const SonicSays = async (text) => {
-    const base = await loadImage(join(__dirname, '..', '..', 'assets', 'images', 'sonic-says.png'));
+    const base = await loadImage(join(__dirname, '..', 'resources', 'assets', 'images', 'sonic-says.png'));
     const canvas = createCanvas(base.width, base.height);
     const ctx = canvas.getContext('2d');
     ctx.textBaseline = 'top';
