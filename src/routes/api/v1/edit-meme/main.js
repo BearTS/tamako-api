@@ -29,7 +29,32 @@ router.use('/like', require('./like'));
 router.use('/lisa-presentation', require('./lisa-presentation'));
 router.use('/look-at-this-photograph', require('./look-at-this-photograph')); // maybe add subtitle
 router.use('/mario-bros-view', require('./mario-bros-view'));
-router.use('/crush', require('./crush'));
-router.use('/crush', require('./crush'));
+router.use('/meme-gen-classic', require('./meme-gen-classic')); // font warning
+router.use('/meme-gen-modern', require('./meme-gen-modern'));
+router.use('/metamorphosis', require('./metamorphosis'));
+router.use('/my-collection-grows', require('./my-collection-grows'));
+router.use('/new-password', require('./new-password')); // wrong display of text in image
+router.use('/nike-ad', require('./nike-ad'));
+router.use('/panik-kalm-panik', require('./panik-kalm-panik'));
+router.use('/phoebe-teaching-joey', require('./phoebe-teaching-joey'));
+router.use('/pills', require('./pills')); // broke
+router.use('/plankton-plan', require('./plankton-plan'));
+router.use('/pogchamp', require('./pogchamp'));
+router.use('/scroll-of-truth', require('./scroll-of-truth'));
+router.use('/skyrim-skill', require('./skyrim-skill'));
+router.use('/sonic-says', require('./sonic-says'));
+router.use('/soraSelfies', require('./soraSelfies'));
+router.use('/sos', require('./sos'));
+router.use('/spiderman-pointing', require('./spiderman-pointing'));
+router.use('/spongebob-burn', require('./spongebob-burn')); // broke
+router.use('/that-sign-wont-stop-me', require('./that-sign-wont-stop-me'));
+router.use('/this-guy', require('./this-guy'));
+router.use('/to-be-continued', require('./to-be-continued'));
+router.use('/tuxedo-pooh', require('./tuxedo-pooh'));
+router.use('/two-buttons', require('./two-buttons'));
+router.use('/ultimate-tattoo', require('./ultimate-tattoo'));
+router.use('/vietnam-flashbacks', require('./vietnam-flashbacks'));
+router.use('/worse-than-hitler', require('./worse-than-hitler'));
+router.use('/worthless', require('./worthless'));
 
 module.exports = router;
