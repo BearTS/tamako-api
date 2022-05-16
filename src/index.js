@@ -6,7 +6,7 @@ const favicon = require('serve-favicon');
 
 // Global Vars
 require('dotenv').config();
-require('./resources/fonts');
+require('./controllers/registerFonts');
 
 // Main App
 const app = express();
