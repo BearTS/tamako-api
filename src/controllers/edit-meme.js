@@ -693,7 +693,6 @@ const newPassword = async (weak, strong) => {
     const ctx = canvas.getContext('2d');
     ctx.drawImage(base, 0, 0);
     ctx.font = '60px Noto Regular';
-    ctx.font = this.client.fonts.get('Noto-Regular.ttf').toCanvasString(60);
     ctx.fillText(shortenText(ctx, weak, 780), 70, 191);
     ctx.fillText(shortenText(ctx, strong, 780), 70, 667);
     return canvas.toBuffer();
