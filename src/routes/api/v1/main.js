@@ -168,7 +168,7 @@ async function chat(userid, message) {
 // Routes for other endpoints
 router.use('/canvas/edit-avatar', require('./edit-avatar/main'));
 router.use('/canvas/edit-meme', require('./edit-meme/main'));
-router.use('/canvas/edit-image', require('./edit-image'));
+router.use('/canvas/edit-image', require('./edit-image/main'));
 router.use('/edit-text', require('./edit-text'));
 router.use('/events', require('./events'));
 router.use('/search', require('./search'));
