@@ -12,7 +12,7 @@ const authorizeUser = (req, res, next) => {
                 'user-agent': req.headers['user-agent']
             },
             error: true,
-            message: 'Dont have a token? Visit the discord server https://discord.gg/' // TODO: Add discord support server invite link
+            message: 'Dont have a token? Visit the discord server ' + process.env.DISCORD_INVITE // TODO: Add discord support server invite link
         });
     }
 
@@ -33,7 +33,7 @@ const authorizeUser = (req, res, next) => {
                 'user-agent': req.headers['user-agent']
             },
             error: true,
-            message: 'Invalid Key, go to our discord server to get one https://discord.gg/' // TODO: Add a better response than this.
+            message: 'Invalid Key, go to our discord server to get one ' + process.env.DISCORD_INVITE // TODO: Add a better response than this.
         });
     }
     
@@ -50,7 +50,7 @@ const authorizeAdmin = (req, res, next) => {
                     'user-agent': req.headers['user-agent']
                 },
                 error: true,
-                message: 'Dont have a token? Visit the discord server https://discord.gg/' // TODO: Add discord support server invite link
+                message: 'Dont have a token? Visit the discord server ' + process.env.DISCORD_INVITE // TODO: Add discord support server invite link
             });
 
         if (req.get('Authorization') === process.env.EXTERNAL_TOKEN) {
