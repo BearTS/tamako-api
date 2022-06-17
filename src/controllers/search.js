@@ -263,7 +263,7 @@ const github = async (author, repository) => {
         .set({ Authorization: `token ${process.env.GITHUB_ACCESS_TOKEN}` });
     const fullName = body.full_name;
     const url = body.html_url;
-    const description = body.description ? shorten(body.description) : 'No description provided.';
+    const description = body.description ? shorten(body.description) : 'No description parameter provided.';
     const avatar = body.owner.avatar_url;
     const stars = formatNumber(body.stargazers_count);
     const forks = formatNumber(body.forks);
@@ -377,7 +377,7 @@ const knowYourMeme = async (query) => {
     const location = await kymsearch(query);
     if (!location) return 'Could not find any results.';
     const data = fetchMeme(location);
-    const description = shorten(data.description) || 'No description provided.';
+    const description = shorten(data.description) || 'No description parameter provided.';
     const embed = {
         description: description,
         title: data.name,
