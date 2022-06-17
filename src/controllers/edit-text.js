@@ -1,6 +1,5 @@
 const { letterTrans, wordTrans } = require('custom-translate');
 const request = require('node-superfetch');
-const { join } = require('path');
 
 const base64 = async (mode, text) => {
     if (mode === 'encode') {
@@ -71,7 +70,7 @@ const mocking = async (text) => {
 
 const morse = async (text) => {
     text = text.toLowerCase();
-    const dictionary =  require(join(__dirname, '..', 'assets', 'json', 'morse'));
+    const dictionary =  require('../resources/assets/json/morse.json');
     return letterTrans(text, dictionary);
 };
 
@@ -105,7 +104,7 @@ const shortenURl = async (url) =>{
 };
 
 const superscript = async (text) => {
-    const dictionary =  require(join(__dirname, '..', 'assets', 'json', 'superscript'));
+    const dictionary =  require('../resources/assets/json/superscript.json');
     return letterTrans(text, dictionary);
 };
 
@@ -117,8 +116,8 @@ const yodaSpeak = async (text) => {
 };
 
 const upsideDown = async (text) => {
-    const dictionary =  require(join(__dirname, '..', 'assets', 'json', 'upside-down'));
-    return letterTrans(text, dictionary).reverse().join('');
+    const dictionary =  require('../resources/assets/json/upside-down.json');
+    return letterTrans(text, dictionary);
 };
 
 module.exports = {
