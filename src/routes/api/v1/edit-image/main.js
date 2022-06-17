@@ -6,7 +6,7 @@ router.use('/axis-cult', require('./axis-cult'));
 router.use('/blur', require('./blur'));
 router.use('/bobross', require('./bobross'));
 router.use('/brazzers', require('./brazzers'));
-router.use('/charcoal', require('./charcoal')); // broken: Error: Stream yields empty buffer
+router.use('/charcoal', require('./charcoal')); 
 router.use('/caution', require('./caution'));
 router.use('/certificate', require('./certificate'));
 router.use('/chineserestaurant', require('./chineserestaurant'));
@@ -44,7 +44,7 @@ router.use('/licensePlate', require('./licensePlate'));
 router.use('/mirror', require('./mirror'));
 router.use('/motionBlur', require('./motionBlur'));
 router.use('/newspaper', require('./newspaper'));
-router.use('/noise', require('./noise')); // broken: Error: Stream yields empty buffer
+router.use('/noise', require('./noise')); 
 router.use('/pet', require('./pet'));
 router.use('/pixelize', require('./pixelize'));
 router.use('/policeTape', require('./policeTape'));
@@ -55,10 +55,10 @@ router.use('/silouette', require('./silouette')); // Its pure black
 router.use('/simp', require('./simp'));
 router.use('/speedLimit', require('./speedLimit'));
 router.use('/spongebobTimeCard', require('./spongebobTimeCard'));
-router.use('/oilPainting', require('./oilPainting')); // broken: Error: Stream yields empty buffer
+router.use('/oilPainting', require('./oilPainting')); 
 router.use('/tint', require('./tint'));
-router.use('/squish', require('./squish')); // broken: Error: Stream yields empty buffer
-router.use('/swirl', require('./swirl')); // broken: Error: Stream yields empty buffer
+router.use('/squish', require('./squish')); 
+router.use('/swirl', require('./swirl')); 
 router.use('/undertale', require('./undertale'));
 router.use('/wanted', require('./wanted'));
 router.use('/wildPokemon', require('./wildPokemon'));
