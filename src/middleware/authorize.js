@@ -7,9 +7,9 @@ const authorizeUser = (req, res, next) => {
     if (!req.get('Authorization')) {
         return res.status(405).json({
             details: {
-                'path': req.baseUrl + req.path, // 
-                'content-type': req.headers['content-type'], // 
-                'user-agent': req.headers['user-agent'] // 
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'],
+                'user-agent': req.headers['user-agent']
             },
             error: true,
             message: 'Dont have a token? Visit the discord server https://discord.gg/' // TODO: Add discord support server invite link
@@ -23,7 +23,7 @@ const authorizeUser = (req, res, next) => {
     });
 
     // Check if the auth header value is in the database
-    if (array.filter(x => x.token === req.get('Authorization')).length !== 0) {
+    if (array.filter(x => x.token === req.get('Authorization')).length !== 0 || req.get('Authorization') === process.env.EXTERNAL_TOKEN) {
         next();
     } else {
         return res.status(400).json({
@@ -45,9 +45,9 @@ const authorizeAdmin = (req, res, next) => {
         if (!req.get('Authorization'))
             return res.status(405).json({
                 details: {
-                    'path': req.baseUrl + req.path, // 
-                    'content-type': req.headers['content-type'], // 
-                    'user-agent': req.headers['user-agent'] // 
+                    'path': req.baseUrl + req.path,
+                    'content-type': req.headers['content-type'],
+                    'user-agent': req.headers['user-agent']
                 },
                 error: true,
                 message: 'Dont have a token? Visit the discord server https://discord.gg/' // TODO: Add discord support server invite link
@@ -58,9 +58,9 @@ const authorizeAdmin = (req, res, next) => {
         } else {
             res.status(405).json({
                 details: {
-                    'path': req.baseUrl + req.path, // 
-                    'content-type': req.headers['content-type'], // 
-                    'user-agent': req.headers['user-agent'] // 
+                    'path': req.baseUrl + req.path,
+                    'content-type': req.headers['content-type'],
+                    'user-agent': req.headers['user-agent']
                 },
                 error: true,
                 message: 'Your not allowed to access this endpoint' // TODO: Add discord support server invite link
