@@ -20,26 +20,37 @@ const {
     upsideDown,
     shipName
 } = require('../../../controllers/edit-text');
-const { authorizeUser } = require('../../../middleware/authorize');
 const { errorResponse } = require('../../../helper/ApiResponse');
 
-router.get('/base64', authorizeUser, async (req, res) => {
+router.get('/base64', async (req, res) => {
     let { mode, text } = req.query;
     if (!mode) mode = 'encode';
-    mode = mode.toLowerCase();
-    if (!(mode === 'encode' || mode === 'decode')) return errorResponse(req, res, 'Invalid mode');
-    if (!text) return errorResponse(req, res, 'No text provided');
+
+    var errors = [];
+    if (!mode) mode = 'encode';
+    if (!(mode.toLowerCase() === 'encode' || mode.toLowerCase() === 'decode'))
+        errors.push({ status: 406, details: 'Invalid mode, should be encode or decode' });
+
+    if (!text)
+        errors.push({ status: 406, details: 'No text parameter provided' });
+        
+    if (errors.length !== 0) {
+        let body = errors;
+        errors = [];
+        return errorResponse(req, res, body, 400);
+    }
+
     try {
-        const result = await base64(mode, text);
+        const result = await base64(mode.toLowerCase(), text);
         res.status(200).send({ response: result });
     } catch (err) {
         errorResponse(req, res, err.message, 500);
     }
 });
 
-router.get('/binary', authorizeUser, async (req, res) => {
+router.get('/binary', async (req, res) => {
     const { text } = req.query;
-    if (!text) return errorResponse(req, res, 'No text provided');
+    if (!text) return errorResponse(req, res, 'No text parameter provided');
     try {
         const result = await binary(text);
         res.status(200).send({ response: result });
@@ -48,9 +59,9 @@ router.get('/binary', authorizeUser, async (req, res) => {
     }
 });
 
-router.get('/braille', authorizeUser, async (req, res) => {
+router.get('/braille', async (req, res) => {
     const { text } = req.query;
-    if (!text) return errorResponse(req, res, 'No text provided');
+    if (!text) return errorResponse(req, res, 'No text parameter provided');
     try {
         const result = await braille(text);
         res.status(200).send({ response: result });
@@ -59,9 +70,9 @@ router.get('/braille', authorizeUser, async (req, res) => {
     }
 });
 
-router.get('/brony-speak', authorizeUser, async (req, res) => {
+router.get('/brony-speak', async (req, res) => {
     const { text } = req.query;
-    if (!text) return errorResponse(req, res, 'No text provided');
+    if (!text) return errorResponse(req, res, 'No text parameter provided');
     try {
         const result = await bronySpeak(text);
         res.status(200).send({ response: result });
@@ -70,9 +81,9 @@ router.get('/brony-speak', authorizeUser, async (req, res) => {
     }
 });
 
-router.get('/clap', authorizeUser, async (req, res) => {
+router.get('/clap', async (req, res) => {
     const { text } = req.query;
-    if (!text) return errorResponse(req, res, 'No text provided');
+    if (!text) return errorResponse(req, res, 'No text parameter provided');
     try {
         const result = text.replaceAll(' ', ' 👏 ');
         res.status(200).send({ response: result });
@@ -81,9 +92,9 @@ router.get('/clap', authorizeUser, async (req, res) => {
     }
 });
 
-router.get('/cow-say', authorizeUser, async (req, res) => {
+router.get('/cow-say', async (req, res) => {
     const { text } = req.query;
-    if (!text) return errorResponse(req, res, 'No text provided');
+    if (!text) return errorResponse(req, res, 'No text parameter provided');
     try {
         const result = await cowSay(text);
         res.status(200).send({ response: result });
@@ -92,9 +103,9 @@ router.get('/cow-say', authorizeUser, async (req, res) => {
     }
 });
 
-router.get('/cursive', authorizeUser, async (req, res) => {
+router.get('/cursive', async (req, res) => {
     const { text } = req.query;
-    if (!text) return errorResponse(req, res, 'No text provided');
+    if (!text) return errorResponse(req, res, 'No text parameter provided');
     try {
         const result = await cursive(text);
         res.status(200).send({ response: result });
@@ -103,9 +114,9 @@ router.get('/cursive', authorizeUser, async (req, res) => {
     }
 });
 
-router.get('/dvorak', authorizeUser, async (req, res) => {
+router.get('/dvorak', async (req, res) => {
     const { text } = req.query;
-    if (!text) return errorResponse(req, res, 'No text provided');
+    if (!text) return errorResponse(req, res, 'No text parameter provided');
     try {
         const result = await Dvorak(text);
         res.status(200).send({ response: result });
@@ -114,9 +125,9 @@ router.get('/dvorak', authorizeUser, async (req, res) => {
     }
 });
 
-router.get('/emojify', authorizeUser, async (req, res) => {
+router.get('/emojify', async (req, res) => {
     const { text } = req.query;
-    if (!text) return errorResponse(req, res, 'No text provided');
+    if (!text) return errorResponse(req, res, 'No text parameter provided');
     try {
         const result = await emojify(text);
         res.status(200).send({ response: result });
@@ -125,9 +136,9 @@ router.get('/emojify', authorizeUser, async (req, res) => {
     }
 });
 
-router.get('/fancy', authorizeUser, async (req, res) => {
+router.get('/fancy', async (req, res) => {
     const { text } = req.query;
-    if (!text) return errorResponse(req, res, 'No text provided');
+    if (!text) return errorResponse(req, res, 'No text parameter provided');
     try {
         const result = await fancy(text);
         res.status(200).send({ response: result });
@@ -136,9 +147,9 @@ router.get('/fancy', authorizeUser, async (req, res) => {
     }
 });
 
-router.get('/hex', authorizeUser, async (req, res) => {
+router.get('/hex', async (req, res) => { // How does work?
     const { text } = req.query;
-    if (!text) return errorResponse(req, res, 'No text provided');
+    if (!text) return errorResponse(req, res, 'No text parameter provided');
     try {
         const result = await hex(text);
         res.status(200).send({ response: result });
@@ -147,9 +158,9 @@ router.get('/hex', authorizeUser, async (req, res) => {
     }
 });
 
-router.get('/mocking', authorizeUser, async (req, res) => {
+router.get('/mocking', async (req, res) => {
     const { text } = req.query;
-    if (!text) return errorResponse(req, res, 'No text provided');
+    if (!text) return errorResponse(req, res, 'No text parameter provided');
     try {
         const result = await mocking(text);
         res.status(200).send({ response: result });
@@ -158,9 +169,9 @@ router.get('/mocking', authorizeUser, async (req, res) => {
     }
 });
 
-router.get('/morse', authorizeUser, async (req, res) => {
+router.get('/morse', async (req, res) => {
     const { text } = req.query;
-    if (!text) return errorResponse(req, res, 'No text provided');
+    if (!text) return errorResponse(req, res, 'No text parameter provided');
     try {
         const result = await morse(text);
         res.status(200).send({ response: result });
@@ -169,9 +180,9 @@ router.get('/morse', authorizeUser, async (req, res) => {
     }
 });
 
-router.get('/owo', authorizeUser, async (req, res) => {
+router.get('/owo', async (req, res) => {
     const { text } = req.query;
-    if (!text) return errorResponse(req, res, 'No text provided');
+    if (!text) return errorResponse(req, res, 'No text parameter provided');
     try {
         const result = await owo(text);
         res.status(200).send({ response: result });
@@ -180,9 +191,9 @@ router.get('/owo', authorizeUser, async (req, res) => {
     }
 });
 
-router.get('/reverse', authorizeUser, async (req, res) => {
+router.get('/reverse', async (req, res) => {
     const { text } = req.query;
-    if (!text) return errorResponse(req, res, 'No text provided');
+    if (!text) return errorResponse(req, res, 'No text parameter provided');
     try {
         const result = await reverse(text);
         res.status(200).send({ response: result });
@@ -191,10 +202,10 @@ router.get('/reverse', authorizeUser, async (req, res) => {
     }
 });
 
-router.get('/shortenURL', authorizeUser, async (req, res) => {
+router.get('/shortenURL', async (req, res) => {
     const { url } = req.query;
-    if (!url) return errorResponse(req, res, 'No url provided');
-    if (encodeURI(url).length > 2083) return errorResponse(req, res, 'URL is too long');
+    if (!url) return errorResponse(req, res, 'No url parameter provided');
+    if (encodeURI(url).length > 2083) return errorResponse(req, res, 'URL must be less than 2083 characters');
     try {
         const result = await shortenURl(url);
         res.status(200).send({ response: result });
@@ -203,25 +214,37 @@ router.get('/shortenURL', authorizeUser, async (req, res) => {
     }
 });
 
-router.get('/ship', authorizeUser, async (req, res) => {
-    let first = req.query.first;
-    let last = req.query.last;
-    if (!first || !last) return errorResponse(req, res, 'Missing Parameters!');
-    first = first.toLowerCase();
-    last = last.toLowerCase();
-    if (first.length > 500 || last.length > 500) return errorResponse(req, res, 'Too long!');
+router.get('/ship', async (req, res) => {
+    let { person1, person2 } = req.query;
+
+    var errors = [];
+    if (!person1)
+        errors.push({ status: 406, details: 'No person1 parameter provided' });
+    else if (person1.toLowerCase().length > 500)
+        errors.push({ status: 406, details: 'Person1 must be less than 500 characters' });
+
+    if (!person2)
+        errors.push({ status: 406, details: 'No person2 parameter provided' });
+    else if (person2.toLowerCase().length > 500)
+        errors.push({ status: 406, details: 'Person2 must be less than 500 characters' });
+
+    if (errors.length !== 0) {
+        let body = errors;
+        errors = [];
+        return errorResponse(req, res, body, 400);
+    }
 
     try {
-        const result = await shipName(first, last);
+        const result = await shipName(person1.toLowerCase(), person2.toLowerCase());
         res.status(200).send({ response: result });
     } catch (err) {
         errorResponse(req, res, err.message, 500);
     }
 });
 
-router.get('/superscript', authorizeUser, async (req, res) => {
+router.get('/superscript', async (req, res) => {
     const { text } = req.query;
-    if (!text) return errorResponse(req, res, 'No text provided');
+    if (!text) return errorResponse(req, res, 'No text parameter provided');
     try {
         const result = await superscript(text);
         res.status(200).send({ response: result });
@@ -230,20 +253,20 @@ router.get('/superscript', authorizeUser, async (req, res) => {
     }
 });
 
-router.get('/yodaSpeak', authorizeUser, async (req, res) => {
+router.get('/yodaSpeak', async (req, res) => {
     const { text } = req.query;
-    if (!text) return errorResponse(req, res, 'No text provided');
+    if (!text) return errorResponse(req, res, 'No text parameter provided');
     try {
-        const result = await yodaSpeak(text);
+        const result = await yodaSpeak(text); // Yoda API Internal Error
         res.status(200).send({ response: result });
     } catch (err) {
         errorResponse(req, res, err.message, 500);
     }
 });
 
-router.get('/upsideDown', authorizeUser, async (req, res) => {
+router.get('/upsideDown', async (req, res) => {
     const { text } = req.query;
-    if (!text) return errorResponse(req, res, 'No text provided');
+    if (!text) return errorResponse(req, res, 'No text parameter provided');
     try {
         const result = await upsideDown(text);
         res.status(200).send({ response: result });
