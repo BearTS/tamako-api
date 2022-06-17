@@ -10,6 +10,7 @@
 
 - [x] Add a ratelimiter using https://github.com/animir/node-rate-limiter-flexible
 - [ ] Update ratelimiter to consume user key intead of using ip
+- [ ] Add a cron job to wipe out all canvasData every one week (prevent DB from using too much space)
 - [x] Disable x-powered-by header
 - [x] Use xss portection
 - [ ] Add a request logger using discord webhook integration (Optional)
