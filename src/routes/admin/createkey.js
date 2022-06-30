@@ -8,9 +8,9 @@ router.post('/', async (req, res) => {
     if (ownerId === null)
         return res.status(400).json({
             details: {
-                'path': req.baseUrl + req.path, // 
-                'content-type': req.headers['content-type'], // 
-                'user-agent': req.headers['user-agent'] // 
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'],
+                'user-agent': req.headers['user-agent']
             },
             error: true,
             message: 'Missing ownerId body parameter!'
@@ -18,21 +18,21 @@ router.post('/', async (req, res) => {
     if (unlimited === null)
         return res.status(400).json({
             details: {
-                'path': req.baseUrl + req.path, // 
-                'content-type': req.headers['content-type'], // 
-                'user-agent': req.headers['user-agent'] // 
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'],
+                'user-agent': req.headers['user-agent']
             },
             error: true,
             message: 'Missing unlimited body parameter!'
         });
         
     // Check if this user is already registered
-    if (userTable.has(ownerId))
+    if (await userTable.has(ownerId))
         return res.status(400).json({
             details: {
-                'path': req.baseUrl + req.path, // 
-                'content-type': req.headers['content-type'], // 
-                'user-agent': req.headers['user-agent'] // 
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'],
+                'user-agent': req.headers['user-agent']
             },
             error: true,
             message: 'User is already registered!'
@@ -44,9 +44,9 @@ router.post('/', async (req, res) => {
         userTable.ensure(ownerId, userData);
         res.status(200).json({
             details: {
-                'path': req.baseUrl + req.path, // 
-                'content-type': req.headers['content-type'], // 
-                'user-agent': req.headers['user-agent'] // 
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'],
+                'user-agent': req.headers['user-agent']
             },
             error: false,
             data: userData
@@ -54,9 +54,9 @@ router.post('/', async (req, res) => {
     } catch (err) {
         return res.status(400).json({
             details: {
-                'path': req.baseUrl + req.path, // 
-                'content-type': req.headers['content-type'], // 
-                'user-agent': req.headers['user-agent'] // 
+                'path': req.baseUrl + req.path,
+                'content-type': req.headers['content-type'],
+                'user-agent': req.headers['user-agent']
             },
             error: true,
             message: err.message

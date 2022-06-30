@@ -1,14 +1,8 @@
 const router = require('express').Router();
+const { isEmpty } = require('lodash');
 const { userTable } = require('../../database/main');
 
-router.get('/:key_token?', (req, res) => {
-    // Get all the user from the db
-    const indexes = userTable.indexes;
-    const array = [];
-    indexes.forEach(val => {
-        array.push(userTable.get(val));
-    });
-
+router.get('/:key_token?', async (req, res) => {
     // Check if theres a key_token parameter
     if (!req.params.key_token)
         return res.status(400).json({
@@ -22,7 +16,7 @@ router.get('/:key_token?', (req, res) => {
         });
     
     // Check if key is in the db -> return 400 if no
-    if (array.filter(x => x.token === req.params.key_token).length === 0)
+    if (isEmpty(await userTable.find('token', req.params.key_token)))
         return res.status(400).json({
             details: {
                 'path': req.baseUrl + req.path,
@@ -34,7 +28,7 @@ router.get('/:key_token?', (req, res) => {
         });
 
     try {
-        const filteredUser =  array.filter(x => x.token === req.params.key_token)[0];
+        const filteredUser = Object.values(await userTable.find('token', req.params.key_token))[0];
         if (filteredUser.unlimited === true)
             return res.status(400).json({
                 details: {
@@ -45,7 +39,7 @@ router.get('/:key_token?', (req, res) => {
                 error: true,
                 message: 'This user is already a pro member' // TODO: Add a better response than this.
             });
-        userTable.set(filteredUser.ownerId, true, 'unlimited'); // Update unlimited prop for the user
+        await userTable.set(filteredUser.ownerId + '.unlimited', true); // Update unlimited prop for the user
 
         res.status(200).json({
             details: {
