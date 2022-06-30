@@ -1,18 +1,22 @@
-const Enmap = require('enmap');
+const Josh = require('@joshdb/core');
+const provider = require('@joshdb/mongo');
 
-const userTable = new Enmap({
+const userTable = new Josh({
     name: 'UserManager',
-    fetchAll: false,
-    autoFetch: true,
-    cloneLevel: 'deep'
+    provider,
+    providerOptions: {
+        collection: 'UserManager',
+        url: process.env.MONGO_URI,
+    }
 });
 
-const canvasData = new Enmap({
-    name: 'EditAvatarTable',
-    fetchAll: false,
-    autoFetch: true,
-    cloneLevel: 'deep',
-    dataDir: './data/canvasData',
+const canvasData = new Josh({
+    name: 'CanvasManager',
+    provider,
+    providerOptions: {
+        collection: 'CanvasManager',
+        url: process.env.MONGO_URI,
+    },
     autoEnsure: {
         'edit-avatar': {
             avatarFusion: [],

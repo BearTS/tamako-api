@@ -2,7 +2,7 @@
 const { userTable } = require('../database/main');
 require('dotenv').config();
 
-const authorizeUser = (req, res, next) => {
+const authorizeUser = async (req, res, next) => {
     // Get Authorization header value -> should be valid
     if (!req.get('Authorization')) {
         return res.status(405).json({
@@ -16,10 +16,11 @@ const authorizeUser = (req, res, next) => {
         });
     }
 
-    const indexes = userTable.indexes;
+    const indexes = await userTable.keys;
     const array = [];
-    indexes.forEach(val => {
-        array.push(userTable.get(val));
+    indexes.forEach(async val => {
+        if (indexes.length !== array.length)
+            array.push(await userTable.get(val));
     });
 
     // Check if the auth header value is in the database
