@@ -12,10 +12,10 @@ router.get('/', authorizeUser, async (req, res) => {
         return errorResponse(req, res, 'avatarURL not provided', 406);
 
     const id = uuidv4();
-    canvasData.push('canvasData', {
+    await canvasData.push('edit-avatar.fire', {
         id,
         avatarURL,
-    }, 'edit-avatar.fire');
+    });
 
     res.status(200).json({
         success: true,
@@ -28,7 +28,7 @@ router.get('/:uuid', async (req, res) => {
     if (!validate(req.params.uuid))
         return;
         
-    const arr = canvasData.get('canvasData', 'edit-avatar.fire');
+    const arr = await canvasData.get('canvasData.edit-avatar.fire');
     const data = arr.filter(x => x.id === req.params.uuid);
 
     try {

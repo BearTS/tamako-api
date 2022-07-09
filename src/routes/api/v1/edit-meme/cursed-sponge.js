@@ -12,10 +12,10 @@ router.get('/', authorizeUser, async (req, res) => {
     if (amount < 1) return errorResponse(req, res, 'Amount too low', 406);
     
     const id = uuidv4();
-    canvasData.push('canvasData', {
+    canvasData.push('edit-meme.cursedSponge', {
         id,
         amount,
-    }, 'edit-meme.cursedSponge');
+    });
     res.status(200).json({
         success: true,
         status: 200,
@@ -27,7 +27,7 @@ router.get('/:uuid', async (req, res) => {
     if (!validate(req.params.uuid))
         return;
         
-    const arr = canvasData.get('canvasData', 'edit-meme.cursedSponge');
+    const arr = await canvasData.get('edit-meme.cursedSponge');
     const data = arr.filter(x => x.id === req.params.uuid);
 
     try {

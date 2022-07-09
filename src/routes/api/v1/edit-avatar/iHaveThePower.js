@@ -12,10 +12,10 @@ router.get('/', authorizeUser, async (req, res) => {
         return errorResponse(req, res, 'avatarURL not provided', 406);
 
     const id = uuidv4();
-    canvasData.push('canvasData', {
+    await canvasData.push('edit-avatar.iHaveThePower', {
         id,
         avatarURL,
-    }, 'edit-avatar.iHaveThePower');
+    });
     res.status(200).json({
         success: true,
         status: 200,
@@ -27,7 +27,7 @@ router.get('/:uuid', async (req, res) => {
     if (!validate(req.params.uuid))
         return;
         
-    const arr = canvasData.get('canvasData', 'edit-avatar.iHaveThePower');
+    const arr = await canvasData.get('edit-avatar.iHaveThePower');
     const data = arr.filter(x => x.id === req.params.uuid);
 
     try {

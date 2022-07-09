@@ -24,11 +24,11 @@ router.get('/', authorizeUser, async (req, res) => {
     }
     
     const id = uuidv4();
-    canvasData.push('canvasData', {
+    await canvasData.push('edit-meme.memeGenModern', {
         id,
         text,
         image,
-    }, 'edit-meme.memeGenModern');
+    });
     res.status(200).json({
         success: true,
         status: 200,
@@ -40,7 +40,7 @@ router.get('/:uuid', async (req, res) => {
     if (!validate(req.params.uuid))
         return;
         
-    const arr = canvasData.get('canvasData', 'edit-meme.memeGenModern');
+    const arr = await canvasData.get('edit-meme.memeGenModern');
     const data = arr.filter(x => x.id === req.params.uuid);
     try {
         const buffer = await memeGenModern(data[0].text, data[0].image);

@@ -6,15 +6,14 @@ const { authorizeUser } = require('../../../../middleware/authorize');
 const { errorResponse } = require('../../../../helper/ApiResponse');
 
 router.get('/', authorizeUser, async (req, res) => {
-    const base = req.query.base;
-    const overlay = req.query.overlay;
+    const { base, overlay } = req.query;
     
     const id = uuidv4();
-    canvasData.push('canvasData', {
+    await canvasData.push('edit-avatar.avatarFusion', {
         id,
         base,
         overlay
-    }, 'edit-avatar.avatarFusion');
+    });
     res.status(200).json({
         success: true,
         status: 200,
@@ -26,7 +25,7 @@ router.get('/:uuid', async (req, res) => {
     if (!validate(req.params.uuid))
         return;
         
-    const arr = canvasData.get('canvasData', 'edit-avatar.avatarFusion');
+    const arr = await canvasData.get('edit-avatar.avatarFusion');
     const data = arr.filter(x => x.id === req.params.uuid);
 
     try {

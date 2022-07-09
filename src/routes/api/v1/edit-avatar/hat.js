@@ -19,10 +19,10 @@ router.get('/', authorizeUser, async (req, res) => {
         return errorResponse(req, res, 'Invalid hat type', 406);
 
     const id = uuidv4();
-    canvasData.push('canvasData', {
+    await canvasData.push('edit-avatar.hat', {
         id,
         avatarURL,
-    }, 'edit-avatar.hat');
+    });
 
     res.status(200).json({
         success: true,
@@ -35,7 +35,7 @@ router.get('/:uuid', async (req, res) => {
     if (!validate(req.params.uuid))
         return;
         
-    const arr = canvasData.get('canvasData', 'edit-avatar.hat');
+    const arr = await canvasData.get('edit-avatar.hat');
     const data = arr.filter(x => x.id === req.params.uuid);
 
     try {

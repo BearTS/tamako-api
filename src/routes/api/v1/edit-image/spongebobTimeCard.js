@@ -16,10 +16,10 @@ router.get('/', authorizeUser, async (req, res) => {
         return errorResponse(req, res, 'Text must be less than 280 characters', 406);
     
     const id = uuidv4();
-    canvasData.push('canvasData', {
+    await canvasData.push('edit-image.SpongebobTimeCard', {
         id,
         text,
-    }, 'edit-image.SpongebobTimeCard');
+    });
     res.status(200).json({
         success: true,
         status: 200,
@@ -31,7 +31,7 @@ router.get('/:uuid', async (req, res) => {
     if (!validate(req.params.uuid))
         return;
         
-    const arr = canvasData.get('canvasData', 'edit-image.SpongebobTimeCard');
+    const arr = await canvasData.get('edit-image.SpongebobTimeCard');
     const data = arr.filter(x => x.id === req.params.uuid);
 
     try {

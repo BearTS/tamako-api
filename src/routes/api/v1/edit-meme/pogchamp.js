@@ -13,10 +13,10 @@ router.get('/', authorizeUser, async (req, res) => {
     if (amount.length > 280) return errorResponse(req, res, 'Amount too long', 406);
     
     const id = uuidv4();
-    canvasData.push('canvasData', {
+    await canvasData.push('edit-meme.pogchamp', {
         id,
         amount,
-    }, 'edit-meme.pogchamp');
+    });
     res.status(200).json({
         success: true,
         status: 200,
@@ -28,7 +28,7 @@ router.get('/:uuid', async (req, res) => {
     if (!validate(req.params.uuid))
         return;
         
-    const arr = canvasData.get('canvasData', 'edit-meme.pogchamp');
+    const arr = await canvasData.get('edit-meme.pogchamp');
     const data = arr.filter(x => x.id === req.params.uuid);
 
     try {

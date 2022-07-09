@@ -11,10 +11,10 @@ router.get('/', authorizeUser, async (req, res) => {
     if (!text) return errorResponse(req, res, 'No text parameter provided', 406);
     
     const id = uuidv4();
-    canvasData.push('canvasData', {
+    await canvasData.push('edit-image.chineserestaurant', {
         id,
         text,
-    }, 'edit-image.chineserestaurant');
+    });
     res.status(200).json({
         success: true,
         status: 200,
@@ -26,7 +26,7 @@ router.get('/:uuid', async (req, res) => {
     if (!validate(req.params.uuid))
         return;
         
-    const arr = canvasData.get('canvasData', 'edit-image.chineserestaurant');
+    const arr = await canvasData.get('edit-image.chineserestaurant');
     const data = arr.filter(x => x.id === req.params.uuid);
 
     try {

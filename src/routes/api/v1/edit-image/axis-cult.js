@@ -40,13 +40,13 @@ router.get('/', authorizeUser, async (req, res) => {
     gender = gender.toLowerCase();
     
     const id = uuidv4();
-    canvasData.push('canvasData', {
+    await canvasData.push('edit-image.axiscult', {
         id,
         username,
         gender,
         age,
         profession
-    }, 'edit-image.axiscult');
+    });
     res.status(200).json({
         success: true,
         status: 200,
@@ -58,7 +58,7 @@ router.get('/:uuid', async (req, res) => {
     if (!validate(req.params.uuid))
         return;
         
-    const arr = canvasData.get('canvasData', 'edit-image.axiscult');
+    const arr = await canvasData.get('edit-image.axiscult');
     const data = arr.filter(x => x.id === req.params.uuid);
 
     try {

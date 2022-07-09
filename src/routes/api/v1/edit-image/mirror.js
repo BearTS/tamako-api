@@ -27,11 +27,11 @@ router.get('/', authorizeUser, async (req, res) => {
     type = type.toLowerCase();
     
     const id = uuidv4();
-    canvasData.push('canvasData', {
+    await canvasData.push('edit-image.mirror', {
         id,
         type,
         image,
-    }, 'edit-image.mirror');
+    });
     res.status(200).json({
         success: true,
         status: 200,
@@ -43,7 +43,7 @@ router.get('/:uuid', async (req, res) => {
     if (!validate(req.params.uuid))
         return;
         
-    const arr = canvasData.get('canvasData', 'edit-image.mirror');
+    const arr = await canvasData.get('edit-image.mirror');
     const data = arr.filter(x => x.id === req.params.uuid);
 
     try {

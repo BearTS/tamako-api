@@ -26,11 +26,11 @@ router.get('/', authorizeUser, async (req, res) => {
     }
     
     const id = uuidv4();
-    canvasData.push('canvasData', {
+    await canvasData.push('edit-image.certificate', {
         id,
         reason,
         name,
-    }, 'edit-image.certificate');
+    });
     res.status(200).json({
         success: true,
         status: 200,
@@ -42,7 +42,7 @@ router.get('/:uuid', async (req, res) => {
     if (!validate(req.params.uuid))
         return;
         
-    const arr = canvasData.get('canvasData', 'edit-image.certificate');
+    const arr = await canvasData.get('edit-image.certificate');
     const data = arr.filter(x => x.id === req.params.uuid);
 
     try {

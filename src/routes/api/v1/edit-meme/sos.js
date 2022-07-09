@@ -12,10 +12,10 @@ router.get('/', authorizeUser, async (req, res) => {
     if (message.length > 10) return errorResponse(req, res, 'Message should be less than 10 characters', 406);
     
     const id = uuidv4();
-    canvasData.push('canvasData', {
+    await canvasData.push('edit-meme.sos', {
         id,
         message,
-    }, 'edit-meme.sos');
+    });
     res.status(200).json({
         success: true,
         status: 200,
@@ -27,7 +27,7 @@ router.get('/:uuid', async (req, res) => {
     if (!validate(req.params.uuid))
         return;
         
-    const arr = canvasData.get('canvasData', 'edit-meme.sos');
+    const arr = await canvasData.get('edit-meme.sos');
     const data = arr.filter(x => x.id === req.params.uuid);
 
     try {

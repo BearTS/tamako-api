@@ -5,7 +5,7 @@ const { canvasData } = require('../../../../database/main');
 const { authorizeUser } = require('../../../../middleware/authorize');
 const { errorResponse } = require('../../../../helper/ApiResponse');
 
-router.get('/', async (req, res) => {
+router.get('/', authorizeUser, async (req, res) => {
     const { burn, person } = req.query;
 
     var errors = [];
@@ -26,11 +26,11 @@ router.get('/', async (req, res) => {
     }
     
     const id = uuidv4();
-    canvasData.push('canvasData', {
+    await canvasData.push('edit-meme.SpongebobBurn', {
         id,
         burn,
         person,
-    }, 'edit-meme.SpongebobBurn');
+    });
     res.status(200).json({
         success: true,
         status: 200,
@@ -42,7 +42,7 @@ router.get('/:uuid', async (req, res) => {
     if (!validate(req.params.uuid))
         return;
         
-    const arr = canvasData.get('canvasData', 'edit-meme.SpongebobBurn');
+    const arr = await canvasData.get('edit-meme.SpongebobBurn');
     const data = arr.filter(x => x.id === req.params.uuid);
     try {
         const buffer = await SpongebobBurn(data[0].burn, data[0].person);

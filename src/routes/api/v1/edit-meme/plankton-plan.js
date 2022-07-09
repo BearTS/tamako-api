@@ -31,12 +31,12 @@ router.get('/', authorizeUser, async (req, res) => {
     }
     
     const id = uuidv4();
-    canvasData.push('canvasData', {
+    await canvasData.push('edit-meme.PlanktonPlan', {
         id,
         step1,
         step2,
         step3,
-    }, 'edit-meme.PlanktonPlan');
+    });
     res.status(200).json({
         success: true,
         status: 200,
@@ -48,7 +48,7 @@ router.get('/:uuid', async (req, res) => {
     if (!validate(req.params.uuid))
         return;
         
-    const arr = canvasData.get('canvasData', 'edit-meme.PlanktonPlan');
+    const arr = await canvasData.get('edit-meme.PlanktonPlan');
     const data = arr.filter(x => x.id === req.params.uuid);
     try {
         const buffer = await PlanktonPlan(data[0].step1, data[0].step2, data[0].step3);

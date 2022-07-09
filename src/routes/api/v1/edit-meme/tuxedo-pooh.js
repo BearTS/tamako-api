@@ -26,11 +26,11 @@ router.get('/', authorizeUser, async (req, res) => {
     }
     
     const id = uuidv4();
-    canvasData.push('canvasData', {
+    await canvasData.push('edit-meme.TuxedoPooh', {
         id,
         normal,
         tuxedo,
-    }, 'edit-meme.TuxedoPooh');
+    });
     res.status(200).json({
         success: true,
         status: 200,
@@ -42,7 +42,7 @@ router.get('/:uuid', async (req, res) => {
     if (!validate(req.params.uuid))
         return;
         
-    const arr = canvasData.get('canvasData', 'edit-meme.TuxedoPooh');
+    const arr = await canvasData.get('edit-meme.TuxedoPooh');
     const data = arr.filter(x => x.id === req.params.uuid);
     try {
         const buffer = await TuxedoPooh(data[0].normal, data[0].tuxedo);

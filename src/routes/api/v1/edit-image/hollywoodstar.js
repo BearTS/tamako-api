@@ -14,10 +14,10 @@ router.get('/', authorizeUser, async (req, res) => {
         return errorResponse(req, res, 'Name must be less than 30 characters', 406);
     
     const id = uuidv4();
-    canvasData.push('canvasData', {
+    await canvasData.push('edit-image.hollywoodstar', {
         id,
         name,
-    }, 'edit-image.hollywoodstar');
+    });
     res.status(200).json({
         success: true,
         status: 200,
@@ -29,7 +29,7 @@ router.get('/:uuid', async (req, res) => {
     if (!validate(req.params.uuid))
         return;
         
-    const arr = canvasData.get('canvasData', 'edit-image.hollywoodstar');
+    const arr = await canvasData.get('edit-image.hollywoodstar');
     const data = arr.filter(x => x.id === req.params.uuid);
 
     try {

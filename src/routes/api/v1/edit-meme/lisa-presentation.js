@@ -12,10 +12,10 @@ router.get('/', authorizeUser, async (req, res) => {
     if (text.length > 280) return errorResponse(req, res, 'Text too long', 406);
     
     const id = uuidv4();
-    canvasData.push('canvasData', {
+    await canvasData.push('edit-meme.LisaPresentation', {
         id,
         text,
-    }, 'edit-meme.LisaPresentation');
+    });
     res.status(200).json({
         success: true,
         status: 200,
@@ -27,7 +27,7 @@ router.get('/:uuid', async (req, res) => {
     if (!validate(req.params.uuid))
         return;
         
-    const arr = canvasData.get('canvasData', 'edit-meme.LisaPresentation');
+    const arr = await canvasData.get('edit-meme.LisaPresentation');
     const data = arr.filter(x => x.id === req.params.uuid);
 
     try {
