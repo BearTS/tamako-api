@@ -1,50 +1,38 @@
 const express = require('express');
 const path = require('path');
-const xss = require('xss-clean');
-const cors = require('cors');
-const favicon = require('serve-favicon');
-
-// Global Vars
+// const rateLimit = require('express-rate-limit');
 require('dotenv').config();
-require('./controllers/registerFonts');
-require('./database/setup')();
+require('./fonts');
+const apiRouter = require('./routes/api');
+const editimageRouter = require('./routes/edit-image');
+const editTextRouter = require('./routes/edit-text');
+const editavatarRouter = require('./routes/edit-avatar');
+const eventsRouter = require('./routes/events');
+const searchRouter = require('./routes/search');
+// const allowlist = ['::1'];
 
-// Main App
+// const limiter = rateLimit({
+//     windowMs: 60 * 60 * 1000, // 60 min
+//     max: process.env.rateLimit, // Limit each IP to rateLimit requests per windowMs
+//     standardHeaders: true, 
+//     legacyHeaders: false,
+//     skip: (request) => allowlist.includes(request.ip),
+// });
+
 const app = express();
-
-// Middlewares
-// eslint-disable-next-line no-unused-vars
-const { handleNotFound, handleInternalError } = require('./middleware/errorHandler');
-const { mainRateLimiter } = require('./middleware/rateLimiter');
-
-// Express App Configuration 
-app.disable('x-powered-by');
-app.use(xss());
-app.use(cors());
-app.set('trust proxy', 1);
-app.set('json spaces', 2);
-app.use(express.json()); // for parsing application/json
-app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-app.engine('html', require('ejs').renderFile);
-
-app.use(favicon(path.resolve('public', 'favicon.ico')));
+// app.use(limiter);
 app.use(express.static(path.join(__dirname, '../public/')));
-app.set('views', path.join(__dirname, '../public/views'));
-app.set('view engine', 'html');
+app.use('/api', apiRouter);
+app.use('/canvas/edit-image', editimageRouter);
+app.use('/canvas/edit-avatar', editavatarRouter);
+app.use('/edit-text', editTextRouter);
+app.use('/events', eventsRouter);
+app.use('/search', searchRouter);
+app.get('*', (req, res) => {
+    res.status(404).sendFile(path.join(__dirname, '../public/404.html'));
+});
 
-// Ratelimiter
-app.use(mainRateLimiter);
 
-// Main route
-app.use('/', require('./routes/index'));
-
-// Back Middlewares
-// App configurations
-app.use(handleNotFound);
-// app.use(authorize);
-app.use(handleInternalError);
-
-// App Listener Event
 app.listen(process.env.PORT || 3000, () => {
     console.log(`Listening on Port ${process.env.PORT || 3000}`);
 });
