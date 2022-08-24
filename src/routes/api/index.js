@@ -7,17 +7,17 @@ router.get('/', async (req, res) => {
         base_url: `${req.protocol}://${req.get('host')}/api/v1`,
         documentation: 'https://tamako.tech/docs/api/chatapi',
         endpoints: [
-            'GET: /api/joke',
-            'GET: /api/animalfact',
-            'GET: /api/images',
-            'GET: /api/roleplay',
-            'GET: /api/chat',
-            'GET: /api/randomizer',
-            'GET: /api/edit-avatar/:type',
-            'GET: /api/edit-image/:type',
-            'GET: /api/edit-meme/:type',
-            'GET: /api/events/:type',
-            'GET: /api/search:type'
+            'GET: /api/v1/joke',
+            'GET: /api/v1/animalfact',
+            'GET: /api/v1/images',
+            'GET: /api/v1/roleplay',
+            'GET: /api/v1/chat',
+            'GET: /api/v1/randomizer',
+            'GET: /api/v1/edit-avatar/:type',
+            'GET: /api/v1/edit-image/:type',
+            'GET: /api/v1/edit-meme/:type',
+            'GET: /api/v1/events/:type',
+            'GET: /api/v1/search:type'
         ],
         owner: [
             {
