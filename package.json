@@ -1,7 +1,7 @@
 {
-  "name": "tamako-microservices",
-  "version": "1.1.0",
-  "description": "Services For Tamako",
+  "name": "tamako-api",
+  "version": "2.0.0",
+  "description": "Tamako API",
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
@@ -9,19 +9,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bearts/tamako-microservices.git"
+    "url": "git+https://github.com/bearts/tamako-api.git"
   },
   "keywords": [
     "microservices",
     "api",
+    "tamako api",
+    "tamako-api",
     "tamako"
   ],
-  "author": "BearTS",
-  "license": "MIT ",
+  "author": "Anuj Parihar <anujparihar@yahoo.com>",
+  "license": "SEE LICENSE IN LICENSE.md",
   "bugs": {
-    "url": "https://github.com/bearts/tamako-microservices/issues"
+    "url": "https://github.com/bearts/tamako-api/issues"
   },
-  "homepage": "https://github.com/bearts/tamako-microservices#readme",
+  "homepage": "https://github.com/bearts/tamako-api#readme",
   "dependencies": {
     "canvas": "^2.9.0",
     "cheerio": "^1.0.0-rc.10",
