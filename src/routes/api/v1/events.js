@@ -1,7 +1,5 @@
 const router = require('express').Router();
-const {
-    animeAiring, apod
-} = require('../../../controllers/events');
+const { animeAiring, apod } = require('../../../controllers/events');
 const { authorizeUser } = require('../../../middleware/authorize');
 const { errorResponse } = require('../../../helper/ApiResponse');
 

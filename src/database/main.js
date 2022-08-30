@@ -11,14 +11,5 @@ const userTable = new Josh({
     }
 });
 
-const canvasData = new Josh({
-    name: 'CanvasManager',
-    provider,
-    providerOptions: {
-        collection: 'CanvasManager',
-        url: process.env.MONGO_URI,
-    },
-});
 
-module.exports.canvasData = canvasData;
 module.exports.userTable = userTable;

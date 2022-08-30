@@ -1,7 +1,5 @@
 const router = require('express').Router();
-const { v4: uuidv4, validate } = require('uuid');
 const { undertale } = require('../../../../controllers/edit-image');
-const { canvasData } = require('../../../../database/main');
 const { authorizeUser } = require('../../../../middleware/authorize');
 const { errorResponse } = require('../../../../helper/ApiResponse');
 const { join } = require('path');
@@ -27,28 +25,8 @@ router.get('/', authorizeUser, async (req, res) => {
         return errorResponse(req, res, body, 400);
     }
     
-    const id = uuidv4();
-    await canvasData.push('edit-image.undertale', {
-        id,
-        character,
-        quote,
-    });
-    res.status(200).json({
-        success: true,
-        status: 200,
-        link: `${req.protocol}://${req.get('host')}/api/v1/canvas/edit-image/undertale/${id}`
-    });
-});
-
-router.get('/:uuid', async (req, res) => {
-    if (!validate(req.params.uuid))
-        return;
-        
-    const arr = await canvasData.get('edit-image.undertale');
-    const data = arr.filter(x => x.id === req.params.uuid);
-
     try {
-        const buffer = await undertale(data[0].character, data[0].quote);
+        const buffer = await undertale(character, quote);
         if (buffer === 0) return errorResponse(req, res, 'Invalid Image URL'); 
         res.writeHead(200,{ 'Content-Type': 'image/jpg' });
         res.end(buffer);
@@ -56,5 +34,6 @@ router.get('/:uuid', async (req, res) => {
         errorResponse(req, res, err.message);
     }
 });
+
 
 module.exports = router;
