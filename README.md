@@ -19,9 +19,6 @@ Read the full license <a href="https://github.com/BearTS/tamako-api/blob/main/LI
   <a href="https://github.com/BearTS/Tamako-API">
     <img src="https://img.shields.io/github/package-json/v/BearTS/tamako-api/main?color=pink&label=Current%20Version" alt="App Version" />
   </a>
-  <a href="https://nodejs.org/dist/latest-v16.x/">
-    <img src="https://img.shields.io/static/v1?label=node&message=>=16.0.0&color=success&logo=Node.js&logoColor=white" alt="Node Requirements">
-  </a>
   <!-- <a href="https://github.com/BearTS/Tamako">
     <img src="https://img.shields.io/github/workflow/status/BearTS/Tamako/Docker%20Image" alt="build">
   </a> -->
