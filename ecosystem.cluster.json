@@ -1,0 +1,9 @@
+{
+    "apps": [{
+        "name": "gravitas backend",
+        "script": "./src/index.js",
+        "instances": "max",
+        "exec_mode": "cluster",
+        "autorestart": true
+    }]
+}

@@ -20,8 +20,10 @@ RUN apk add  --no-cache git ffmpeg gettext librsvg ghostscript imagemagick graph
 RUN mkdir -p /usr/src/
 WORKDIR /usr/src/
 
+RUN npm install -g pm2 
+
 COPY package.json /usr/src/
-RUN npm install
+RUN yarn install
 COPY . /usr/src/
-EXPOSE ${PORT}
-CMD ["node", "src/index.js"]
+
+CMD ["pm2-runtime", "start ecosystem.cluster.json"]

@@ -1,0 +1,34 @@
+version: "3.8"
+services:
+  db:
+    image: mongo:5.0.2
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    networks:
+      - tamako-api
+    volumes:
+      - tamako-api:/data/db
+  api:
+    depends_on:
+      - db
+    build: .
+    env_file: ./.env
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - MONGO_URL=mongodb://root:root@mongodb:27017/
+    ports:
+      - "8080:3000"
+    networks:
+      - tamako-api
+    stdin_open: true
+    tty: true
+
+volumes:
+  tamako-api:
+
+networks:
+  tamako-api:

@@ -17,18 +17,16 @@ const authorizeUser = async (req, res, next) => {
         });
     }
 
-    const indexes = await userTable.keys;
-    if (array.length !== indexes.length) {
-        for (let i = 0; i < indexes.length; i++) {
-
-            array.push(await userTable.get(indexes[i]));
-            console.log(array);
-        }
-    }
     // Check if the auth header value is in the database
     if (array.filter(x => x.token === req.get('Authorization')).length !== 0 || req.get('Authorization') === process.env.EXTERNAL_TOKEN) {
         next();
     } else {
+        const indexes = await userTable.keys;
+        if (array.length !== indexes.length) {
+            for (let i = 0; i < indexes.length; i++) {
+                array.push(await userTable.get(indexes[i]));
+            }
+        }
         return res.status(400).json({
             details: {
                 'path': req.baseUrl + req.path,
